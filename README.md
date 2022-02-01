@@ -5,8 +5,8 @@ This is the frontend project for the secure hospital system app.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Instructions for merging:
-- Create new branch by keep the main as parent.
-- Make you changes in new branch 
+- Create new branch by keeping the main as parent.
+- Make you changes in new branch.
 - Commit and push your changes.
 - Raise a pull request.
 
