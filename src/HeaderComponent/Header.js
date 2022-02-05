@@ -1,66 +1,37 @@
 import {Nav, Navbar, Container, NavDropdown} from 'react-bootstrap'
 import HeaderConfig from "./HeaderConfig.json"
 import HeaderData from "./HeaderImport.json"
-
-
+import { AppConstants } from '../AppConstants';
 
 
 function Header() {
-  if (HeaderData.role == "ADMIN"){
     return (
       <>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Navbar.Brand href="#home">CSE 545 Secure Hospital System Group 3</Navbar.Brand>
+            <Navbar.Brand href="#home">{AppConstants.appName}</Navbar.Brand>
             <Container>
               <Nav className="AdminNavBar">
-                <Nav.Link href ="users">Users</Nav.Link>
-                <Nav.Link href ="logs">Logs</Nav.Link>
+                {HeaderData.role == "ADMIN" && <Nav.Link href ="users">{AppConstants.users}</Nav.Link>}
+                {HeaderData.role == "ADMIN" && <Nav.Link href ="logs">{AppConstants.logs}</Nav.Link>}
+                {HeaderData.role == "PATIENT" && <Nav.Link href ="appointments">{AppConstants.appointments}</Nav.Link>}
               </Nav>
             </Container>
           </Container>
-          <Nav>
+          {HeaderData.role && <Nav>
             <Container>
               <NavDropdown title="Options" id="header-options">
-                <NavDropdown.Item href="HeaderAccount">Account</NavDropdown.Item>
-                <NavDropdown.Item href="HeaderSettings">Settings</NavDropdown.Item>
-                <NavDropdown.Item href="HeaderLogout">Logout</NavDropdown.Item>
+                {
+                  AppConstants.profile.map(function(item, i){
+                    return <NavDropdown.Item href="HeaderAccount" key={i}>{item}</NavDropdown.Item>
+                  })
+                }
               </NavDropdown>
             </Container>
-          </Nav>
+          </Nav>}
         </Navbar>
       </>
    );
-  }
-  else if (HeaderData.role == "PATIENT"){
-    return (
-      <>
-        <Navbar bg="dark" variant="dark">
-          <Container>
-            <Navbar.Brand href="#home">CSE 545 Secure Hospital System Group 3</Navbar.Brand>
-            <Container>
-              <Nav className="AdminNavBar">
-                <Nav.Link href ="appointments">Appointments</Nav.Link>
-              </Nav>
-            </Container>
-          </Container>
-          <Nav>
-            <Container>
-              <NavDropdown title="Options" id="header-options">
-                <NavDropdown.Item href="Account">Account</NavDropdown.Item>
-                <NavDropdown.Item href="Settings">Settings</NavDropdown.Item>
-                <NavDropdown.Item href="Logout">Logout</NavDropdown.Item>
-              </NavDropdown>
-            </Container>
-          </Nav>
-        </Navbar>
-      </>
-   );
-  }
-
-
-
-  
  
 }
 

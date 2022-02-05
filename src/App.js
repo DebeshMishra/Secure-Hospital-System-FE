@@ -6,17 +6,23 @@ import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from './LoginComponent/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container } from 'react-bootstrap';
 
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />}>
-          <Route index element={<Login />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+    <Header/ >
+    <Container>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Main />}>
+            <Route index element={<Login />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </Container>
+    </>
   );
 }
 
