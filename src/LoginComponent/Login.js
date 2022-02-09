@@ -1,44 +1,64 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import "./Login.css";
+  import React, { useState } from "react";
+  import "./login.css"
+  import { Link } from "react-router-dom";
+  
+  const Login = (props) => {
+      const [data, setData] = useState([])
+  
+      const handleSubmit = async (e) => {
+          e.preventDefault();
+      }
 
-export default function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-  
-    function validateForm() {
-      return email.length > 0 && password.length > 0;
-    }
-  
-    function handleSubmit(event) {
-      event.preventDefault();
-    }
-  
-    return (
-      <div className="Login">
-        <Form onSubmit={handleSubmit}>
-          <Form.Group size="lg" controlId="email">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              autoFocus
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group size="lg" controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Button block size="lg" type="submit" disabled={!validateForm()}>
-            Login
-          </Button>
-        </Form>
-      </div>
-    );
+      const handleChange = (e) => {
+          const newdata = { ...data };
+          newdata[e.target.id] = e.target.value;
+          setData(newdata);
+        };
+
+      return (
+          <div>
+              <form>
+                  <div className="form-group">
+                      <label>Email</label>
+                      <br />
+                      <input type="email" 
+                      className="form-control" 
+                      placeholder="Enter email"
+                      id="email"
+                      value={data.email} 
+                      onChange={handleChange}/>
+                  </div>
+                  <br />
+                  <div className="form-group">
+                      <label>Password</label>
+                      <input type="password" 
+                      className="form-control" 
+                      placeholder="Enter password"
+                      id = "password"
+                      value={data.password}
+                      onChange={handleChange} />
+                  </div>
+                  <br />
+                  <div className="form-group">
+                      <div className="custom-control custom-checkbox">
+                          <input type="checkbox" 
+                          className="custom-control-input" 
+                          id="customCheck1" />
+                          <label className="custom-control-label" 
+                          htmlFor="customCheck1">
+                              Remember me
+                              </label>
+                      </div>
+                  </div>
+                  <br />
+                  <button type="submit" 
+                  className="btn btn-dark btn-lg btn-block"
+                  onSubmit={handleSubmit}
+                  >Sign in
+                  </button>
+              </form>
+          </div>
+      )
   }
+  export default Login
+  
