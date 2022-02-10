@@ -14,7 +14,7 @@ import Signup from './LoginComponent/Signup';
 function App() {
   return (<BrowserRouter>
     <div className="App">
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+      {/* <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/login"}>Secure Hospital System</Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
@@ -28,7 +28,8 @@ function App() {
             </ul>
           </div>
         </div>
-      </nav>
+      </nav> */}
+      < Header/>
       <div className="outer">
         <div className="inner">
           <Routes>
