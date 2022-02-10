@@ -1,3 +1,4 @@
 {
-    "role" : null
+    "role" : null,
+    "isLoggedIn": false
 }
