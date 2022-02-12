@@ -8,6 +8,7 @@ import { Container } from 'react-bootstrap';
 import { BrowserRouter, Routes, Route,Link } from "react-router-dom";
 import Login from './LoginComponent/Login';
 import Signup from './LoginComponent/Signup';
+import Appointments from './Appointments/Appointments';
 
 
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/appointments" element={<Appointments />} />
           </Routes>
         </div>
       </div>
