@@ -40,6 +40,7 @@ function Header() {
               {HeaderData.role == "ADMIN" && <li className="nav-item" href="users"><Link className="nav-link" to={"/users"}>{AppConstants.users}</Link></li>}
               {HeaderData.role == "ADMIN" && <li className="nav-item" href="logs"><Link className="nav-link" to={"/logs"}>{AppConstants.logs}</Link></li>}
               {HeaderData.role == "PATIENT" && <li className="nav-item" href="appointments"><Link className="nav-link" to={"/appointments"}>{AppConstants.appointments}</Link></li>}
+              {HeaderData.role == "HOSPITALSTAFF" && <li className="nav-item" href="users"><Link className="nav-link" to={"/users"}>{AppConstants.users}</Link></li>}
             </ul>
           </div>}
           
