@@ -3,16 +3,29 @@ import HeaderConfig from "./HeaderConfig.json"
 import HeaderData from "./HeaderImport.json"
 import { AppConstants } from '../AppConstants';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { setUserData, removeUserData, setUserToken } from "../features/user";
 
 function Header() {
   let profile;
-  if (HeaderData.isLoggedIn) {
+  const userIsLoggedIn = useSelector((state) => state.user.isLoggedIn)
+  const user = useSelector((state) => state.user)
+  // const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   // setting this manually but have to make a backend call
+  //   dispatch(setUserData({userData: {email: "spapani@asu.edu", role: "ADMIN"}}))
+  // }, [userIsLoggedIn])
+
+
+  if (userIsLoggedIn) {
     profile = <Nav>
       <Container>
         <NavDropdown title="Options" id="header-options">
           {
             AppConstants.profile.map(function (item, i) {
-              return <NavDropdown.Item href="HeaderAccount" key={i}>{item}</NavDropdown.Item>
+              return <NavDropdown.Item key={i}>{item}</NavDropdown.Item>
             })
           }
         </NavDropdown>
@@ -30,19 +43,20 @@ function Header() {
       </ul>
     </div>
   }
+
   return (
     <>
       <Navbar className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
           <Link className="navbar-brand" to={"/login"}>{AppConstants.appName}</Link>
-          {HeaderData.isLoggedIn && <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+          {userIsLoggedIn && <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
-              {HeaderData.role == "ADMIN" && <li className="nav-item" href="users"><Link className="nav-link" to={"/users"}>{AppConstants.users}</Link></li>}
-              {HeaderData.role == "ADMIN" && <li className="nav-item" href="logs"><Link className="nav-link" to={"/logs"}>{AppConstants.logs}</Link></li>}
-              {HeaderData.role == "PATIENT" && <li className="nav-item" href="appointments"><Link className="nav-link" to={"/appointments"}>{AppConstants.appointments}</Link></li>}
+              {user.userData.role == "ADMIN" && <li className="nav-item" href="users"><Link className="nav-link" to={"/users"}>{AppConstants.users}</Link></li>}
+              {user.userData.role == "ADMIN" && <li className="nav-item" href="logs"><Link className="nav-link" to={"/logs"}>{AppConstants.logs}</Link></li>}
+              {user.userData.role == "PATIENT" && <li className="nav-item" href="appointments"><Link className="nav-link" to={"/appointments"}>{AppConstants.appointments}</Link></li>}
             </ul>
           </div>}
-          
+
           {profile}
         </div>
       </Navbar>

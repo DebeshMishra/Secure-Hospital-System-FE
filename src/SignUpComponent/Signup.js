@@ -7,6 +7,9 @@ const Signup = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // TODO API signUp Data to backend.
+        alert(data);
+        console.log(data);
     }
 
     const handleChange = (e) => {
@@ -17,7 +20,7 @@ const Signup = (props) => {
 
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h3>Register</h3>
                 <div className="form-group">
                     <label>First name</label>
@@ -57,8 +60,7 @@ const Signup = (props) => {
                 </div>
                 <br />
                 <button type="submit"
-                    className="btn btn-dark btn-lg btn-block"
-                    onSubmit={handleSubmit}>
+                    className="btn btn-dark btn-lg btn-block">
                     Register
                 </button>
             </form>
