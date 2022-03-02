@@ -4,6 +4,7 @@ import { loginAPI } from "../services/authentication.service";
 import { setUserData, removeUserData, setUserToken } from "../features/user";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+import Cookies from 'universal-cookie';
 
 
 const Login = (props) => {
@@ -12,6 +13,7 @@ const Login = (props) => {
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch();
     let navigate = useNavigate();
+    const cookies = new Cookies();
 
     //   const postData = async () => {
     //     const response = await fetch('http://localhost:8080/api/auth/login', {
@@ -30,14 +32,19 @@ const Login = (props) => {
 
     // }
 
+    if (cookies.get('JWTToken') != null) {
+
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // TODO API Login Data to backend.
         console.log(data);
+        console.log(data.email);
 
         loginAPI(data).then(response => {
             setToken(response.data.token)
-            setUserData({userData: {email: data.email}})
+            dispatch(setUserData({ userData: { email: data.email } }))
         });
     }
 

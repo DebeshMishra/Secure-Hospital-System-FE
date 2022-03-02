@@ -7,23 +7,39 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setUserData, removeUserData, setUserToken } from "../features/user";
 import { getUserByEmailId } from '../services/authentication.service';
+import { useState } from 'react';
 
 function Header() {
   let profile;
   const userIsLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const user = useSelector((state) => state.user)
+  const [userDataInfo, setUserDataInfo] = useState(undefined)
   const dispatch = useDispatch();
 
   useEffect(() => {
     //if user is logged in
-    if (user.isLoggedIn){
-      let userInfo = getUserByEmailId(user.email, user.jwtToken).then(response =>{
-      dispatch(setUserData({userData: {email: userInfo.email, role: userInfo.role}}))
+    if (user.isLoggedIn) {
+      getUserByEmailId(user.userData.email, user.jwtToken).then(response => {
+        console.log(response);
+        // setUserDataInfo(response);
+        dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role } }))
       })
     }
-  },[userIsLoggedIn])    
+  }, [userIsLoggedIn]);
 
 
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    // loginAPI(data).then(response => {
+    //   setToken(response.data.token)
+    //   dispatch(setUserData({ userData: { email: data.email } }))
+    // });
+  }
+
+  // useEffect(() => {
+  //   console.log(userDataInfo);
+
+  // }, [userDataInfo]);
 
   if (userIsLoggedIn) {
     profile = <Nav>

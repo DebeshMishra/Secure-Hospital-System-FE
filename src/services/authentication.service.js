@@ -38,13 +38,15 @@ export const loginAPI = async (data) => {
 }
 
 export const getUserByEmailId = async (data, jwtToken) => {
-    const response = await axios.post('http://127.0.0.1:8080/api/users/getUserByEmailId', data, {
+    console.log(data)
+    const response = await axios.get('http://127.0.0.1:8080/api/users/getUserByEmailId?emailId=' + data, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
-            'Authorization': jwtToken,
+            'Authorization': "Bearer " + jwtToken,
         },
     })
+    return response.data;
 }
 
 // function logout() {
