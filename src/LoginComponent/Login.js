@@ -37,12 +37,12 @@ const Login = (props) => {
 
         loginAPI(data).then(response => {
             setToken(response.data.token)
+            setUserData({userData: {email: data.email}})
         });
     }
 
     useEffect(() => {
         if (token != undefined) {
-            dispatch(setUserData({ userData: { email: data.email, role: "ADMIN" } }))
             dispatch(setUserToken({ jwtToken: token }))
             console.log(user);
             navigate('/dashboard')

@@ -37,7 +37,15 @@ export const loginAPI = async (data) => {
     return response;
 }
 
-
+export const getUserByEmailId = async (data, jwtToken) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/users/getUserByEmailId', data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+            'Authorization': jwtToken,
+        },
+    })
+}
 
 // function logout() {
 //     // remove user from local storage to log user out

@@ -6,17 +6,23 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { setUserData, removeUserData, setUserToken } from "../features/user";
+import { getUserByEmailId } from '../services/authentication.service';
 
 function Header() {
   let profile;
   const userIsLoggedIn = useSelector((state) => state.user.isLoggedIn)
   const user = useSelector((state) => state.user)
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   // setting this manually but have to make a backend call
-  //   dispatch(setUserData({userData: {email: "spapani@asu.edu", role: "ADMIN"}}))
-  // }, [userIsLoggedIn])
+  useEffect(() => {
+    //if user is logged in
+    if (user.isLoggedIn){
+      let userInfo = getUserByEmailId(user.email, user.jwtToken).then(response =>{
+      dispatch(setUserData({userData: {email: userInfo.email, role: userInfo.role}}))
+      })
+    }
+  },[userIsLoggedIn])    
+
 
 
   if (userIsLoggedIn) {
