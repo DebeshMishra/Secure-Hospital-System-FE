@@ -80,3 +80,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Important useful links
 - https://medium.com/the-andela-way/understanding-the-fundamentals-of-routing-in-react-b29f806b157e
+- https://github.com/reactivestack/cookies/tree/master/packages/universal-cookie

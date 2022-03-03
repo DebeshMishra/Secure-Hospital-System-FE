@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import Cookies from 'universal-cookie/es6';
 
 const initialUserState = { email: "" }
 
@@ -8,6 +9,8 @@ export const userSlice = createSlice({
     reducers: {
         setUserToken: (state, action) => {
             state.isLoggedIn = true;
+            const cookies = new Cookies();
+            cookies.set('JWTToken', action.payload.jwtToken);
             state.jwtToken = action.payload.jwtToken
         },
 
