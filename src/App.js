@@ -8,6 +8,7 @@ import Signup from './SignUpComponent/Signup';
 import Dashboard from './components/MainDashboard/Dashboard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
+import Users from './components/Admin/Users/Users';
 
 function PrivateRoute() {
   const user = useSelector((state) => state.user)
@@ -31,6 +32,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/users" element={<Users />} />
               {/* <Route path="/dashboard" element={<Dashboard />} /> */}
             </Routes>
           </div>
