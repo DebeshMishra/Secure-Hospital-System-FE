@@ -10,19 +10,80 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 import ThemeProvider from 'react-bootstrap/ThemeProvider'
 import { useState } from 'react';
-import user from './features/user';
+import { routes } from './RouteConfig';
+import { history } from './helpers/history';
 
-function PrivateRoute() {
-  const user = useSelector((state) => state.user)
-  const location = useLocation();
-  return user.isLoggedIn
-    ? <Outlet />
-    : <Navigate to="/login" replace state={{ from: location }} />;
-}
 
 function App() {
 
   const [userData, setUserData] = useState({isLoggedIn: false})
+
+  // const ProtectedRoute = ({component: Component, ...rest}) => {
+  //   const user = useSelector((state) => state.user)
+  //   const location = useLocation();
+  //   return (
+  //     <Route
+  //       {...rest}
+  //       render={props => {
+  //         if(user.isLoggedIn){
+  //           return <component {...props}/>
+  //         }else{
+  //           return <Navigate to={
+  //             {
+  //               pathname: "/login",
+  //               state: {from: props.location}
+  //             }
+  //           }/>
+  //         }
+  //       }}
+  //     />
+  //   )
+  // }
+
+  // function ProtectedRoute({ component, ...restOfProps }) {
+  //   const user = useSelector((state) => state.user)
+  //   console.log(component, restOfProps);
+  //   return (
+  //     <Route
+  //       {...restOfProps}
+  //       render={(props) =>
+  //         user.isLoggedIn ? <component {...props} /> : <Navigate to="/login" />
+  //       }
+  //     />
+  //   );
+  // }
+
+  const ProtectRouteLogin = (props) => {
+    const user = useSelector((state) => state.user)
+  
+    const route =  !user.isLoggedIn ? (
+      <Route {...props} />
+    ) : (
+      <Navigate
+        to={{
+          pathname: "/dashboard"
+        }}
+      />
+    );
+    console.log(route);
+    return route;
+  };
+
+  const PrivateRoute = (props) => {
+    const user = useSelector((state) => state.user)
+  
+    const route =  user.isLoggedIn ? (
+      <Route {...props} />
+    ) : (
+      <Navigate
+        to={{
+          pathname: "/login"
+        }}
+      />
+    );
+    console.log(route);
+    return route;
+  }
 
   return (
     <BrowserRouter>
@@ -34,14 +95,13 @@ function App() {
           <div className="outer">
             <div className="inner">
               <Routes>
-                {/* <Route path="/" element={<PrivateRoute />} >
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Route> */}
-                <Route path='/' element={<Login userData={userData} setUserData={setUserData}/>} />
-                <Route path="/login" element={<Login userData={userData} setUserData={setUserData}/>} />
-                <Route path="/signup" element={<Signup userData={userData} setUserData={setUserData}/>} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                {routes.map((item, index) => {
+                    return <PrivateRoute key={index} exact path="/dashboard" element={<Dashboard />}/>
+                })}
+                <ProtectRouteLogin exact path='/' element={<Dashboard />} />
+                <ProtectRouteLogin exact path="/login" element={<Login />} />
+                <ProtectRouteLogin exact path="/signup" element={<Signup />} />
+                {/* <ProtectedRoute exact path="/dashboard" element={<Dashboard />} /> */}
               </Routes>
             </div>
           </div>

@@ -1,3 +1,3 @@
-export class Environments {
-    SERVER_URL = "http://localhost:8080"
+export const environments =  {
+    SERVER_URL : "http://localhost:8080"
 }

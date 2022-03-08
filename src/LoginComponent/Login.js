@@ -19,7 +19,7 @@ const Login = (props) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         loginAPI(data).then(response => {
-            dispatch(setUserData({ userData: { email: data.email, user: {}} }));
+            dispatch(setUserData({ userData: { email: data.email, user: {} } }));
             dispatch(setUserToken({ jwtToken: response.data.token }));
             navigate('/dashboard')
         });
@@ -27,9 +27,9 @@ const Login = (props) => {
 
     // when chrome refresh happens
     useEffect(() => {
-        if (cookies.JWTToken != null) {
-            navigate('/dashboard')
-        }
+        // if (cookies.JWTToken != null) {
+        //     navigate('/dashboard')
+        // }
     })
 
     const handleChange = (e) => {
@@ -43,10 +43,10 @@ const Login = (props) => {
             <Row className="justify-content-md-center login-header">
                 <h2 >Login</h2>
             </Row>
-            <Row className="justify-content-md-center">
-                <Col md="auto">
-                    <Form onSubmit={handleSubmit}>
-                        <InputGroup className="mb-3">
+            <Form onSubmit={handleSubmit}>
+                <Row className="justify-content-md-center mb-3">
+                    <Col md="4">
+                        <InputGroup>
                             <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
                             <FormControl
                                 placeholder="Email address"
@@ -58,7 +58,11 @@ const Login = (props) => {
                             />
                             <InputGroup.Text id="basic-addon2">@example.com</InputGroup.Text>
                         </InputGroup>
-                        <InputGroup className="mb-3">
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center mb-3">
+                    <Col md="4">
+                        <InputGroup>
                             <InputGroup.Text id="basic-addon1">Password</InputGroup.Text>
                             <FormControl
                                 placeholder="Password"
@@ -69,19 +73,28 @@ const Login = (props) => {
                                 type="password"
                             />
                         </InputGroup>
-                        <Form.Group className="mb-3">
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center mb-3">
+                    <Col md="4">
+                        <Form.Group >
                             <Form.Check className="floatLeft"
                                 label="Remember"
                             />
                         </Form.Group>
-                        <Form.Group className="mb-3">
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center mb-3">
+                    <Col md="4">
+                        <Form.Group>
                             <Button variant="primary" type="submit" className="submit-button">
                                 Submit
                             </Button>
                         </Form.Group>
-                    </Form>
-                </Col>
-            </Row>
+
+                    </Col>
+                </Row>
+            </Form>
         </Container>
     )
 }

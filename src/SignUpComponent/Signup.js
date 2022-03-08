@@ -1,70 +1,150 @@
-import React, { useState } from "react";
+
 import "./signup.css"
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { loginAPI, registerUser } from "../services/authentication.service";
+import { setUserData, removeUserData, setUserToken } from "../features/user";
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { useCookies } from 'react-cookie';
+
+import { Form, Row, Container, Col, InputGroup, FormControl, Button, DropdownButton, Dropdown } from "react-bootstrap";
+import { Navigate } from "react-router";
 
 const Signup = (props) => {
-    const [data, setData] = useState([])
+    const [registrationdata, setRegistrationData] = useState({role: "PATIENT"})
+    const [cookies, setCookie, removeCookie] = useCookies(['JWTToken', "emailId"]);
+    const userInfo = useSelector((state) => state.user);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO API signUp Data to backend.
-        alert(data);
-        console.log(data);
+        console.log(registrationdata);
+        registrationdata.roles = [registrationdata.role];
+        registerUser(registrationdata).then(response => {
+            console.log(response);
+            if(response.status == 200){
+                alert("Successfully registered!!! please view your email to confirm your account.")
+                Navigate('/login');
+            }
+        }, error => {
+            alert("Error occurred!!! Please try again.")
+            console.log(error);
+        })
     }
 
     const handleChange = (e) => {
-        const newdata = { ...data };
+        const newdata = { ...registrationdata };
         newdata[e.target.id] = e.target.value;
-        setData(newdata);
+        setRegistrationData(newdata);
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <h3>Register</h3>
-                <div className="form-group">
-                    <label>First name</label>
-                    <input type="text"
-                        className="form-control"
-                        placeholder="First name"
-                        id="firstname"
-                        value={data.firstname}
-                        onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>Last name</label>
-                    <input type="text"
-                        className="form-control"
-                        placeholder="Last name"
-                        id="lastname"
-                        value={data.lastname}
-                        onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="email"
-                        className="form-control"
-                        placeholder="Enter email"
-                        id="email"
-                        value={data.email}
-                        onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password"
-                        className="form-control"
-                        placeholder="Enter password"
-                        id="password"
-                        value={data.password}
-                        onChange={handleChange} />
-                </div>
-                <br />
-                <button type="submit"
-                    className="btn btn-dark btn-lg btn-block">
-                    Register
-                </button>
-            </form>
-        </div>
+        <Container className="login">
+            <Row className="justify-content-md-center login-header">
+                <h2>Register</h2>
+            </Row>
+            <Form onSubmit={handleSubmit}>
+                <Row className="justify-content-md-center mb-3" >
+                    <Col md="6">
+                        <InputGroup >
+                            <InputGroup.Text id="basic-addon1">First Name</InputGroup.Text>
+                            <FormControl
+                                placeholder="First Name"
+                                aria-label="First Name"
+                                id="firstName"
+                                value={registrationdata.firstName}
+                                onChange={handleChange}
+                                required
+                                type="text"
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center mb-3" >
+                    <Col md="6">
+                        <InputGroup >
+                            <InputGroup.Text id="basic-addon1">Last Name</InputGroup.Text>
+                            <FormControl
+                                placeholder="Last Name"
+                                aria-label="Last Name"
+                                id="lastName"
+                                value={registrationdata.lastName}
+                                onChange={handleChange}
+                                required
+                                type="text"
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center mb-3" >
+                    <Col md="6">
+                        <InputGroup >
+                            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
+                            <FormControl
+                                placeholder="Email address"
+                                aria-label="Email address"
+                                id="email"
+                                value={registrationdata.email}
+                                required
+                                onChange={handleChange}
+                                type="email"
+                            />
+                            <InputGroup.Text id="basic-addon2">@example.com</InputGroup.Text>
+                        </InputGroup>
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center mb-3">
+                    <Col md="6">
+                        <InputGroup>
+                            <InputGroup.Text id="basic-addon1">Password</InputGroup.Text>
+                            <FormControl
+                                placeholder="Password"
+                                aria-label="Password"
+                                id="password"
+                                required
+                                value={registrationdata.password}
+                                onChange={handleChange}
+                                type="password"
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
+                <Row className="justify-content-md-center mb-3">
+                    <Col md="6">
+                        <InputGroup>
+                            <InputGroup.Text id="basic-addon1">Phone Number</InputGroup.Text>
+                            <FormControl
+                                placeholder="Phone Number"
+                                aria-label="Phone Number"
+                                id="phoneNumber"
+                                value={registrationdata.phoneNumber}
+                                onChange={handleChange}
+                                type="text"
+                            />
+                        </InputGroup>
+                    </Col>
+                </Row>
+                {userInfo.isLoggedIn && <Row className="justify-content-md-center mb-3">
+                    <Col md="6">
+                    <Form.Select aria-label="Default select example" onChange={handleChange} value={registrationdata.role}>
+                        <option>Select Roles</option>
+                        <option value="PATIENT">Patient</option>
+                        <option value="ADMIN">Admin</option>
+                        <option value="HOSPITAL_STAFF">Hospital Staff</option>
+                    </Form.Select>
+                        </Col>
+                </Row>}
+                
+                <Row className="justify-content-md-center mb-3" >
+                    <Col md="6">
+                        <Form.Group className="mb-3">
+                            <Button variant="primary" type="submit" className="submit-button">
+                                Submit
+                            </Button>
+                        </Form.Group>
+                    </Col>
+                </Row>
+            </Form>
+        </Container>
     )
 }
 export default Signup

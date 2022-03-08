@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import Cookies from 'universal-cookie/es6';
 
 const initialUserState = { email: "", user: {} }
+const cookies = new Cookies();
 
 export const userSlice = createSlice({
     name: 'user',
@@ -34,10 +35,19 @@ export const userSlice = createSlice({
         resetUserData: (state, action) => {
             state.isLoggedIn = false
             state.userData = initialUserState
+        },
+
+        checkCookiesForToken: (state, action) => {
+            const cookies = new Cookies();
+            if(cookies.JWTToken && cookies.emailId){
+                state.isLoggedIn = true;
+                state.jwtToken = cookies.JWTToken;
+                state.userData.email = cookies.emailId;
+            }
         }
     }
 });
 
-export const { setUserData, setUserToken, removeUserData } = userSlice.actions
+export const { setUserData, setUserToken, removeUserData, checkCookiesForToken } = userSlice.actions
 
 export default userSlice.reducer
