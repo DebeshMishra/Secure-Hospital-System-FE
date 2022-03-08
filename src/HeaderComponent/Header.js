@@ -8,79 +8,84 @@ import { useEffect } from 'react';
 import { setUserData, removeUserData, setUserToken } from "../features/user";
 import { getUserByEmailId } from '../services/authentication.service';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
+import { Dropdown } from 'react-bootstrap';
+import './Header.css';
+import { useNavigate } from "react-router-dom";
 
-function Header() {
-  let profile;
-  const userIsLoggedIn = useSelector((state) => state.user.isLoggedIn)
-  const user = useSelector((state) => state.user)
-  const [userDataInfo, setUserDataInfo] = useState(undefined)
+function Header(props) {
+  const [cookies, setCookie, removeCookie] = useCookies(['JWTToken', 'emailId']);
   const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.user);
+  const [isLogoutClicked, setIsLogoutClicked] = useState(false);
+  let navigate = useNavigate();
+  console.log(userInfo);
+
 
   useEffect(() => {
     //if user is logged in
-    if (user.isLoggedIn) {
-      getUserByEmailId(user.userData.email, user.jwtToken).then(response => {
-        console.log(response);
-        // setUserDataInfo(response);
-        dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role } }))
-      })
+    if ((userInfo.isLoggedIn || cookies.JWTToken != undefined)) {
+      if(cookies.emailId){
+        getUserByEmailId(cookies.emailId).then(response => {
+          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response} }))
+        }) 
+      }
+      else if(userInfo.userData.email){
+        getUserByEmailId(userInfo.userData.email).then(response => {
+          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response} }))
+        }) 
+      }
+      
     }
-  }, [userIsLoggedIn]);
+  }, [userInfo.isLoggedIn]);  
 
-
-  const handleLogout = async (e) => {
-    e.preventDefault();
-    // loginAPI(data).then(response => {
-    //   setToken(response.data.token)
-    //   dispatch(setUserData({ userData: { email: data.email } }))
-    // });
-  }
-
-  // useEffect(() => {
-  //   console.log(userDataInfo);
-
-  // }, [userDataInfo]);
-
-  if (userIsLoggedIn) {
-    profile = <Nav>
-      <Container>
-        <NavDropdown title="Options" id="header-options">
-          {
-            AppConstants.profile.map(function (item, i) {
-              return <NavDropdown.Item key={i}>{item}</NavDropdown.Item>
-            })
-          }
-        </NavDropdown>
-      </Container>
-    </Nav>
-  } else {
-    profile = <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to={"/login"}>Sign in</Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to={"/signup"}>Sign up</Link>
-        </li>
-      </ul>
-    </div>
+  const logout = () => {
+    removeCookie("JWTToken");
+    setIsLogoutClicked(true);
+    dispatch(removeUserData());
+    console.log("logging out!!!");
+    navigate('/login');
   }
 
   return (
     <>
-      <Navbar className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/login"}>{AppConstants.appName}</Link>
-          {userIsLoggedIn && <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              {user.userData.role == "ADMIN" && <li className="nav-item" href="users"><Link className="nav-link" to={"/users"}>{AppConstants.users}</Link></li>}
-              {user.userData.role == "ADMIN" && <li className="nav-item" href="logs"><Link className="nav-link" to={"/logs"}>{AppConstants.logs}</Link></li>}
-              {user.userData.role == "PATIENT" && <li className="nav-item" href="appointments"><Link className="nav-link" to={"/appointments"}>{AppConstants.appointments}</Link></li>}
-            </ul>
-          </div>}
+      <Navbar className="navbar-dark bg-dark" sticky="top">
+        <Container>
+          <Navbar.Brand href={"/login"}>{AppConstants.appName}</Navbar.Brand>
+          <Navbar.Collapse id="responsive-navbar-nav">
+          {userInfo.isLoggedIn &&
+            <>
+              <Nav className="ms-auto">
+                {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/users">{AppConstants.users}</Nav.Link></Nav.Item>}
+                {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/logs">{AppConstants.logs}</Nav.Link></Nav.Item>}
+                {userInfo.userData.role == "PATIENT" && <Nav.Item><Nav.Link  className="nav-link" href="/appointments">{AppConstants.appointments}</Nav.Link></Nav.Item>}
 
-          {profile}
-        </div>
+
+                  <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  {userInfo.userData.email}
+                  </Dropdown.Toggle>
+
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="/profile">{AppConstants.profile[0]}</Dropdown.Item>
+                    <Dropdown.Item href="/settings">{AppConstants.profile[1]}</Dropdown.Item>
+                    <Dropdown.Item onClick={logout}>{AppConstants.profile[2]}</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Nav>
+            </>
+          }
+          {
+            !userInfo.isLoggedIn && <>
+              <Nav className="ms-auto" variant="pills" defaultActiveKey="/login">
+              <Nav.Item><Nav.Link to={"/login"}>Sign in</Nav.Link></Nav.Item>
+              <Nav.Item><Nav.Link to={"/signup"}>Sign up</Nav.Link></Nav.Item>
+              </Nav>
+            </>
+
+          }
+          </Navbar.Collapse>
+        </Container>
       </Navbar>
     </>
   );

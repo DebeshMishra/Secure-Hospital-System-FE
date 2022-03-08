@@ -8,6 +8,9 @@ import Signup from './SignUpComponent/Signup';
 import Dashboard from './components/MainDashboard/Dashboard';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
+import ThemeProvider from 'react-bootstrap/ThemeProvider'
+import { useState } from 'react';
+import user from './features/user';
 
 function PrivateRoute() {
   const user = useSelector((state) => state.user)
@@ -18,24 +21,32 @@ function PrivateRoute() {
 }
 
 function App() {
+
+  const [userData, setUserData] = useState({isLoggedIn: false})
+
   return (
     <BrowserRouter>
-      <div className="App">
-        < Header />
-        <div className="outer">
-          <div className="inner">
-            <Routes>
-              {/* <Route path="/" element={<PrivateRoute />} >
+      <ThemeProvider
+        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+      >
+        <div className="App">
+          < Header userData={userData} setUserData={setUserData}/>
+          <div className="outer">
+            <div className="inner">
+              <Routes>
+                {/* <Route path="/" element={<PrivateRoute />} >
                 <Route path="/dashboard" element={<Dashboard />} />
               </Route> */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-            </Routes>
+                <Route path='/' element={<Login userData={userData} setUserData={setUserData}/>} />
+                <Route path="/login" element={<Login userData={userData} setUserData={setUserData}/>} />
+                <Route path="/signup" element={<Signup userData={userData} setUserData={setUserData}/>} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+              </Routes>
+            </div>
           </div>
         </div>
-      </div>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }
