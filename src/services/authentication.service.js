@@ -1,33 +1,10 @@
-import { Environments } from '../environment';
+
 const axios = require('axios');
 
-// function login(data) {
-
-//     return axios.post('http://localhost:8080/api/auth/login', { 'email': 'spapani@asu.edu', 'password': 'Charan@123' })
-//         .then(function (response) {
-//             console.log(response);
-//             // store user details and jwt token in local storage to keep user logged in between page refreshes
-//             window.localStorage.setItem('user', JSON.stringify(response));
-//             return response;
-//         })
-//         .catch(function (error) {
-//             console.log(error);
-//         });
-
-//     // return fetch('http://localhost:8080/api/auth/login', {
-//     //     method: 'POST',
-//     //     headers: { 'Content-Type': 'application/json' },
-//     //     body: JSON.stringify({'email' : 'spapani@asu.edu', 'password': 'Charan@123'})
-//     // })
-//     //     .then(user => {
-//     //         // store user details and jwt token in local storage to keep user logged in between page refreshes
-//     //         window.localStorage.setItem('user', JSON.stringify(user));
-//     //         return user;
-//     //     });
-// }
+const SERVER_URL = "http://localhost:8080";
 
 export const loginAPI = async (data) => {
-    const response = await axios.post('http://127.0.0.1:8080/api/auth/login', data, {
+    const response = await axios.post(SERVER_URL + '/api/auth/login', data, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
@@ -39,13 +16,24 @@ export const loginAPI = async (data) => {
 
 export const getUserByEmailId = async (data, jwtToken) => {
     console.log(data)
-    const response = await axios.get('http://127.0.0.1:8080/api/users/getUserByEmailId?emailId=' + data, {
+    const response = await axios.get(SERVER_URL + '/api/users/getUserByEmailId?emailId=' + data, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
         },
     })
     return response.data;
+}
+
+
+export const registerUser = async (data) => {
+    const response = await axios.post(SERVER_URL + '/api/auth/register', data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response;
 }
 
 // function logout() {

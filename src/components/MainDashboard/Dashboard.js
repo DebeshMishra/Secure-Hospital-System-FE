@@ -13,7 +13,7 @@ const Dashboard = () => {
     <>
       <div className="jumbotron">
         <h1>Welcome</h1>
-        <h3>{userInfo.userData.user.firstName}</h3>
+        {/* <h3>{userInfo.userData.user.firstName}</h3> */}
       </div>
     </>
 
