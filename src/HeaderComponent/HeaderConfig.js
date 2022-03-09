@@ -2,13 +2,17 @@ export const navLinks = {
 	"roles": ["ADMIN", "PATIENT"],
 	"ADMIN": {
 		"name": "Administrator",
-		"availableLinks": ["users", "logs"]
+		"availableLinks": ["dashboard", "users", "logs"]
 	},
 	"PATIENT": {
 		"name": "Patient",
-		"availableLinks": ["appointment", "diagnosis", "viewUserById"]
+		"availableLinks": ["dashboard", "appointment", "diagnosis", "viewUserById"]
 	},
 	"links": {
+		"dashboard": {
+			"name": "Dashboard",
+			"url": "/dashboard"
+		},
 		"users": {
 			"name": "Users",
 			"url": "/users"

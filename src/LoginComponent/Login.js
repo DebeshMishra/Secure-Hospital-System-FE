@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { loginAPI } from "../services/authentication.service";
-import { setUserData, removeUserData, setUserToken, checkCookiesForToken } from "../features/user";
+import { setUserData, removeUserData, setAllData, setUserToken, checkCookiesForToken } from "../features/user";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
@@ -18,12 +18,11 @@ const Login = (props) => {
 
     // on click of submit button, store in cookie - email and token
     const handleSubmit = async (e) => {
-        dispatch(removeUserData());
         e.preventDefault();
+        dispatch(removeUserData());
         loginAPI(data).then(response => {
-            dispatch(setUserData({ userData: { email: data.email, user: {} } }));
-            dispatch(setUserToken({ jwtToken: response.data.token }));
-            navigate('/dashboard')
+            dispatch(setAllData({ jwtToken: response.data.token, userData: { email: data.email, user: {} } }));
+            navigate('/dashboard');
         });
     }
 

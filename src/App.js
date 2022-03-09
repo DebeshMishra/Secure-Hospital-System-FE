@@ -96,7 +96,7 @@ function App() {
             <div className="inner">
               <Routes>
                 {routes.map((item, index) => {
-                    return <PrivateRoute key={index} exact path="/dashboard" element={<Dashboard />}/>
+                    return <PrivateRoute key={index} exact path={item.path} element={item.component} />
                 })}
                 <ProtectRouteLogin exact path='/' element={<Login />} />
                 <ProtectRouteLogin exact path="/login" element={<Login />} />
