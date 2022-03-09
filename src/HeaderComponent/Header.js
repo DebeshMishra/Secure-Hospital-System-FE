@@ -41,8 +41,9 @@ function Header(props) {
   }, [userInfo.isLoggedIn]);
 
   const logout = () => {
-    // removeCookie("JWTToken");
-    // removeCookie("emailId");
+    // removing the local cookiee state
+    removeCookie("JWTToken");
+    removeCookie("emailId");
     // setIsLogoutClicked(true);
     dispatch(removeUserData());
     console.log("logging out!!!");
