@@ -4,7 +4,7 @@ import { AppConstants } from '../AppConstants';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { setUserData, removeUserData, setUserToken, checkCookiesForToken } from "../features/user";
+import { setUserData, removeUserData,setAllData, setUserToken, checkCookiesForToken } from "../features/user";
 import { getUserByEmailId } from '../services/authentication.service';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
@@ -18,21 +18,22 @@ function Header(props) {
   const userInfo = useSelector((state) => state.user);
   const [isLogoutClicked, setIsLogoutClicked] = useState(false);
   let navigate = useNavigate();
-  console.log(userInfo);
 
 
   useEffect(() => {
     //if user is logged in
     dispatch(checkCookiesForToken());
+    console.log(userInfo);
+
     if ((userInfo.isLoggedIn || cookies.JWTToken != undefined)) {
       if (cookies.emailId) {
         getUserByEmailId(cookies.emailId).then(response => {
-          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response } }))
+          dispatch(setAllData({jwtToken:cookies.JWTToken, userData: { email: response.email, role: response.roles[0].role, user: response } }))
         })
       }
       else if (userInfo.userData.email) {
         getUserByEmailId(userInfo.userData.email).then(response => {
-          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response } }))
+          dispatch(setUserData({ jwtToken: userInfo.JWTToken, userData: { email: response.email, role: response.roles[0].role, user: response } }))
         })
       }
 
@@ -40,12 +41,16 @@ function Header(props) {
   }, [userInfo.isLoggedIn]);
 
   const logout = () => {
-    removeCookie("JWTToken");
-    removeCookie("emailId");
-    setIsLogoutClicked(true);
+    // removeCookie("JWTToken");
+    // removeCookie("emailId");
+    // setIsLogoutClicked(true);
     dispatch(removeUserData());
     console.log("logging out!!!");
     navigate('/login');
+  }
+
+  const profileNav = () => {
+    navigate('profile');
   }
 
   return (
@@ -69,7 +74,7 @@ function Header(props) {
                     </Dropdown.Toggle>
 
                     <Dropdown.Menu>
-                      <Dropdown.Item href="/profile">{AppConstants.profile[0]}</Dropdown.Item>
+                      <Dropdown.Item onClick={profileNav}>{AppConstants.profile[0]}</Dropdown.Item>
                       <Dropdown.Item href="/settings">{AppConstants.profile[1]}</Dropdown.Item>
                       <Dropdown.Item onClick={logout}>{AppConstants.profile[2]}</Dropdown.Item>
                     </Dropdown.Menu>

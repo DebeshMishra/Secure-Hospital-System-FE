@@ -25,10 +25,11 @@ function Account() {
       <Row className="justify-content-md-center account-header">
         <h2>Account Details</h2>
       </Row>
-      <Row className="justify-content-md-center">
-        <Col md="auto">
-          <Form>
-            <InputGroup className="mb-3">
+      <Form>
+        <Row className="justify-content-md-center mb-3">
+          <Col md="4">
+
+            <InputGroup>
               <InputGroup.Text id="basic-addon1">First Name</InputGroup.Text>
               <FormControl
                 readOnly
@@ -39,7 +40,11 @@ function Account() {
                 type="text"
               />
             </InputGroup>
-            <InputGroup className="mb-3">
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center mb-3">
+          <Col md="4">
+            <InputGroup>
               <InputGroup.Text id="basic-addon1">Last Name</InputGroup.Text>
               <FormControl
                 readOnly
@@ -50,7 +55,11 @@ function Account() {
                 type="text"
               />
             </InputGroup>
-            <InputGroup className="mb-3">
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center mb-3">
+          <Col md="4">
+            <InputGroup >
               <InputGroup.Text id="basic-addon1">Email</InputGroup.Text>
               <FormControl
                 readOnly
@@ -61,7 +70,11 @@ function Account() {
                 type="email"
               />
             </InputGroup>
-            <InputGroup className="mb-3">
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center mb-3">
+          <Col md="4">
+            <InputGroup>
               <InputGroup.Text id="basic-addon1">Phone</InputGroup.Text>
               <FormControl
                 readOnly
@@ -72,14 +85,19 @@ function Account() {
                 type="number"
               />
             </InputGroup>
-            <Form.Group className="mb-3">
-              <Button variant="primary" onClick={showForm}>
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center mb-3">
+          <Col md="4">
+            <Form.Group>
+              <Button className="EditButton" variant="primary" onClick={showForm}>
                 Edit
               </Button>
             </Form.Group>
-          </Form>
-        </Col>
-      </Row>
+
+          </Col>
+        </Row>
+      </Form>
     </Container>
   );
 }

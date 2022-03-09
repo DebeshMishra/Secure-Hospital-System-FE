@@ -9,45 +9,49 @@ export const userSlice = createSlice({
     initialState: { isLoggedIn: false, userData: initialUserState, jwtToken: undefined },
     reducers: {
         setUserToken: (state, action) => {
-            const cookies = new Cookies();
             cookies.set('JWTToken', action.payload.jwtToken);
-            state.jwtToken = action.payload.jwtToken
+            state.jwtToken = action.payload.jwtToken;
             state.isLoggedIn = true;
         },
 
         setUserData: (state, action) => {
-            const cookies = new Cookies();
             cookies.set('emailId', action.payload.userData.email);
-            state.userData = action.payload.userData
+            state.userData = action.payload.userData;
             state.isLoggedIn = true;
             
         },
 
+        setAllData: (state, action) => {
+            cookies.set('emailId', action.payload.userData.email);
+            cookies.set('JWTToken', action.payload.jwtToken);
+            state.userData = action.payload.userData;
+            state.jwtToken = action.payload.jwtToken;
+            state.isLoggedIn = true;
+        },
+
         removeUserData: (state, action) => {
-            state.isLoggedIn = false
-            state.userData = initialUserState
-            state.jwtToken = undefined;
-            const cookies = new Cookies();
             cookies.remove('emailId');
             cookies.remove('JWTToken');
+            state.userData = initialUserState
+            state.jwtToken = undefined;
+            state.isLoggedIn = false;
         },
 
         resetUserData: (state, action) => {
-            state.isLoggedIn = false
-            state.userData = initialUserState
+            state.userData = initialUserState;
+            state.isLoggedIn = false;
         },
 
         checkCookiesForToken: (state, action) => {
-            const cookies = new Cookies();
             if(cookies.JWTToken && cookies.emailId){
-                state.isLoggedIn = true;
                 state.jwtToken = cookies.JWTToken;
                 state.userData.email = cookies.emailId;
+                state.isLoggedIn = true;
             }
         }
     }
 });
 
-export const { setUserData, setUserToken, removeUserData, checkCookiesForToken } = userSlice.actions
+export const { setUserData,setAllData, setUserToken, removeUserData, checkCookiesForToken } = userSlice.actions
 
 export default userSlice.reducer

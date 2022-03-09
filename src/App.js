@@ -1,36 +1,22 @@
-import "./App.css";
-import Header from "./HeaderComponent/Header";
-import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  Outlet,
-} from "react-router-dom";
-import Login from "./LoginComponent/Login";
-import Signup from "./SignUpComponent/Signup";
-import Dashboard from "./components/MainDashboard/Dashboard";
-import Account from "./components/Account/Account";
-import EditAccount from "./components/Account/EditAccount";
-import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router";
-import ThemeProvider from "react-bootstrap/ThemeProvider";
-import { useState } from "react";
-import user from "./features/user";
 
-function PrivateRoute() {
-  const user = useSelector((state) => state.user);
-  const location = useLocation();
-  return user.isLoggedIn ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/login" replace state={{ from: location }} />
-  );
-}
+import './App.css';
+import Header from './HeaderComponent/Header';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
+import Login from './LoginComponent/Login'
+import Signup from './SignUpComponent/Signup';
+import Dashboard from './components/MainDashboard/Dashboard';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router';
+import ThemeProvider from 'react-bootstrap/ThemeProvider'
+import { useState } from 'react';
+import { routes } from './RouteConfig';
+import { history } from './helpers/history';
+
 
 function App() {
-  const [userData, setUserData] = useState({ isLoggedIn: false });
+
+  const [userData, setUserData] = useState({isLoggedIn: false})
 
   // const ProtectedRoute = ({component: Component, ...rest}) => {
   //   const user = useSelector((state) => state.user)
@@ -68,14 +54,14 @@ function App() {
   // }
 
   const ProtectRouteLogin = (props) => {
-    const user = useSelector((state) => state.user);
-
-    const route = !user.isLoggedIn ? (
+    const user = useSelector((state) => state.user)
+  
+    const route =  !user.isLoggedIn ? (
       <Route {...props} />
     ) : (
       <Navigate
         to={{
-          pathname: "/dashboard",
+          pathname: "/dashboard"
         }}
       />
     );
@@ -84,45 +70,44 @@ function App() {
   };
 
   const PrivateRoute = (props) => {
-    const user = useSelector((state) => state.user);
-
-    const route = user.isLoggedIn ? (
+    const user = useSelector((state) => state.user)
+  
+    const route =  user.isLoggedIn ? (
       <Route {...props} />
     ) : (
       <Navigate
         to={{
-          pathname: "/login",
+          pathname: "/login"
         }}
       />
     );
     console.log(route);
     return route;
-  };
+  }
 
   return (
     <BrowserRouter>
       <ThemeProvider
-        breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}>
+        breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+      >
         <div className="App">
-          <Header userData={userData} setUserData={setUserData} />
+          < Header userData={userData} setUserData={setUserData}/>
           <div className="outer">
             <div className="inner">
               <Routes>
-                <Route path="/account" element={<Account />} />
-                <Route path="/editAccount" element={<EditAccount />} />
-                {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 {routes.map((item, index) => {
-                    return <PrivateRoute key={index} exact path="/dashboard" element={<Dashboard />}/>
+                    return <PrivateRoute key={index} exact path={item.path} element={item.component} />
                 })}
                 <ProtectRouteLogin exact path='/' element={<Login />} />
                 <ProtectRouteLogin exact path="/login" element={<Login />} />
                 <ProtectRouteLogin exact path="/signup" element={<Signup />} />
+                {/* <ProtectedRoute exact path="/dashboard" element={<Dashboard />} /> */}
               </Routes>
             </div>
           </div>
         </div>
       </ThemeProvider>
     </BrowserRouter>
-  );
+  )
 }
 export default App;
