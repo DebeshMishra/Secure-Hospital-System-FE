@@ -108,31 +108,15 @@ function App() {
           <div className="outer">
             <div className="inner">
               <Routes>
-                {/* <Route path="/" element={<PrivateRoute />} >
-                <Route path="/dashboard" element={<Dashboard />} />
-              </Route> */}
-                <Route
-                  path="/"
-                  element={
-                    <Login userData={userData} setUserData={setUserData} />
-                  }
-                />
-                <Route
-                  path="/login"
-                  element={
-                    <Login userData={userData} setUserData={setUserData} />
-                  }
-                />
-                <Route
-                  path="/signup"
-                  element={
-                    <Signup userData={userData} setUserData={setUserData} />
-                  }
-                />
-                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/account" element={<Account />} />
                 <Route path="/editAccount" element={<EditAccount />} />
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                {routes.map((item, index) => {
+                    return <PrivateRoute key={index} exact path="/dashboard" element={<Dashboard />}/>
+                })}
+                <ProtectRouteLogin exact path='/' element={<Login />} />
+                <ProtectRouteLogin exact path="/login" element={<Login />} />
+                <ProtectRouteLogin exact path="/signup" element={<Signup />} />
               </Routes>
             </div>
           </div>
