@@ -31,7 +31,7 @@ function EditAccount() {
 
   let navigate = useNavigate();
   const showForm = () => {
-    navigate("/account");
+    navigate("/profile");
   };
 
   return (
