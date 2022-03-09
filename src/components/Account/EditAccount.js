@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import {
+  Form,
+  Row,
+  Container,
+  Col,
+  InputGroup,
+  FormControl,
+  Button,
+} from "react-bootstrap";
 
 import "./styles.css";
 
@@ -26,63 +35,70 @@ function EditAccount() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h3>Edit Details</h3>
-        <div className="form-group">
-          <label>First name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="firstname"
-            value={data.firstname}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Last name</label>
-          <input
-            type="text"
-            className="form-control"
-            id="lastname"
-            value={data.lastname}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            value={data.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="form-group">
-          <label>Phone</label>
-          <input
-            type="text"
-            className="form-control"
-            id="phone"
-            value={data.phone}
-            onChange={handleChange}
-          />
-        </div>
-        <br />
-        <div className="button-section">
-          <button type="submit" className="btn btn-dark btn-lg btn-block">
-            Submit
-          </button>
-          <button
-            type="button"
-            className="btn btn-dark btn-lg btn-block"
-            onClick={showForm}>
-            Cancel
-          </button>
-        </div>
-      </form>
-    </div>
+    <Container className="account">
+      <Row className="justify-content-md-center account-header">
+        <h2>Edit Account</h2>
+      </Row>
+      <Row className="justify-content-md-center">
+        <Col md="auto">
+          <Form onSubmit={handleSubmit}>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">First Name</InputGroup.Text>
+              <FormControl
+                placeholder="First Name"
+                aria-label="First Name"
+                id="firstName"
+                value={data.firstName}
+                onChange={handleChange}
+                type="text"
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">Last Name</InputGroup.Text>
+              <FormControl
+                placeholder="Last Name"
+                aria-label="Last Name"
+                id="lastName"
+                value={data.lastName}
+                onChange={handleChange}
+                type="text"
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">Email</InputGroup.Text>
+              <FormControl
+                placeholder="Email Address"
+                aria-label="Email Address"
+                id="email"
+                value={data.email}
+                onChange={handleChange}
+                type="email"
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">Phone</InputGroup.Text>
+              <FormControl
+                placeholder="Phone"
+                aria-label="Phone"
+                id="phone"
+                value={data.phone}
+                onChange={handleChange}
+                type="number"
+              />
+            </InputGroup>
+            <Form.Group className="mb-3">
+              <Button variant="primary">Submit</Button>
+              <Button
+                type="button"
+                className="cancel-button"
+                onClick={showForm}>
+                Cancel
+              </Button>
+            </Form.Group>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
