@@ -1,6 +1,5 @@
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap'
-import HeaderConfig from "./HeaderConfig.json"
-import HeaderData from "./HeaderImport.json"
+import { navLinks } from './HeaderConfig.js';
 import { AppConstants } from '../AppConstants';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -42,6 +41,7 @@ function Header(props) {
 
   const logout = () => {
     removeCookie("JWTToken");
+    removeCookie("emailId");
     setIsLogoutClicked(true);
     dispatch(removeUserData());
     console.log("logging out!!!");
@@ -57,9 +57,12 @@ function Header(props) {
             {userInfo.isLoggedIn &&
               <>
                 <Nav className="ms-auto">
-                  {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/users">{AppConstants.users}</Nav.Link></Nav.Item>}
+                  {userInfo.userData.role && navLinks[userInfo.userData.role].availableLinks.map((item, index) => {
+                    return <Nav.Item key={index}><Nav.Link className="nav-link" href={navLinks.links[item].url}>{navLinks.links[item].name}</Nav.Link></Nav.Item>
+                  })}
+                  {/* {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/users">{AppConstants.users}</Nav.Link></Nav.Item>}
                   {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/logs">{AppConstants.logs}</Nav.Link></Nav.Item>}
-                  {userInfo.userData.role == "PATIENT" && <Nav.Item><Nav.Link className="nav-link" href="/appointments">{AppConstants.appointments}</Nav.Link></Nav.Item>}
+                  {userInfo.userData.role == "PATIENT" && <Nav.Item><Nav.Link className="nav-link" href="/appointments">{AppConstants.appointments}</Nav.Link></Nav.Item>} */}
                   <Dropdown>
                     <Dropdown.Toggle variant="success" id="dropdown-basic">
                       {userInfo.userData.email}
