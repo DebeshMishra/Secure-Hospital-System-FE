@@ -1,11 +1,10 @@
 
 import './App.css';
-import Header from './HeaderComponent/Header';
+import Header from './components/General/HeaderComponent/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom";
-import Login from './LoginComponent/Login'
-import Signup from './SignUpComponent/Signup';
-import Dashboard from './components/MainDashboard/Dashboard';
+import Login from './components/General/LoginComponent/Login'
+import Signup from './components/General/SignUpComponent/Signup';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router';
 import ThemeProvider from 'react-bootstrap/ThemeProvider'
@@ -16,7 +15,7 @@ import { history } from './helpers/history';
 
 function App() {
 
-  const [userData, setUserData] = useState({isLoggedIn: false})
+  const [userData, setUserData] = useState({isLoggedIn: false}) 
 
   // const ProtectedRoute = ({component: Component, ...rest}) => {
   //   const user = useSelector((state) => state.user)

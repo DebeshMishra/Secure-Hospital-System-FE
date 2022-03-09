@@ -1,8 +1,8 @@
 
 import "./signup.css"
 import React, { useEffect, useState } from "react";
-import { loginAPI, registerUser } from "../services/authentication.service";
-import { setUserData, removeUserData, setUserToken } from "../features/user";
+import { loginAPI, registerUser } from "../../..//services/authentication.service";
+import { setUserData, removeUserData, setUserToken } from "../../../features/user";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
@@ -11,7 +11,7 @@ import { Form, Row, Container, Col, InputGroup, FormControl, Button, DropdownBut
 import { Navigate } from "react-router";
 
 const Signup = (props) => {
-    const [registrationdata, setRegistrationData] = useState({role: "PATIENT"})
+    const [registrationdata, setRegistrationData] = useState({ role: "PATIENT" })
     const [cookies, setCookie, removeCookie] = useCookies(['JWTToken', "emailId"]);
     const userInfo = useSelector((state) => state.user);
 
@@ -21,7 +21,7 @@ const Signup = (props) => {
         registrationdata.roles = [registrationdata.role];
         registerUser(registrationdata).then(response => {
             console.log(response);
-            if(response.status == 200){
+            if (response.status == 200) {
                 alert("Successfully registered!!! please view your email to confirm your account.")
                 Navigate('/login');
             }
@@ -125,15 +125,15 @@ const Signup = (props) => {
                 </Row>
                 {userInfo.isLoggedIn && <Row className="justify-content-md-center mb-3">
                     <Col md="6">
-                    <Form.Select aria-label="Default select example" onChange={handleChange} value={registrationdata.role}>
-                        <option>Select Roles</option>
-                        <option value="PATIENT">Patient</option>
-                        <option value="ADMIN">Admin</option>
-                        <option value="HOSPITAL_STAFF">Hospital Staff</option>
-                    </Form.Select>
-                        </Col>
+                        <Form.Select aria-label="Default select example" onChange={handleChange} value={registrationdata.role}>
+                            <option>Select Roles</option>
+                            <option value="PATIENT">Patient</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="HOSPITAL_STAFF">Hospital Staff</option>
+                        </Form.Select>
+                    </Col>
                 </Row>}
-                
+
                 <Row className="justify-content-md-center mb-3" >
                     <Col md="6">
                         <Form.Group className="mb-3">

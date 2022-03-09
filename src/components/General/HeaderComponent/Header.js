@@ -1,11 +1,11 @@
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap'
-import { navLinks } from './HeaderConfig.js';
-import { AppConstants } from '../AppConstants';
+import { navLinks } from '../../../helpers/HeaderConfig';
+import { AppConstants } from '../../../AppConstants';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { setUserData, removeUserData,setAllData, setUserToken, checkCookiesForToken } from "../features/user";
-import { getUserByEmailId } from '../services/authentication.service';
+import { setUserData, removeUserData, setAllData, setUserToken, checkCookiesForToken } from "../../../features/user";
+import { getUserByEmailId } from '../../../services/authentication.service';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Dropdown } from 'react-bootstrap';
@@ -28,7 +28,7 @@ function Header(props) {
     if ((userInfo.isLoggedIn || cookies.JWTToken != undefined)) {
       if (cookies.emailId) {
         getUserByEmailId(cookies.emailId).then(response => {
-          dispatch(setAllData({jwtToken:cookies.JWTToken, userData: { email: response.email, role: response.roles[0].role, user: response } }))
+          dispatch(setAllData({ jwtToken: cookies.JWTToken, userData: { email: response.email, role: response.roles[0].role, user: response } }))
         })
       }
       else if (userInfo.userData.email) {
