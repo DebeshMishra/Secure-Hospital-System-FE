@@ -16,7 +16,7 @@ const cookies = new Cookies();
 axios.interceptors.request.use((request) => {
   // Do something before request is sent
   console.log(request);
-  if(!request.url.includes('api/auth/login') || !request.url.includes('api/auth/login')){
+  if(!(request.url.includes('api/auth/login') || request.url.includes('api/auth/register'))){
     request.headers.Authorization = 'Bearer ' + cookies.get('JWTToken');
   }
   return request;

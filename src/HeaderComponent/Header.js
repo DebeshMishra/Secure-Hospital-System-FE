@@ -5,7 +5,7 @@ import { AppConstants } from '../AppConstants';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { setUserData, removeUserData, setUserToken } from "../features/user";
+import { setUserData, removeUserData, setUserToken, checkCookiesForToken } from "../features/user";
 import { getUserByEmailId } from '../services/authentication.service';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
@@ -24,20 +24,21 @@ function Header(props) {
 
   useEffect(() => {
     //if user is logged in
+    dispatch(checkCookiesForToken());
     if ((userInfo.isLoggedIn || cookies.JWTToken != undefined)) {
-      if(cookies.emailId){
+      if (cookies.emailId) {
         getUserByEmailId(cookies.emailId).then(response => {
-          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response} }))
-        }) 
+          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response } }))
+        })
       }
-      else if(userInfo.userData.email){
+      else if (userInfo.userData.email) {
         getUserByEmailId(userInfo.userData.email).then(response => {
-          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response} }))
-        }) 
+          dispatch(setUserData({ userData: { email: response.email, role: response.roles[0].role, user: response } }))
+        })
       }
-      
+
     }
-  }, [userInfo.isLoggedIn]);  
+  }, [userInfo.isLoggedIn]);
 
   const logout = () => {
     removeCookie("JWTToken");
@@ -53,37 +54,34 @@ function Header(props) {
         <Container>
           <Navbar.Brand href={"/login"}>{AppConstants.appName}</Navbar.Brand>
           <Navbar.Collapse id="responsive-navbar-nav">
-          {userInfo.isLoggedIn &&
-            <>
-              <Nav className="ms-auto">
-                {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/users">{AppConstants.users}</Nav.Link></Nav.Item>}
-                {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/logs">{AppConstants.logs}</Nav.Link></Nav.Item>}
-                {userInfo.userData.role == "PATIENT" && <Nav.Item><Nav.Link  className="nav-link" href="/appointments">{AppConstants.appointments}</Nav.Link></Nav.Item>}
-
-
+            {userInfo.isLoggedIn &&
+              <>
+                <Nav className="ms-auto">
+                  {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/users">{AppConstants.users}</Nav.Link></Nav.Item>}
+                  {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/logs">{AppConstants.logs}</Nav.Link></Nav.Item>}
+                  {userInfo.userData.role == "PATIENT" && <Nav.Item><Nav.Link className="nav-link" href="/appointments">{AppConstants.appointments}</Nav.Link></Nav.Item>}
                   <Dropdown>
-                  <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  {userInfo.userData.email}
-                  </Dropdown.Toggle>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      {userInfo.userData.email}
+                    </Dropdown.Toggle>
 
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="/profile">{AppConstants.profile[0]}</Dropdown.Item>
-                    <Dropdown.Item href="/settings">{AppConstants.profile[1]}</Dropdown.Item>
-                    <Dropdown.Item onClick={logout}>{AppConstants.profile[2]}</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </Nav>
-            </>
-          }
-          {
-            !userInfo.isLoggedIn && <>
-              <Nav className="ms-auto" variant="pills" defaultActiveKey="/login">
-              <Nav.Item><Nav.Link to={"/login"}>Sign in</Nav.Link></Nav.Item>
-              <Nav.Item><Nav.Link to={"/signup"}>Sign up</Nav.Link></Nav.Item>
-              </Nav>
-            </>
-
-          }
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/profile">{AppConstants.profile[0]}</Dropdown.Item>
+                      <Dropdown.Item href="/settings">{AppConstants.profile[1]}</Dropdown.Item>
+                      <Dropdown.Item onClick={logout}>{AppConstants.profile[2]}</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Nav>
+              </>
+            }
+            {
+              !userInfo.isLoggedIn && <>
+                <Nav className="ms-auto" defaultActiveKey="/login">
+                  <Nav.Item><Nav.Link href="/login">Sign in</Nav.Link></Nav.Item>
+                  <Nav.Item><Nav.Link href="/signup">Sign up</Nav.Link></Nav.Item>
+                </Nav>
+              </>
+            }
           </Navbar.Collapse>
         </Container>
       </Navbar>

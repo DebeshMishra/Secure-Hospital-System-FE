@@ -32,6 +32,73 @@ function PrivateRoute() {
 function App() {
   const [userData, setUserData] = useState({ isLoggedIn: false });
 
+  // const ProtectedRoute = ({component: Component, ...rest}) => {
+  //   const user = useSelector((state) => state.user)
+  //   const location = useLocation();
+  //   return (
+  //     <Route
+  //       {...rest}
+  //       render={props => {
+  //         if(user.isLoggedIn){
+  //           return <component {...props}/>
+  //         }else{
+  //           return <Navigate to={
+  //             {
+  //               pathname: "/login",
+  //               state: {from: props.location}
+  //             }
+  //           }/>
+  //         }
+  //       }}
+  //     />
+  //   )
+  // }
+
+  // function ProtectedRoute({ component, ...restOfProps }) {
+  //   const user = useSelector((state) => state.user)
+  //   console.log(component, restOfProps);
+  //   return (
+  //     <Route
+  //       {...restOfProps}
+  //       render={(props) =>
+  //         user.isLoggedIn ? <component {...props} /> : <Navigate to="/login" />
+  //       }
+  //     />
+  //   );
+  // }
+
+  const ProtectRouteLogin = (props) => {
+    const user = useSelector((state) => state.user);
+
+    const route = !user.isLoggedIn ? (
+      <Route {...props} />
+    ) : (
+      <Navigate
+        to={{
+          pathname: "/dashboard",
+        }}
+      />
+    );
+    console.log(route);
+    return route;
+  };
+
+  const PrivateRoute = (props) => {
+    const user = useSelector((state) => state.user);
+
+    const route = user.isLoggedIn ? (
+      <Route {...props} />
+    ) : (
+      <Navigate
+        to={{
+          pathname: "/login",
+        }}
+      />
+    );
+    console.log(route);
+    return route;
+  };
+
   return (
     <BrowserRouter>
       <ThemeProvider
