@@ -2,11 +2,30 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./Users.css";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import Table from "../../../helpers/table.js";
+import Table from "../../tables/table.js";
 import { getUsersByQuery } from "../../../services/users.service.js";
 
+
+
 const Users = (props) => {
-    const [data, setData] = useState({ query: "" })
+    const [data, setData] = useState({ query: "" });
+    const [rowData, setRowData] = useState("");
+
+    const editRowOnClick = (rowInfo) =>{
+        setRowData(rowInfo)
+        //console.log("edit clicked")
+        //console.log(row)
+        //console.log(rowData)
+
+    }
+
+    const deleteRowOnClick = (rowInfo) =>{
+        setRowData(rowInfo)
+        //console.log("edit clicked")
+        //console.log(row)
+        //console.log(rowData)
+        
+    }
 
     const columns = useMemo(() => [
         {
@@ -23,7 +42,19 @@ const Users = (props) => {
         },
         {
             Header: 'Manage Users',
-            accessor: 'manage'
+            accessor: 'manage',
+            Cell: ({ cell }) => (
+                <div>
+                    <button id="edit" onClick={()=>editRowOnClick(cell.row.values)}>
+                    Edit
+                    </button>
+                    <button id="delete" onClick={()=>deleteRowOnClick(cell.row.values)}>
+                    Delete
+                    </button>
+                </div>
+                
+                
+              )
         }
     ])
     //let tableData = useState([]) 
@@ -33,6 +64,7 @@ const Users = (props) => {
             lastName: 'Parrish',
             firstName: 'Kim',
             email: 'kparrish@asu.edu',
+            
         },
         {
             lastName: 'Smith',
