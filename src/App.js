@@ -98,7 +98,7 @@ function App() {
                 {routes.map((item, index) => {
                     return <PrivateRoute key={index} exact path="/dashboard" element={<Dashboard />}/>
                 })}
-                <ProtectRouteLogin exact path='/' element={<Dashboard />} />
+                <ProtectRouteLogin exact path='/' element={<Login />} />
                 <ProtectRouteLogin exact path="/login" element={<Login />} />
                 <ProtectRouteLogin exact path="/signup" element={<Signup />} />
                 {/* <ProtectedRoute exact path="/dashboard" element={<Dashboard />} /> */}
