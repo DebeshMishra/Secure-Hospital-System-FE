@@ -3,6 +3,7 @@ import Login from "./components/General/LoginComponent/Login";
 import Signup from "./components/General/SignUpComponent/Signup";
 import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
+import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
 
 
 export const routes = [
@@ -17,5 +18,9 @@ export const routes = [
   {
     path : "/editAccount",
     component: <EditAccount/>
+  },
+  {
+    path: "/diagnosis",
+    component: <Diagnosis />
   }
 ];

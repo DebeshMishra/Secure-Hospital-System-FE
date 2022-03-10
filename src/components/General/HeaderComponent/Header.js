@@ -64,7 +64,7 @@ function Header(props) {
               <>
                 <Nav className="ms-auto">
                   {userInfo.userData.role && navLinks[userInfo.userData.role].availableLinks.map((item, index) => {
-                    return <Nav.Item key={index}><Nav.Link className="nav-link" href={navLinks.links[item].url}>{navLinks.links[item].name}</Nav.Link></Nav.Item>
+                    return <Nav.Item key={index}><Nav.Link className="nav-link" onClick={() => navigate(navLinks.links[item].url)}>{navLinks.links[item].name}</Nav.Link></Nav.Item>
                   })}
                   {/* {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/users">{AppConstants.users}</Nav.Link></Nav.Item>}
                   {userInfo.userData.role == "ADMIN" && <Nav.Item><Nav.Link className="nav-link" href="/logs">{AppConstants.logs}</Nav.Link></Nav.Item>}

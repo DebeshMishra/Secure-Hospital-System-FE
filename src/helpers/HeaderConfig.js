@@ -27,11 +27,11 @@ export const navLinks = {
 		},
 		"diagnosis": {
 			"name": "Diagnosis",
-			"url": "diagnosis"
+			"url": "/diagnosis"
 		},
 		"viewUserById": {
 			"name": "View user",
-			"url": "ViewUserById"
+			"url": "/viewUserById"
 		}
     }
 }
