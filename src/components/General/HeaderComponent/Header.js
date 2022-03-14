@@ -11,6 +11,7 @@ import { useCookies } from 'react-cookie';
 import { Dropdown } from 'react-bootstrap';
 import './Header.css';
 import { useNavigate } from "react-router-dom";
+import React, { Component }  from 'react';
 
 function Header(props) {
   const [cookies, setCookie, removeCookie] = useCookies(['JWTToken', 'emailId']);

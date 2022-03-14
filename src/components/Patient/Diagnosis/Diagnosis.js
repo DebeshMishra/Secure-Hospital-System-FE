@@ -4,7 +4,7 @@ import { Accordion, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import '../Diagnosis/Diagnosis.css';
 import { Form, Button, InputGroup, FormControl, Row, Col } from "react-bootstrap";
-
+import React, { Component }  from 'react';
 function Diagnosis() {
     const userInfo = useSelector((state) => state.user);
 

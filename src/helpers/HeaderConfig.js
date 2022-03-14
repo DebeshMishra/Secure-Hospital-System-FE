@@ -6,7 +6,11 @@ export const navLinks = {
 	},
 	"PATIENT": {
 		"name": "Patient",
-		"availableLinks": ["dashboard", "appointment", "diagnosis", "viewUserById"]
+		"availableLinks": ["dashboard", "patient_appointment", "diagnosis", "viewUserById"]
+	},
+	"HOSPITAL_STAFF": {
+		"name": "Hospital Staff",
+		"availableLinks": ["dashboard", "hs_appointments"]
 	},
 	"links": {
 		"dashboard": {
@@ -21,7 +25,7 @@ export const navLinks = {
 			"name": "Logs",
 			"url": "/logs"
 		},
-		"appointment": {
+		"patient_appointment": {
 			"name": "Appointments",
 			"url": "/appointments"
 		},
@@ -32,6 +36,10 @@ export const navLinks = {
 		"viewUserById": {
 			"name": "View user",
 			"url": "/viewUserById"
+		},
+		"hs_appointments":{
+			"name": "View Appointments",
+			"url": "/hs_appointments"
 		}
     }
 }
