@@ -36,6 +36,16 @@ export const registerUser = async (data) => {
     return response;
 }
 
+export const updateUserByEmailId = async (data) => {
+    const response = await axios.post(SERVER_URL + '/api/users/updateUserByEmailId',  data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response;
+}
+
 // function logout() {
 //     // remove user from local storage to log user out
 //     localStorage.removeItem('user');

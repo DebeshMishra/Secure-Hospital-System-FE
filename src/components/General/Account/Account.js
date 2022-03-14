@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
@@ -9,14 +9,48 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+import { useCookies } from 'react-cookie';
+import { useSelector } from "react-redux";
 
 import "./styles.css";
+import { getUserByEmailId } from "../../../services/authentication.service";
 
 function Account() {
   let navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies(['JWTToken', 'emailId']);
+  const userInfo = useSelector((state) => state.user);
+
   const showForm = () => {
     navigate("/editAccount");
   };
+
+  useEffect(() => {
+    if ((userInfo.isLoggedIn || cookies.JWTToken != undefined)) {
+      if (cookies.emailId) {
+        getUserByEmailId(cookies.emailId).then(response => {
+          console.log(response);
+          setData({
+            firstName: response.firstName,
+            lastName: response.lastName,
+            phone: response.phone,
+            email: response.email
+          })
+        })
+      }
+      else if (userInfo.userData.email) {
+        getUserByEmailId(userInfo.userData.email).then(response => {
+          console.log(response);
+          setData({
+            firstName: response.firstName,
+            lastName: response.lastName,
+            phone: response.phone,
+            email: response.email
+          })
+        })
+      }
+
+    }
+  }, []);
 
   const [data, setData] = useState([]);
 
@@ -51,7 +85,7 @@ function Account() {
                 placeholder="Last Name"
                 aria-label="Last Name"
                 id="lastName"
-                value={data.LastName}
+                value={data.lastName}
                 type="text"
               />
             </InputGroup>
