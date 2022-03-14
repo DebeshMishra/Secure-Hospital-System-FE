@@ -15,7 +15,7 @@ import { history } from './helpers/history';
 
 function App() {
 
-  const [userData, setUserData] = useState({isLoggedIn: false}) 
+  const [userData, setUserData] = useState({ isLoggedIn: false })
 
   // const ProtectedRoute = ({component: Component, ...rest}) => {
   //   const user = useSelector((state) => state.user)
@@ -54,14 +54,12 @@ function App() {
 
   const ProtectRouteLogin = (props) => {
     const user = useSelector((state) => state.user)
-  
-    const route =  !user.isLoggedIn ? (
-      <Route {...props} />
+
+    const route = !user.isLoggedIn ? (
+      <Outlet/>
     ) : (
       <Navigate
-        to={{
-          pathname: "/dashboard"
-        }}
+        to="/dashboard"
       />
     );
     console.log(route);
@@ -70,14 +68,12 @@ function App() {
 
   const PrivateRoute = (props) => {
     const user = useSelector((state) => state.user)
-  
-    const route =  user.isLoggedIn ? (
-      <Route {...props} />
+
+    const route = user.isLoggedIn ? (
+      <Outlet/>
     ) : (
       <Navigate
-        to={{
-          pathname: "/login"
-        }}
+        to="/login"
       />
     );
     console.log(route);
@@ -90,16 +86,21 @@ function App() {
         breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
       >
         <div className="App">
-          < Header userData={userData} setUserData={setUserData}/>
+          < Header userData={userData} setUserData={setUserData} />
           <div className="outer">
             <div className="inner">
               <Routes>
-                {routes.map((item, index) => {
-                    return <PrivateRoute key={index} exact path={item.path} element={item.component} />
-                })}
-                <ProtectRouteLogin exact path='/' element={<Login />} />
-                <ProtectRouteLogin exact path="/login" element={<Login />} />
-                <ProtectRouteLogin exact path="/signup" element={<Signup />} />
+                <Route exact path='/' element={<PrivateRoute/>}>
+                  {routes.map((item, index) => {
+                    return <Route key={index} exact path={item.path} element={item.component} />
+                  })}
+                </Route>
+                <Route exact path="/" element={<ProtectRouteLogin />}>
+                    <Route exact path='/' element={<Login />} />
+                    <Route exact path="/login" element={<Login />} />
+                    <Route exact path="/signup" element={<Signup />} />
+                </Route>
+                
                 {/* <ProtectedRoute exact path="/dashboard" element={<Dashboard />} /> */}
               </Routes>
             </div>
