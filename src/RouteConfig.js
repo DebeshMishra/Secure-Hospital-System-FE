@@ -4,7 +4,7 @@ import Signup from "./components/General/SignUpComponent/Signup";
 import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
 import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
-import Users from "./components/Admin/Users/Users";
+import Users from "./components/Admin/users/Users";
 
 
 export const routes = [
