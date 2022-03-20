@@ -15,7 +15,6 @@ export const loginAPI = async (data) => {
 }
 
 export const getUserByEmailId = async (data, jwtToken) => {
-    console.log(data)
     const response = await axios.get(SERVER_URL + '/api/users/getUserByEmailId?emailId=' + data, {
         headers: {
             'Accept': "application/json",

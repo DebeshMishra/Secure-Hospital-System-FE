@@ -2,18 +2,23 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./Users.css";
 import Table from "../../Table/table.js";
 import { getUsersByQuery } from "../../../services/users.service.js";
-
+import { tab } from "@testing-library/user-event/dist/tab";
+import {useDispatch } from 'react-redux';
 
 
 const Users = (props) => {
     const [data, setData] = useState({ query: "" });
     const [rowData, setRowData] = useState("");
+    const [tableData, setTableData] = useState([])
+
+
+    const dispatch = useDispatch();
 
     const editRowOnClick = (rowInfo) =>{
         setRowData(rowInfo)
         //console.log("edit clicked")
         //console.log(row)
-        //console.log(rowData)
+        console.log(rowData)
 
     }
 
@@ -43,9 +48,10 @@ const Users = (props) => {
             accessor: 'manage',
             Cell: ({ cell }) => (
                 <div>
-                    <button id="edit" onClick={()=>editRowOnClick(cell.row.values)}>
+                    <button id="edit" onClick={()=>editRowOnClick(cell.row.values)} >
                     Edit
                     </button>
+                    &nbsp;&nbsp;&nbsp;
                     <button id="delete" onClick={()=>deleteRowOnClick(cell.row.values)}>
                     Delete
                     </button>
@@ -57,52 +63,17 @@ const Users = (props) => {
     ])
     //let tableData = useState([]) 
     //place holder data to see formatting of table
-    let tableData = useMemo(() => [
-        {
-            lastName: 'Parrish',
-            firstName: 'Kim',
-            email: 'kparrish@asu.edu',
-
-        },
-        {
-            lastName: 'Smith',
-            firstName: 'John',
-            email: 'jsmith@asu.edu',
-        },
-        {
-            lastName: 'Doe',
-            firstName: 'John',
-            email: 'jdoe@asu.edu',
-        },
-        {
-            lastName: 'Doe',
-            firstName: 'Jane',
-            email: 'jdoe2@asu.edu',
-        },
-        {
-            lastName: 'Castle',
-            firstName: 'Frank',
-            email: 'fcastle@asu.edu',
-        },
-        {
-            lastName: 'Allen',
-            firstName: 'Barry',
-            email: 'ballen@asu.edu',
-        },
-        {
-            lastName: 'obscenely',
-            firstName: 'random',
-            email: 'robscenelylongusernameemailpassword@asu.edu',
-        },
-    ])
+    
+    
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(data);
-        console.log(data.email);
         //TODO handle Search API here
-        tableData = getUsersByQuery(data)
+        getUsersByQuery(data.query).then(response => {
+            dispatch(setTableData(response))});
+              
     }
 
     //useEffect(() => {

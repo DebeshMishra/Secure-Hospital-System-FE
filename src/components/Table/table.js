@@ -12,12 +12,17 @@ function Table({ columns, data }) {
 
     return (
         <table {...getTableProps()}>
-            <thead>
+            <thead
+            style={{padding: '200px',border: 'solid 2px Black',}}>
+                
                 {headerGroups.map(headerGroup => (
                     <tr {...headerGroup.getHeaderGroupProps()}
                     >
                         {headerGroup.headers.map(column => (
-                            <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                            <th 
+                                style={{padding: '10px',border: 'solid 2px Black',
+                              }}
+                              {...column.getHeaderProps()}>{column.render("Header")}</th>
                         ))}
                     </tr>
                 ))}
@@ -28,7 +33,8 @@ function Table({ columns, data }) {
                     return (
                         <tr {...row.getRowProps()}>
                             {row.cells.map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                                return <td style={{padding: '10px',border: 'solid 2px Black',}}
+                                {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                             })}
                         </tr>
                     );
