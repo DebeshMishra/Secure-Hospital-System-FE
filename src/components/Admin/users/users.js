@@ -3,7 +3,6 @@ import Table from "../../Table/table.js";
 import { getUsersByQuery, blockUserByEmailId, unblockUserByEmailId } from "../../../services/users.service.js";
 import {useDispatch, useSelector } from 'react-redux';
 import { getUserByEmailId } from "../../../services/authentication.service.js";
-import { setEditableData } from "../../../features/editableUser.js";
 import { useNavigate } from "react-router-dom";
 
 
