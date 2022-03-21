@@ -1,34 +1,43 @@
 import React, { useEffect, useMemo, useState } from "react";
-import "./Users.css";
 import Table from "../../Table/table.js";
-import { getUsersByQuery } from "../../../services/users.service.js";
-import { tab } from "@testing-library/user-event/dist/tab";
-import {useDispatch } from 'react-redux';
+import { getUsersByQuery, blockUserByEmailId, unblockUserByEmailId } from "../../../services/users.service.js";
+import {useDispatch, useSelector } from 'react-redux';
+import { getUserByEmailId } from "../../../services/authentication.service.js";
+import { setEditableData } from "../../../features/editableUser.js";
+import { useNavigate } from "react-router-dom";
+
 
 
 const Users = (props) => {
     const [data, setData] = useState({ query: "" });
-    const [rowData, setRowData] = useState("");
+    const [rowData, setRowData] = useState([]);
     const [tableData, setTableData] = useState([])
-
+    const editableUserInfo = useSelector((state) => state.editableUser);
 
     const dispatch = useDispatch();
+    let navigate = useNavigate();
 
     const editRowOnClick = (rowInfo) =>{
-        setRowData(rowInfo)
-        //console.log("edit clicked")
-        //console.log(row)
-        console.log(rowData)
-
+        navigate("/editUser", {state: rowInfo})
     }
 
-    const deleteRowOnClick = (rowInfo) =>{
-        setRowData(rowInfo)
-        //console.log("edit clicked")
-        //console.log(row)
-        //console.log(rowData)
-
+    const blockOnClick = (rowInfo) =>{
+        blockUserByEmailId(rowInfo, data.query).then(response => {
+            setTableData(response)
+        })
     }
+
+    const unblockOnClick = (rowInfo) =>{
+        unblockUserByEmailId(rowInfo, data.query).then(response => {
+            setTableData(response)
+        })
+    }
+
+    useEffect(() => {
+        getUsersByQuery("").then(response => {
+            setTableData(response)
+        })
+    },[]);
 
     const columns = useMemo(() => [
         {
@@ -43,6 +52,18 @@ const Users = (props) => {
             Header: 'Email',
             accessor: 'email'
         },
+        {     
+            Header: 'Enabled',
+            accessor: e => {
+                let str = e.enabled.toString()
+                let output = str.substring(0, 1).toUpperCase() + str.substring(1);
+                return output;
+            }
+        },
+        {
+            Header: 'Phone',
+            accessor: 'phone'
+        },
         {
             Header: 'Manage Users',
             accessor: 'manage',
@@ -52,8 +73,12 @@ const Users = (props) => {
                     Edit
                     </button>
                     &nbsp;&nbsp;&nbsp;
-                    <button id="delete" onClick={()=>deleteRowOnClick(cell.row.values)}>
-                    Delete
+                    <button id="block" onClick={()=>blockOnClick(cell.row.values)}>
+                    Block
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button id="block" onClick={()=>unblockOnClick(cell.row.values)}>
+                    Unblock
                     </button>
                 </div>
 
@@ -61,18 +86,15 @@ const Users = (props) => {
               )
         }
     ])
-    //let tableData = useState([]) 
-    //place holder data to see formatting of table
+   
     
-    
-
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(data);
+        //console.log(data);
         //TODO handle Search API here
         getUsersByQuery(data.query).then(response => {
-            dispatch(setTableData(response))});
+            setTableData(response)
+        })
               
     }
 
@@ -89,9 +111,9 @@ const Users = (props) => {
 
     return (
         <div>
+        <div >
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Search</label>
                     <br />
                     <input type="string"
                         className="form-control"
@@ -107,8 +129,15 @@ const Users = (props) => {
                 </button>
             </form>
             <br />
-            <Table columns={columns} data={tableData} />
-
+        </div>
+            <div
+            style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+            }}>
+                <Table columns={columns} data={tableData}/>
+            </div>
         </div>
     )
 }

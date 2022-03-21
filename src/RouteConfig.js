@@ -5,6 +5,7 @@ import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
 import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
 import Users from "./components/Admin/users/Users";
+import EditUser from "./components/Admin/editUsers/EditUser";
 
 
 export const routes = [
@@ -27,5 +28,9 @@ export const routes = [
   {
     path: "/users",
     component: <Users />
+  },
+  {
+    path: "/editUser",
+    component: <EditUser />
   }
 ];
