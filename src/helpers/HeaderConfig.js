@@ -1,5 +1,5 @@
 export const navLinks = {
-	"roles": ["ADMIN", "PATIENT"],
+	"roles": ["ADMIN", "PATIENT", "LAB_STAFF"],
 	"ADMIN": {
 		"name": "Administrator",
 		"availableLinks": ["dashboard", "users", "logs"]
@@ -7,6 +7,10 @@ export const navLinks = {
 	"PATIENT": {
 		"name": "Patient",
 		"availableLinks": ["dashboard", "appointment", "diagnosis", "viewUserById"]
+	},
+	"LAB_STAFF": {
+		"name": "Lab_Staff",
+		"availableLinks": ["dashboard", "labTestReports", "labTestRequests" , "diagnosis"]
 	},
 	"links": {
 		"dashboard": {
@@ -32,6 +36,14 @@ export const navLinks = {
 		"viewUserById": {
 			"name": "View user",
 			"url": "/viewUserById"
-		}
+		},
+		"labTestReports": {
+			"name": "Lab Test Reports",
+			"url": "/labTestReports"
+		},
+		"labTestRequests": {
+			"name": "Lab Test Requests",
+			"url": "/labTestRequests"
+		},
     }
 }

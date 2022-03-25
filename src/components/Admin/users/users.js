@@ -76,7 +76,7 @@ const Users = (props) => {
                     Block
                     </button>
                     &nbsp;&nbsp;&nbsp;
-                    <button id="block" onClick={()=>unblockOnClick(cell.row.values)}>
+                    <button id="unblock" onClick={()=>unblockOnClick(cell.row.values)}>
                     Unblock
                     </button>
                 </div>
