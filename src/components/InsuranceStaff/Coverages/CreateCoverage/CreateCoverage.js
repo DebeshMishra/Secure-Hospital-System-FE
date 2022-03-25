@@ -16,8 +16,9 @@ import {
 } from "react-bootstrap";
 import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
+import { createCoverage } from '../../../../services/InsuranceStaff.services';
 
-function CreateCoverage() {
+function CreateCoverage(props) {
 
     const [coverageData, setCoverageData] = useState({});
 
@@ -29,7 +30,12 @@ function CreateCoverage() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        createCoverage(coverageData).then(response => {
+            alert("Successfully created a coverage!");
+            props.onSubmitted(true);
+        });
     };
+
 
     const handleChange = (e) => {
         const newdata = { ...coverageData };
@@ -50,6 +56,7 @@ function CreateCoverage() {
                                 placeholder="Coverage Name"
                                 aria-label="Coverage Name"
                                 id="coverageName"
+                                autocomplete="off"
                                 value={coverageData.coverageName}
                                 onChange={handleChange}
                                 required
@@ -63,10 +70,10 @@ function CreateCoverage() {
                             <FormControl
                                 placeholder="Coverage Description"
                                 aria-label="Coverage Description"
-                                id="coverageDescription"
-                                value={coverageData.coverageDescription}
+                                id="description"
+                                autocomplete="off"
+                                value={coverageData.description}
                                 onChange={handleChange}
-                                required
                                 as="textarea"
                                 type="text"
                             />
@@ -80,7 +87,7 @@ function CreateCoverage() {
                         </Form.Group>
                 </Row>
             </Form>
-
+            
         </div>
     )
 }

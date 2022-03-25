@@ -1,3 +1,6 @@
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import {
     Form,
@@ -7,27 +10,54 @@ import {
     InputGroup,
     FormControl,
     Button,
+    Table,
     DropdownButton,
     Dropdown,
-    Table
 } from "react-bootstrap";
+import { Navigate } from "react-router";
+import React, { useEffect, useState } from "react";
+import { getCoverages } from "../../../services/InsuranceStaff.services";
 import './Coverages.css';
 import CreateCoverage from './CreateCoverage/CreateCoverage';
 
 function Coverages() {
 
-    // needs API integration
+    const [coverages, setCoverages] = useState([]);
+    // cosnt [isCoverageAdded, setIsCoverageAdded] = userState(false);
 
-    const coverages = [
-        {
-            coverageName: "hello",
-            description: "skdjbsk"
-        },
-        {
-            coverageName: "hello",
-            description: "skdjbsk"
+    const [cookies, setCookie, removeCookie] = useCookies([
+        "JWTToken",
+        "emailId",
+    ]);
+    const userInfo = useSelector((state) => state.user);
+
+    // needs API integration
+    useEffect(() => {
+        getCoverages().then(response => {
+            setCoverages(response.data)
+            console.log(coverages);
+        });
+    }, [])
+
+    const triggerBECall = (e) => {
+        if(e){
+            getCoverages().then(response => {
+                setCoverages(response.data)
+                console.log(coverages);
+            });
         }
-    ]
+    };
+
+    // const coverages = [
+    //     {
+    //         coverageName: "hello",
+    //         description: "skdjbsk"
+    //     },
+    //     {
+    //         coverageName: "hello",
+    //         description: "skdjbsk"
+    //     }
+    // ]
 
     return (
         <div className="coveragesParent">
@@ -46,10 +76,10 @@ function Coverages() {
                             {
                                 coverages.map((coverage, index) => {
                                     return (
-                                        <tr>
-                                            <td>{index+1}</td>
-                                            <td>{coverage.coverageName}</td>
-                                            <td>{coverage.description}</td>
+                                        <tr key={index}>
+                                            <td key={1}>{index+1}</td>
+                                            <td key={2}>{coverage.coverageName}</td>
+                                            <td key={3}> {coverage.description}</td>
                                         </tr>
                                     )
                                 })
@@ -58,7 +88,7 @@ function Coverages() {
                     </Table>
                 </Col>
                 <Col md="4" className="border-c">
-                    <CreateCoverage />
+                    <CreateCoverage onSubmitted={triggerBECall}/>
                 </Col>
             </Row>
 

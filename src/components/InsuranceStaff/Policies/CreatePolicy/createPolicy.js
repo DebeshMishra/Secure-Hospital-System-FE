@@ -13,14 +13,15 @@ import {
     DropdownButton,
     Dropdown,
 } from "react-bootstrap";
-import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
+import { createPolicy, getCoverages } from '../../../../services/InsuranceStaff.services';
 
-function CreatePolicy() {
+function CreatePolicy(props) {
 
-    // API integration needed
+    // Validation are pending.
 
-    const [policyData, setPolicyData] = useState({});
+    const [policyData, setPolicyData] = useState({coverages : []});
+    const [coverages, setCoverages] = useState([]);
 
     const [cookies, setCookie, removeCookie] = useCookies([
         "JWTToken",
@@ -30,13 +31,47 @@ function CreatePolicy() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(policyData.coverages.length == 0){
+            alert("need atleat one coverage!");
+            return;
+        }
+        createPolicy(policyData).then(response => {
+            alert("Policy Created Successfully!");
+            props.onSubmitted(true);
+        })
     };
 
     const handleChange = (e) => {
+        console.log(e.target.value);
         const newdata = { ...policyData };
         newdata[e.target.id] = e.target.value;
         setPolicyData(newdata);
+        console.log(newdata);
     };
+
+
+    const handleChangeCheckBox = (e) => {
+        if(e.target.checked){
+            const newdata = { ...policyData };
+            newdata['coverages'].push(e.target.name);
+            setPolicyData(newdata);
+        }else{
+            const newdata = { ...policyData };
+            const index = newdata['coverages'].indexOf(e.target.name);
+            if (index > -1) {
+                newdata['coverages'].splice(index, 1); // 2nd parameter means remove one item only
+            }
+            setPolicyData(newdata);
+        }
+        console.log(policyData);
+    };
+    
+
+    useEffect(() => {
+        getCoverages().then(response => {
+            setCoverages(response.data)
+        });
+    }, []);
 
     return (
         <Container>
@@ -51,6 +86,7 @@ function CreatePolicy() {
                             placeholder="Policy Name"
                             aria-label="Policy Name"
                             id="policyName"
+                            autocomplete="off"
                             value={policyData.policyName}
                             onChange={handleChange}
                             required
@@ -61,16 +97,17 @@ function CreatePolicy() {
                 {/* policyType has to be a dropdown and should be fetch used an API */}
                 <Row className="justify-content-md-center mb-3">
                     <Form.Group>
-                        <Form.Label id="basic-addon1" className='label-css'>Policy Types</Form.Label>
-                        <FormControl
-                            placeholder="Policy Type"
-                            aria-label="Policy Type"
-                            id="policyType"
+                        <Form.Label id="basic-addon1" className='label-css'>Select policy Type</Form.Label>
+                        <Form.Select
+                            aria-label="Default select example"
                             value={policyData.policyType}
+                            id="policyType"
                             onChange={handleChange}
-                            required
-                            type="text"
-                        />
+                        >
+                            <option>Select Policy Type</option>
+                            <option value="BASIC">Basic</option>
+                            <option value="PREMIUM">Premium</option>
+                        </Form.Select>
                     </Form.Group>
                 </Row>
                 <Row className="justify-content-md-center mb-3">
@@ -80,21 +117,8 @@ function CreatePolicy() {
                             placeholder="Maximum Amount"
                             aria-label="Maximum Amount"
                             id="policyClaimMaximumAmt"
+                            autocomplete="off"
                             value={policyData.policyClaimMaximumAmt}
-                            onChange={handleChange}
-                            required
-                            type="text"
-                        />
-                    </Form.Group>
-                </Row>
-                <Row className="justify-content-md-center mb-3">
-                    <Form.Group>
-                        <Form.Label id="basic-addon1" className='label-css'>Percentage of payment</Form.Label>
-                        <FormControl
-                            placeholder="Percentage of payment contributed by company"
-                            aria-label="Percentage of payment contributed by company"
-                            id="coPayPercentage"
-                            value={policyData.coPayPercentage}
                             onChange={handleChange}
                             required
                             type="text"
@@ -107,8 +131,9 @@ function CreatePolicy() {
                         <FormControl
                             placeholder="Insurance Company Name"
                             aria-label="Insurance Company Name"
-                            id="InsuranceProviderName"
-                            value={policyData.InsuranceProviderName}
+                            autocomplete="off"
+                            id="insuranceProviderName"
+                            value={policyData.insuranceProviderName}
                             onChange={handleChange}
                             required
                             type="text"
@@ -118,17 +143,19 @@ function CreatePolicy() {
                 <Row className="justify-content-md-center mb-3">
                     <Form.Group>
                         <Form.Label id="basic-addon1" className='label-css'>Select Coverages</Form.Label>
-                        <Form.Select
-                            aria-label="Default select example"
-                            value={policyData.coverages}
-                            id="coverages"
-                            onChange={handleChange}
-                        >
-                            <option>Select Coverages</option>
-                            <option value="AUTO">Auto</option>
-                            <option value="LIFE">Life</option>
-                            <option value="HOME_OWNER">Home owner</option>
-                        </Form.Select>
+                        {
+                            coverages.map((coverage, index) => {
+                                return (
+                                <Form.Check
+                                    inline
+                                    label={coverage.coverageName}
+                                    type="checkbox"
+                                    name={coverage.coverageName}
+                                    id={`coverages-${coverage.coverageName}`}
+                                    onChange={handleChangeCheckBox}
+                                />)
+                            })
+                        }
                     </Form.Group>
                 </Row>
                 <Row className="justify-content-md-center mb-3">
