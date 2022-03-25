@@ -11,18 +11,10 @@ const Users = (props) => {
 
     const editRowOnClick = (rowInfo) =>{
         setRowData(rowInfo)
-        //console.log("edit clicked")
-        //console.log(row)
-        //console.log(rowData)
-
     }
 
     const deleteRowOnClick = (rowInfo) =>{
         setRowData(rowInfo)
-        //console.log("edit clicked")
-        //console.log(row)
-        //console.log(rowData)
-
     }
 
     const columns = useMemo(() => [

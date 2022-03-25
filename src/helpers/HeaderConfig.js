@@ -1,5 +1,5 @@
 export const navLinks = {
-  roles: ["ADMIN", "PATIENT"],
+  roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF"],
   ADMIN: {
     name: "Administrator",
     availableLinks: ["dashboard", "users", "logs", "createUser"],
@@ -8,10 +8,30 @@ export const navLinks = {
     name: "Patient",
     availableLinks: ["dashboard", "appointment", "diagnosis", "viewUserById"],
   },
+  INSURANCE_STAFF: {  
+    name: "Insurance Staff",
+    availableLinks: ["dashboard", "viewClaims", "viewPolicies", "coverages"]
+  },
   links: {
     dashboard: {
       name: "Dashboard",
       url: "/dashboard",
+    },
+    coverages: {
+      name: "Coverages",
+      url: "/coverages"
+    },
+    viewClaims: {
+      name: "View Claims",
+      url: "/viewClaims"
+    },
+    createPolicy: {
+      name: "Create Policy",
+      url: "/createPolicy"
+    },
+    viewPolicies: {
+      name: "View Policies",
+      url: "/viewPolicies"
     },
     users: {
       name: "Users",

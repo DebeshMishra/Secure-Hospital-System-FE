@@ -27,7 +27,7 @@ import {
 import { Navigate } from "react-router";
 
 const CreateUser = (props) => {
-  const [registrationdata, setRegistrationData] = useState({ role: "PATIENT" });
+  const [registrationdata, setRegistrationData] = useState({});
   const [cookies, setCookie, removeCookie] = useCookies([
     "JWTToken",
     "emailId",
@@ -36,7 +36,6 @@ const CreateUser = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(registrationdata);
     registrationdata.roles = [registrationdata.role];
     registerUser(registrationdata).then(
       (response) => {
@@ -152,12 +151,16 @@ const CreateUser = (props) => {
             <Col md="6">
               <Form.Select
                 aria-label="Default select example"
+                value={registrationdata.role}
+                id="role"
                 onChange={handleChange}
-                value={registrationdata.role}>
+                >
                 <option>Select Roles</option>
                 <option value="PATIENT">Patient</option>
                 <option value="ADMIN">Admin</option>
                 <option value="HOSPITAL_STAFF">Hospital Staff</option>
+                <option value="LAB_STAFF">Lab Staff</option>
+                <option value="INSURANCE_STAFF">Insurance Staff</option>
               </Form.Select>
             </Col>
           </Row>
