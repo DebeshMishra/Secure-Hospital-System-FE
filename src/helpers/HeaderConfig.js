@@ -1,17 +1,26 @@
 export const navLinks = {
-  roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF"],
+  roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF"],
   ADMIN: {
     name: "Administrator",
     availableLinks: ["dashboard", "users", "logs", "createUser"],
   },
   PATIENT: {
     name: "Patient",
-    availableLinks: ["dashboard", "appointment", "diagnosis", "viewUserById", "createAClaim"],
+    availableLinks: [
+      "dashboard",
+      "appointment",
+      "diagnosis",
+      "viewUserById",
+      "createAClaim",
+    ],
   },
-
-  INSURANCE_STAFF: {  
+  LAB_STAFF: {
+    name: "Lab Staff",
+    availableLinks: ["dashboard", "labTestReports", "labTests", "diagnosis"],
+  },
+  INSURANCE_STAFF: {
     name: "Insurance Staff",
-    availableLinks: ["dashboard", "viewClaims", "viewPolicies", "coverages"]
+    availableLinks: ["dashboard", "viewClaims", "viewPolicies", "coverages"],
   },
   links: {
     dashboard: {
@@ -20,23 +29,23 @@ export const navLinks = {
     },
     coverages: {
       name: "Coverages",
-      url: "/coverages"
+      url: "/coverages",
     },
     createAClaim: {
       name: "Raise a Claim",
-      url: "/raiseClaim"
+      url: "/raiseClaim",
     },
     viewClaims: {
       name: "View Claims",
-      url: "/viewClaims"
+      url: "/viewClaims",
     },
     createPolicy: {
       name: "Create Policy",
-      url: "/createPolicy"
+      url: "/createPolicy",
     },
     viewPolicies: {
       name: "View Policies",
-      url: "/viewPolicies"
+      url: "/viewPolicies",
     },
     users: {
       name: "Users",
@@ -61,6 +70,14 @@ export const navLinks = {
     createUser: {
       name: "Create user",
       url: "/createUser",
+    },
+    labTestReports: {
+      name: "Lab Test Reports",
+      url: "/labTestReports",
+    },
+    labTests: {
+      name: "Lab Tests",
+      url: "/labTests",
     },
   },
 };
