@@ -11,6 +11,9 @@ import CreatePolicy from "./components/InsuranceStaff/Policies/CreatePolicy/crea
 import Policies from "./components/InsuranceStaff/Policies/viewPolicies/Policies";
 import CreateClaim from "./components/General/CreateClaim/CreateClaim";
 import Appointments from "./components/General/Appointments/Appointments";
+import LabTestReports from "./components/LabStaff/LabTestReports/LabTestReports";
+import UpdateLabTestReport from "./components/LabStaff/LabTestReports/UpdateLabTestReport";
+import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
 
 export const routes = [
   {
@@ -35,25 +38,38 @@ export const routes = [
   },
   {
     path: "/viewClaims",
-    component: <ViewClaims />
+    component: <ViewClaims />,
   },
   {
     path: "/viewPolicies",
-    component: <Policies/>
+    component: <Policies />,
   },
   {
     path: "/createPolicy",
-    component: <CreatePolicy />
+    component: <CreatePolicy />,
   },
   {
     path: "/coverages",
-    component: <Coverages />
+    component: <Coverages />,
   },
   {
     path: "/raiseClaim",
-    component: <CreateClaim />
-  },{
+    component: <CreateClaim />,
+  },
+  {
     path: "/appointments",
-    component: <Appointments />
-  }
+    component: <Appointments />,
+  },
+  {
+    path: "/labTestReports",
+    component: <LabTestReports />,
+  },
+  {
+    path: "/updateLabTestReport",
+    component: <UpdateLabTestReport />,
+  },
+  {
+    path: "/labTests",
+    component: <LabTests />,
+  },
 ];
