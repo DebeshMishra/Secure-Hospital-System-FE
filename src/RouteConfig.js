@@ -4,11 +4,13 @@ import CreateUser from "./components/General/CreateUserComponent/CreateUser";
 import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
 import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
-import Users from "./components/Admin/users/Users";
+import Users from "./components/Admin/Users/Users";
 import ViewClaims from "./components/InsuranceStaff/ViewClaims/ViewClaims";
 import Coverages from "./components/InsuranceStaff/Coverages/Coverages";
 import CreatePolicy from "./components/InsuranceStaff/Policies/CreatePolicy/createPolicy";
 import Policies from "./components/InsuranceStaff/Policies/viewPolicies/Policies";
+import CreateClaim from "./components/General/CreateClaim/CreateClaim";
+import Appointments from "./components/General/Appointments/Appointments";
 
 export const routes = [
   {
@@ -46,5 +48,12 @@ export const routes = [
   {
     path: "/coverages",
     component: <Coverages />
+  },
+  {
+    path: "/raiseClaim",
+    component: <CreateClaim />
+  },{
+    path: "/appointments",
+    component: <Appointments />
   }
 ];
