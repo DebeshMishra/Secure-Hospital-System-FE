@@ -48,17 +48,6 @@ function Coverages() {
         }
     };
 
-    // const coverages = [
-    //     {
-    //         coverageName: "hello",
-    //         description: "skdjbsk"
-    //     },
-    //     {
-    //         coverageName: "hello",
-    //         description: "skdjbsk"
-    //     }
-    // ]
-
     return (
         <div className="coveragesParent">
             <Row className="justify-content-md-center header">

@@ -13,6 +13,10 @@ export const navLinks = {
     name: "Insurance Staff",
     availableLinks: ["dashboard", "viewClaims", "viewPolicies", "coverages"]
   },
+  HOSPITAL_STAFF: {
+    name: "Hospital Staff",
+    availableLinks: ["dashboard", "appointment", "users", "createUser"]
+  },
   links: {
     dashboard: {
       name: "Dashboard",

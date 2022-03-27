@@ -161,6 +161,7 @@ const CreateUser = (props) => {
                 <option value="HOSPITAL_STAFF">Hospital Staff</option>
                 <option value="LAB_STAFF">Lab Staff</option>
                 <option value="INSURANCE_STAFF">Insurance Staff</option>
+                <option value="DOCTOR">Doctor</option>
               </Form.Select>
             </Col>
           </Row>
