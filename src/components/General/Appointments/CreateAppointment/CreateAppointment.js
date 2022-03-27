@@ -15,7 +15,7 @@ import {
 } from "react-bootstrap";
 import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
-import { bookAppointment, getAllUserByTerm, getAppointmentTimings } from "../../../../services/users.service";
+import { bookAppointment, getAllUserByTerm, getAllUsersByRole, getAppointmentTimings } from "../../../../services/users.service";
 import { CodeSlash } from "react-bootstrap-icons";
 
 function CreateAppointment() {
@@ -76,7 +76,7 @@ function CreateAppointment() {
     useEffect(() => {
         setDoctors([])
         if(appointmentType=="SPECIFIC"){
-            getAllUserByTerm("DOCTOR").then(response => {
+            getAllUsersByRole("DOCTOR").then(response => {
                 setDoctors(response);
             })
         }
@@ -109,7 +109,7 @@ function CreateAppointment() {
         // if (e.target.id === "GENERAL") {
         setAppointmentType(e.target.id);
         // }
-        //     getAllUserByTerm("DOCTOR").then(response => {
+        //     getAllUsersByRole("DOCTOR").then(response => {
         //         setDoctors(response);
         //         setAppointmentType(e.target.id);
         //         if(response.length == 0){
