@@ -63,7 +63,9 @@ function CreateLabTests(props) {
             </InputGroup>
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">Description</InputGroup.Text>
-              <FormControl
+              <textarea
+                rows = "5"
+                cols = "39"
                 placeholder="Description"
                 aria-label="Description"
                 id="labTestDescription"

@@ -1,8 +1,20 @@
 const axios = require('axios');
 
+const SERVER_URL = "http://localhost:8080";
+
 export const getUsersByQuery = async (data) => {
     console.log(data)
-    const response = await axios.get('http://127.0.0.1:8080/api/users/' + data, {
+    const response = await axios.get(SERVER_URL + '/api/users/getAllUsers?searchTerm=' + data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json", 
+        },
+    })
+    return response.data;
+}
+
+export const getUserByEmailId = async (data) => {
+    const response = await axios.get(SERVER_URL + '/api/users/getUserByEmailId?emailId=' + data, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
@@ -11,24 +23,25 @@ export const getUsersByQuery = async (data) => {
     return response.data;
 }
 
-export const editUsers = async (data) => {
+export const blockUserByEmailId = async (data, query) => {
     console.log(data)
-    const response = await axios.post('http://127.0.0.1:8080/api/users/' + data, {
+    await axios.post(SERVER_URL + '/api/users/blockAccountByEmailId?emailId=' + data.email, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
         },
     })
-    return response.data;
+    return getUsersByQuery(query);
 }
 
-export const deleteUsers = async (data) => {
+export const unblockUserByEmailId = async (data, query) => {
     console.log(data)
-    const response = await axios.post('http://127.0.0.1:8080/api/users/' + data, {
+    await axios.post(SERVER_URL + '/api/users/activateAccountByEmailId?emailId=' +  data.email, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
         },
     })
-    return response.data;
+    
+    return getUsersByQuery(query);
 } 
