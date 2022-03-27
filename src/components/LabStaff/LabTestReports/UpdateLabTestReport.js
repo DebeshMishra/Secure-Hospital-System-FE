@@ -114,6 +114,7 @@ function UpdateLabTestReport(props) {
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">Details</InputGroup.Text>
               <textarea
+                rows = "10"
                 class="form-control"
                 placeholder="Details"
                 aria-label="Details"
@@ -123,6 +124,7 @@ function UpdateLabTestReport(props) {
                 type="text"
                 required
               />
+              
             </InputGroup>
             <Form.Group className="mb-3">
               <Button variant="primary" type="submit">
