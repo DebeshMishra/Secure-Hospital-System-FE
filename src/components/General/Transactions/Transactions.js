@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-
+import { useMemo } from "react";
 import {
   Form,
   Row,
@@ -27,12 +27,24 @@ function ViewTransactions() {
   ]);
   const userInfo = useSelector((state) => state.user);
 
+  let dummyData = useMemo(() => [
+    {
+      lastName: "Parrish",
+      firstName: "Kim",
+      transactionPrice: 1000.19,
+      status: "Approved",
+      description:
+        "Lorem ipsum dolor sit amet.",
+    },
+  ])
+
   // needs API integration
   useEffect(() => {
     /*getAllLabTests().then((response) => {
       setLabTests(response.data);
       console.log(labTests);
     });*/
+    setTransactions(dummyData)
   }, []);
 
   const triggerBECall = (e) => {
@@ -44,8 +56,16 @@ function ViewTransactions() {
     }
   };
 
+  const createBillOnClick = (e) => {
+    //TODO Create Bill Here
+  }
 
-//TODO Create Receipts and Bills based off transaction
+  const createReceiptOnClick = (e) => {
+    //TODO Create Receipt Here
+  }
+
+
+  //TODO Create Receipts and Bills based off transaction
 
 
 
@@ -58,12 +78,13 @@ function ViewTransactions() {
             <thead>
               <tr>
                 <th>Transaction No</th>
-                <th>Description</th>
+                <th >Description</th>
                 <th>Last Name</th>
                 <th>First Name</th>
-                <th>Fee</th>
+                <th>Price</th>
+                <th>Status</th>
                 <th>Receipts and Bills</th>
-                
+
               </tr>
             </thead>
             <tbody>
@@ -71,11 +92,21 @@ function ViewTransactions() {
                 return (
                   <tr key={index}>
                     <td key={1}>{index + 1}</td>
-                    <td key={2}>{transactions.description}</td>
+                    <td style={{ maxWidth: "200px" }} key={2}>{transactions.description}</td>
                     <td key={3}> {transactions.lastName}</td>
                     <td key={4}> {transactions.firstName}</td>
-                    <td key={5}> {transactions.transactionsPrice}</td>
-                    <td key={6}> {<div><Button>Create Receipt</Button><Button>Create Receipt</Button></div>}</td>
+                    <td key={5}> {transactions.transactionPrice}</td>
+                    <td key={6}> {transactions.status} </td>
+                    <td key={7}> {<div>
+                      <Button id="createReceipt" onClick={() => createReceiptOnClick(transactions.row.values)}>
+                        Create Receipt
+                      </Button>
+                      &nbsp;&nbsp;
+                      <Button id="createBill" onClick={() => createBillOnClick(transactions.row.values)}>
+                        Create Bill
+                      </Button>
+                    </div>}
+                    </td>
                   </tr>
                 );
               })}

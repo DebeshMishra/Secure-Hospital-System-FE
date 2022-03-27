@@ -18,7 +18,7 @@ export const navLinks = {
   },
   HOSPITAL_STAFF: {
     name: "Hospital Staff",
-    availableLinks: ["dashboard", "appointments", "records", "editUser", "diagnoses", "prescriptions", "labTestReports", "transactions",],
+    availableLinks: ["dashboard", "appointments", "records", "editUserHS", "diagnoses", "prescriptions", "labTestReports", "transactions",],
   },
   links: {
     dashboard: {
@@ -84,6 +84,10 @@ export const navLinks = {
     editUser: {
       name: "Edit User",
       url: "/editUser",
+    },
+    editUserHS: {
+      name: "Edit User",
+      url: "/editUserHS",
     },
     prescriptions: {
       name: "View Prescriptions",

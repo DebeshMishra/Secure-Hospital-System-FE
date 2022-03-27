@@ -14,7 +14,9 @@ import Appointments from "./components/General/Appointments/Appointments";
 import LabTestReports from "./components/LabStaff/LabTestReports/LabTestReports";
 import UpdateLabTestReport from "./components/LabStaff/LabTestReports/UpdateLabTestReport";
 import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
-import Transactions from "./components/General/Transactions/Transactions"
+import Transactions from "./components/General/Transactions/Transactions";
+import AdminEditUser from "./components/Admin/EditUsers/EditUser"
+import HospitalStaffEditUser from "./components/HospitalStaff/EditUsers/EditUser"
 
 export const routes = [
   {
@@ -76,5 +78,13 @@ export const routes = [
   {
     path: "/transactions",
     component: <Transactions />,
+  },
+  {
+    path: "/editUser",
+    component: <AdminEditUser />
+  },
+  {
+    path: "/editUserHS",
+    component: <HospitalStaffEditUser />
   },
 ];
