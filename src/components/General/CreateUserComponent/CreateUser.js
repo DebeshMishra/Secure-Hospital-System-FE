@@ -27,7 +27,7 @@ import {
 import { Navigate } from "react-router";
 
 const CreateUser = (props) => {
-  const [registrationdata, setRegistrationData] = useState({});
+  const [registrationdata, setRegistrationData] = useState({ role: "PATIENT" });
   const [cookies, setCookie, removeCookie] = useCookies([
     "JWTToken",
     "emailId",
@@ -153,8 +153,7 @@ const CreateUser = (props) => {
                 aria-label="Default select example"
                 value={registrationdata.role}
                 id="role"
-                onChange={handleChange}
-                >
+                onChange={handleChange}>
                 <option>Select Roles</option>
                 <option value="PATIENT">Patient</option>
                 <option value="ADMIN">Admin</option>
