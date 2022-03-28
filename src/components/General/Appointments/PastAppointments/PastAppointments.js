@@ -1,5 +1,3 @@
-
-
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -20,6 +18,7 @@ import {
 } from "react-bootstrap";
 import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
+import { getAllAppointments, getAllFutureAppointments, getAllPastAppointments } from "../../../../services/users.service";
 
 function PastAppointments(props) {
 
@@ -34,22 +33,9 @@ function PastAppointments(props) {
 
     // needs API integration
     useEffect(() => {
-        setAppointments([
-            {
-                appointmentId: 1,
-                DoctorName: "Sham",
-                hospitalStaffName: "Ram",
-                time: "09:30am",
-                date: "03/29/2022"
-            },
-            {
-                appointmentId: 1,
-                DoctorName: "Sham",
-                hospitalStaffName: "Ram",
-                time: "09:30am",
-                date: "03/29/2022"
-            }
-        ])
+        getAllPastAppointments("").then(response => {
+            setAppointments(response);
+        })
     }, [])
 
     const triggerBECall = (e) => {
@@ -68,10 +54,12 @@ function PastAppointments(props) {
                         <thead>
                             <tr>
                                 <th>Appointment Id</th>
+                                <th>Appoointment Type</th>
                                 <th>Doctor Assigned</th>
                                 <th>Hosiptal Staff</th>
                                 <th>Time Slot</th>
                                 <th>Date</th>
+                                <th>Status</th>
                                 <th>Modifications</th>
                             </tr>
                         </thead>
@@ -80,14 +68,16 @@ function PastAppointments(props) {
                                 appointments.map((appointment, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td key={1}>{appointment.appointmentId}</td>
-                                            <td key={2}> {appointment.DoctorName}</td>
-                                            <td key={3}>{appointment.hospitalStaffName}</td>
-                                            <td key={4}> {appointment.time}</td>
-                                            <td key={5}>{appointment.date}</td>
+                                            <td key={1}>{appointment.appointment.id}</td>
+                                            <td key={9}>{appointment.appointment.appointmentType}</td>
+                                            <td key={2}> {appointment.doctorFirstName!= null && appointment.doctorLastName != null ? appointment.doctorFirstName + " " + appointment.doctorLastName: "-"}</td>
+                                            <td key={3}>{appointment.staffFirstname != null && appointment.staffLastName != null ? appointment.staffFirstname + " " + appointment.staffLastName: "-"}</td>
+                                            <td key={4}> {appointment.appointment.startTime}</td>
+                                            <td key={5}>{appointment.appointment.date}</td>
+                                            <td key={7}>{appointment.appointment.status}</td>
                                             <td key={6}>
-                                                <Button variant="success" className="submit-button">
-                                                    View Diagnosis
+                                                <Button variant="primary" className="submit-button">
+                                                    View diagnosis
                                                 </Button>
                                             </td>
                                         </tr>
@@ -98,6 +88,8 @@ function PastAppointments(props) {
                     </Table>
                 </Col>
             </Row>
+
+
         </div>
     );
 }

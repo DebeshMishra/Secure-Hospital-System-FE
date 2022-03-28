@@ -14,6 +14,7 @@ import Appointments from "./components/General/Appointments/Appointments";
 import LabTestReports from "./components/LabStaff/LabTestReports/LabTestReports";
 import UpdateLabTestReport from "./components/LabStaff/LabTestReports/UpdateLabTestReport";
 import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
+import PatientRecord from './components/Patient/User/PatientRecord'
 
 export const routes = [
   {
@@ -72,4 +73,8 @@ export const routes = [
     path: "/labTests",
     component: <LabTests />,
   },
+  {
+    path: "/userData",
+    component: <PatientRecord />
+  }
 ];

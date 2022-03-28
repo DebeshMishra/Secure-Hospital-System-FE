@@ -42,10 +42,10 @@ function Appointments() {
                 onSelect={(k) => setKey(k)}
                 className="mb-3"
             >
-                <Tab eventKey="Current" title="Current">
+                <Tab eventKey="Current" title="Current Appointments">
                     <CurrentAppointments />
                 </Tab>
-                <Tab eventKey="Past" title="Past">
+                <Tab eventKey="Past" title="Past Appointments">
                     <PastAppointments />
                 </Tab>
                 {userInfo.userData.role && userInfo.userData.role==="PATIENT" && <Tab eventKey="Book" title="Book Appointment">

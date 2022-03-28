@@ -44,7 +44,11 @@ function CreateAppointment() {
         e.preventDefault();
         bookAppointment(appointmentData).then(response => {
             alert(response);
+            setAppointmentData({});
+            setDoctors([]);
+            setTimeSlots([]);
             navigate('/dashboard');
+            setsubmit(!submit);
         });
         
     };
@@ -66,6 +70,7 @@ function CreateAppointment() {
         if(e.target.id=='doctorId'){
             newdata[e.target.id] = e.target.value;
             newdata['startTime'] = 'Select';
+            newdata['date'] = null;
             setTimeSlots([]);
         }
         setAppointmentData(newdata);

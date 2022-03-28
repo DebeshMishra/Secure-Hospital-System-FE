@@ -86,3 +86,23 @@ export const getAllFutureAppointments = async (data) => {
     })
     return response.data;
 } 
+
+export const getAllPastAppointments = async (data) => {
+    const response = await axios.get('http://127.0.0.1:8080/api/appointment/getAllPastAppointments?searchTerm='+data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+
+export const cancelAppointment = async (data) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/appointment/cancelAppointment?appointmentId='+data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 

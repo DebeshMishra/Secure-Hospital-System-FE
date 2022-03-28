@@ -1,3 +1,5 @@
+import Appointments from "../components/General/Appointments/Appointments";
+
 export const navLinks = {
   roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF"],
   ADMIN: {
@@ -13,6 +15,14 @@ export const navLinks = {
       "viewUserById",
       "createAClaim",
     ],
+  },
+  DOCTOR: {
+    name: "Doctor",
+    availableLinks: [
+      "dashboard",
+      "appointment",
+      "diagnosis"
+    ]
   },
   LAB_STAFF: {
     name: "Lab Staff",
@@ -83,5 +93,9 @@ export const navLinks = {
       name: "Lab Tests",
       url: "/labTests",
     },
+    userData: {
+      name: "Patient Records",
+      url: "/userData"
+    }
   },
 };

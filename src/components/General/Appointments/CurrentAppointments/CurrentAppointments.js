@@ -18,12 +18,14 @@ import {
 } from "react-bootstrap";
 import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
-import { getAllAppointments, getAllFutureAppointments } from "../../../../services/users.service";
+import { cancelAppointment, getAllAppointments, getAllFutureAppointments } from "../../../../services/users.service";
 
 function CurrentAppointments(props) {
 
     const [appointments, setAppointments] = useState([]);
-    const [key, setKey] = useState('Current');
+    const [anyCancelled, setAnyCancelled] = useState(true);
+    let navigate = useNavigate();
+
 
     const [cookies, setCookie, removeCookie] = useCookies([
         "JWTToken",
@@ -36,13 +38,24 @@ function CurrentAppointments(props) {
         getAllFutureAppointments("").then(response => {
             setAppointments(response);
         })
-    }, [])
+    }, [anyCancelled])
 
     const triggerBECall = (e) => {
         if (e) {
 
         }
     };
+
+    const cancelAppointmt = (id) => {
+        cancelAppointment(id).then(response => {
+            alert(response);
+            setAnyCancelled(!anyCancelled);
+        })
+    }
+
+    const attendAppointment = (id) => {
+        navigate("/userData");
+    }
 
 
     return (
@@ -59,6 +72,7 @@ function CurrentAppointments(props) {
                                 <th>Hosiptal Staff</th>
                                 <th>Time Slot</th>
                                 <th>Date</th>
+                                <th>Status</th>
                                 <th>Modifications</th>
                             </tr>
                         </thead>
@@ -69,14 +83,24 @@ function CurrentAppointments(props) {
                                         <tr key={index}>
                                             <td key={1}>{appointment.appointment.id}</td>
                                             <td key={9}>{appointment.appointment.appointmentType}</td>
-                                            <td key={2}> {appointment.doctorFirstName!= null && appointment.doctorLastName != null ? appointment.doctorFirstName + " " + appointment.doctorLastName: "-"}</td>
-                                            <td key={3}>{appointment.staffFirstname != null && appointment.staffLastName != null ? appointment.staffFirstname + " " + appointment.staffLastName: "-"}</td>
+                                            <td key={2}> {appointment.doctorFirstName != null && appointment.doctorLastName != null ? appointment.doctorFirstName + " " + appointment.doctorLastName : "-"}</td>
+                                            <td key={3}>{appointment.staffFirstname != null && appointment.staffLastName != null ? appointment.staffFirstname + " " + appointment.staffLastName : "-"}</td>
                                             <td key={4}> {appointment.appointment.startTime}</td>
                                             <td key={5}>{appointment.appointment.date}</td>
+                                            <td key={7}>{appointment.appointment.status}</td>
                                             <td key={6}>
-                                                <Button variant="danger" className="submit-button">
-                                                    Cancel
-                                                </Button>
+                                                {
+                                                    (userInfo.userData.role == "HOSPITAL_STAFF" || userInfo.userData.role == "PATIENT") && <Button variant="danger" disabled={appointment.appointment.status == 'CANCELED'} className="submit-button" onClick={() => cancelAppointmt(appointment.appointment.id)}>
+                                                        Cancel
+                                                    </Button>
+                                                }
+
+                                                {
+                                                    userInfo.userData.role == "DOCTOR" && <Button variant="danger" disabled={appointment.appointment.status == 'CANCELED'} className="submit-button" onClick={() => attendAppointment(appointment.appointment.id)}>
+                                                        {appointment.appointment.status=="COMPLETED"? "View" : "Attend"}
+                                                    </Button>
+                                                }
+
                                             </td>
                                         </tr>
                                     )
