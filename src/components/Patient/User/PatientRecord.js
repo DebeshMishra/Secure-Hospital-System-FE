@@ -1,10 +1,11 @@
 
+import './PatientRecord.css'
+
 
 function PatientRecord(props){
 
-    return (
-        <p>PatientRecord</p>
-    )
+    return
+   
 }
 
 export default PatientRecord;

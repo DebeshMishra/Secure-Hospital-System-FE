@@ -15,6 +15,7 @@ import LabTestReports from "./components/LabStaff/LabTestReports/LabTestReports"
 import UpdateLabTestReport from "./components/LabStaff/LabTestReports/UpdateLabTestReport";
 import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
 import PatientRecord from './components/Patient/User/PatientRecord'
+import AppointmentConfirmation from "./components/HospitalStaff/AppointmentConfirmation/AppointmentConfirmation";
 
 export const routes = [
   {
@@ -76,5 +77,9 @@ export const routes = [
   {
     path: "/userData",
     component: <PatientRecord />
+  },
+  {
+    path: "/appointmentConfirmation",
+    component: <AppointmentConfirmation />
   }
 ];

@@ -53,8 +53,12 @@ function CurrentAppointments(props) {
         })
     }
 
-    const attendAppointment = (id) => {
-        navigate("/userData");
+    const attendAppointment = (appointment) => {
+        navigate("/appointmentConfirmation", {state :{ app: appointment}});
+    }
+
+    const viewPatient = (id) => {
+        
     }
 
 
@@ -74,6 +78,7 @@ function CurrentAppointments(props) {
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Modifications</th>
+                                {userInfo.userData.role != "PATIENT"  && <th>Patient Record</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -87,21 +92,28 @@ function CurrentAppointments(props) {
                                             <td key={3}>{appointment.staffFirstname != null && appointment.staffLastName != null ? appointment.staffFirstname + " " + appointment.staffLastName : "-"}</td>
                                             <td key={4}> {appointment.appointment.startTime}</td>
                                             <td key={5}>{appointment.appointment.date}</td>
-                                            <td key={7}>{appointment.appointment.status}</td>
+                                            <td key={7} >{appointment.appointment.status}</td>
                                             <td key={6}>
+                                                
                                                 {
-                                                    (userInfo.userData.role == "HOSPITAL_STAFF" || userInfo.userData.role == "PATIENT") && <Button variant="danger" disabled={appointment.appointment.status == 'CANCELED'} className="submit-button" onClick={() => cancelAppointmt(appointment.appointment.id)}>
-                                                        Cancel
+                                                    (userInfo.userData.role == "DOCTOR" ||  userInfo.userData.role == "HOSPITAL_STAFF") && <div>
+                                               
+                                                    <Button variant="primary" className="submit-button"size="sm" disabled={appointment.appointment.status==="CANCELED" || appointment.appointment.appointmentType==="SPECIFIC"} onClick={() => attendAppointment(appointment)}>
+                                                        {appointment.appointment.status=="COMPLETED"? "View" : appointment.appointment.status==="CANCELED"? "Rejected": appointment.appointment.appointmentType==="SPECIFIC"? "Booked" : "Approve"}
                                                     </Button>
-                                                }
-
-                                                {
-                                                    userInfo.userData.role == "DOCTOR" && <Button variant="danger" disabled={appointment.appointment.status == 'CANCELED'} className="submit-button" onClick={() => attendAppointment(appointment.appointment.id)}>
-                                                        {appointment.appointment.status=="COMPLETED"? "View" : "Attend"}
-                                                    </Button>
+                                                    </div>
                                                 }
 
                                             </td>
+                                            
+                                            {
+                                                    (userInfo.userData.role == "DOCTOR" ||  userInfo.userData.role == "HOSPITAL_STAFF") && 
+                                                    <td>
+                                                        <Button variant="primary" className="submit-button"size="sm" onClick={() => viewPatient(appointment.patientId)}>
+                                                        {appointment.patientFirstName + " " + appointment.patientLastName}
+                                                    </Button>
+                                                    </td>
+                                                }
                                         </tr>
                                     )
                                 })

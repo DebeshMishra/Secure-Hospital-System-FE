@@ -55,7 +55,7 @@ export const getAllUsersByRole = async (data) => {
 } 
 
 export const getAppointmentTimings = async (data) => {
-    const response = await axios.post('http://127.0.0.1:8080/api/appointment/getAvailableSlotOfDoctors', data, {
+    const response = await axios.post('http://127.0.0.1:8080/api/appointment/getAvailableSlotsOfDoctor', data, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
@@ -99,6 +99,39 @@ export const getAllPastAppointments = async (data) => {
 
 export const cancelAppointment = async (data) => {
     const response = await axios.post('http://127.0.0.1:8080/api/appointment/cancelAppointment?appointmentId='+data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+
+
+export const getAllAvailableSlotOfDoctors = async (data) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/appointment/getAllAvailableSlotOfDoctors', data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+
+
+export const getAllAvailableDoctorsForaTimeSlot = async (data) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/appointment/getAllAvailableDoctorsForaTimeSlot', data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+
+
+export const updateAppointment = async (data) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/appointment/updateAppointment', data, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",

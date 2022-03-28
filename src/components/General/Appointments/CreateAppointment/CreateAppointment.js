@@ -39,7 +39,6 @@ function CreateAppointment() {
     const userInfo = useSelector((state) => state.user);
 
     const handleSubmit = async (e) => {
-        console.log(e);
         setsubmit(true);
         e.preventDefault();
         bookAppointment(appointmentData).then(response => {
@@ -132,6 +131,7 @@ function CreateAppointment() {
         <div className='create-coverage-parent'>
             <Row className="justify-content-md-center header">
                 <h3>Book Appointment</h3>
+                {doctors.length <= 0 &&  appointmentData.appointmentType==='SPECIFIC' && <b className="red">No Available Doctors, Please try booking later!</b>}
             </Row>
             <Form onSubmit={handleSubmit}>
             <Row className="justify-content-md-center mb-3">
