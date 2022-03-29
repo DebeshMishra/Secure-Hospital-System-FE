@@ -19,7 +19,7 @@ import {
 } from "react-bootstrap";
 import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
-import { cancelAppointment, getAllAvailableDoctorsForaTimeSlot} from "../../../services/users.service";
+import { cancelAppointment, getAllAvailableDoctorsForaTimeSlot, updateAppointment} from "../../../services/users.service";
 
 function AppointmentConfirmation (props) {
     
@@ -72,6 +72,12 @@ function AppointmentConfirmation (props) {
 
     const updateAppointmt = (e) => {
         console.log(appointmentData);
+        // updateAppointment({
+
+        // }).then(response => {
+        //     alert(response);
+        //     navigate("/appointments");
+        // })
     }
 
     function DisabilityCheck(){

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import {
     Form,
     Row,
@@ -24,11 +25,13 @@ function UserInformation(props) {
 
     };
 
+    useEffect(() => {
+        console.log(props);
+    }, []);
+
     return (
         <Container>
-        <Row className="justify-content-md-center header">
             <h3>User Details</h3>
-        </Row>
         <Form onSubmit={handleSubmit}>
         <Row className="mb-3">
                 <Col md="6">
@@ -39,7 +42,7 @@ function UserInformation(props) {
                         aria-label="Patient Name"
                         id="paitentName"
                         autoComplete="off"
-                        value=""
+                        value={props.userInformation.firstName + " " + props.userInformation.lastName}
                         required
                         disabled
                         type="text"
@@ -71,7 +74,7 @@ function UserInformation(props) {
                         aria-label="Phone"
                         id="phone"
                         autoComplete="off"
-                        value=""
+                        value={props.userInformation.phone}
                         onChange={handleChange}
                         required
                         disabled
@@ -87,7 +90,7 @@ function UserInformation(props) {
                         aria-label="Email"
                         id="date"
                         autoComplete="off"
-                        value=""
+                        value={props.userInformation.email}
                         onChange={handleChange}
                         required
                         disabled
@@ -105,7 +108,7 @@ function UserInformation(props) {
                         aria-label="User Name"
                         id="startTime"
                         autoComplete="off"
-                        value=""
+                        value={props.userInformation.username}
                         onChange={handleChange}
                         required
                         disabled
@@ -121,7 +124,7 @@ function UserInformation(props) {
                         aria-label="Role"
                         id="fee"
                         autoComplete="off"
-                        value=""
+                        value={props.userInformation.roles[0].role}
                         onChange={handleChange}
                         required
                         disabled
