@@ -16,6 +16,7 @@ import ThemeProvider from "react-bootstrap/ThemeProvider";
 import { useState } from "react";
 import { routes } from "./RouteConfig";
 import { history } from "./helpers/history";
+import Logs from "./components/Admin/Logs";
 
 function App() {
   const [userData, setUserData] = useState({ isLoggedIn: false });
@@ -97,6 +98,7 @@ function App() {
                   <Route exact path="/login" element={<Login />} />
                 </Route>
                 <Route exact path="/createUser" element={<CreateUser />} />
+                <Route exact path="/logs" element={<Logs />} />
 
                 {/* <ProtectedRoute exact path="/dashboard" element={<Dashboard />} /> */}
               </Routes>
