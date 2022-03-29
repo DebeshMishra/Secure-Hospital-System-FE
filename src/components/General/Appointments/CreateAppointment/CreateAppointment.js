@@ -110,20 +110,8 @@ function CreateAppointment() {
         setDoctors([]);
         setTimeSlots([]);
         setAppointmentData({});
-        // if (e.target.id === "GENERAL") {
         setAppointmentType(e.target.id);
-        // }
-        //     getAllUsersByRole("DOCTOR").then(response => {
-        //         setDoctors(response);
-        //         setAppointmentType(e.target.id);
-        //         if(response.length == 0){
-        //             alert("No doctors available!");
-        //         }else if(response.length == 1){
 
-        //         }
-        //         console.log(appointmentData);
-        //     });
-        // }
         
     };
 

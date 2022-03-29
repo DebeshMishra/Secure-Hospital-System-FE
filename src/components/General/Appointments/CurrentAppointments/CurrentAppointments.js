@@ -58,7 +58,8 @@ function CurrentAppointments(props) {
     }
 
     const viewPatient = (id) => {
-        
+        console.log(id);
+        navigate("/userData", {state: {userId: id}})
     }
 
 
