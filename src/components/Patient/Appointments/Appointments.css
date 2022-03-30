@@ -1,0 +1,15 @@
+.lab-test{
+    border: 2px black solid;
+}
+
+.lab-test-parent{
+    padding: 2%;
+}
+
+.lab-test-parent-1{
+    border: 2px black solid;
+}
+
+.red{
+    color: red;
+}

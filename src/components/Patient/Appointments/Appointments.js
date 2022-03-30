@@ -16,14 +16,9 @@ import {
 } from "react-bootstrap";
 import { useState } from "react";
 import { getAllLabTests } from "../../../services/LabTests.services";
+import './Appointments.css'
 
 function Appointments(props) {
-    const [labTests, setLabTests] = useState(null)
-
-
-    const handleSubmit = async (e) => {
-
-    };
 
     const handleChange = (appointment, e) => {
         e.preventDefault();
@@ -31,9 +26,7 @@ function Appointments(props) {
     };
 
     useEffect(() => {
-        getAllLabTests().then(response => {
-            setLabTests(response.data);
-        });
+
     }, []);
 
 
@@ -42,6 +35,7 @@ function Appointments(props) {
             <Accordion flush>
                 {
                     props.appointments.map((appointment, index) => {
+
                         return (
                             <Accordion.Item eventKey={index} >
                                 <Accordion.Header>Appointment Id: {appointment.id} - Date : {appointment.date}</Accordion.Header>
@@ -54,7 +48,7 @@ function Appointments(props) {
                                                         <b>Type:</b>
                                                     </Col>
                                                     <Col sm="8">
-                                                        <span>{appointment.appointmentType} </span>
+                                                        <span>{appointment.appointmentType || "-"} </span>
                                                     </Col>
                                                 </Row>
                                             </Col>
@@ -64,7 +58,7 @@ function Appointments(props) {
                                                         <b>Start Time:</b>
                                                     </Col>
                                                     <Col sm="8">
-                                                        <span>{appointment.startTime} </span>
+                                                        <span>{appointment.startTime || "-"} </span>
                                                     </Col>
                                                 </Row>
                                             </Col>
@@ -74,7 +68,7 @@ function Appointments(props) {
                                                         <b>Fees:</b>
                                                     </Col>
                                                     <Col sm="8">
-                                                        <span>{appointment.fees} </span>
+                                                        <span>{appointment.fees || "-"} </span>
                                                     </Col>
                                                 </Row>
                                             </Col>
@@ -86,7 +80,7 @@ function Appointments(props) {
                                                         <b>Status:</b>
                                                     </Col>
                                                     <Col sm="8">
-                                                        <span>{appointment.status} </ span>
+                                                        <span>{appointment.status || "-"} </ span>
                                                     </Col>
                                                 </Row>
                                             </Col>
@@ -96,101 +90,136 @@ function Appointments(props) {
                                                         <b>Staff Notes:</b>
                                                     </Col>
                                                     <Col sm="8">
-                                                        <span> {appointment.staffNote} </span>
+                                                        <span> {appointment.staffNote || "-"} </span>
                                                     </Col>
                                                 </Row>
                                             </Col>
                                         </Row>
-                                        <hr />
-                                        <Row>
-                                            {
-                                                (appointment.status == "Completed" && appointment.diagnosis != null) ?
-                                                    (
-                                                        <p>completed</p>
-                                                    ) :
-                                                    (
-                                                        <>
-                                                            <h4>Add Diagnosis</h4>
-                                                            <Form onSubmit={(appointment) => handleSubmit(appointment)}>
-                                                                <Row className="mb-3">
-                                                                    <Col md="12">
-                                                                        <Form.Group>
-                                                                            <Form.Label id="basic-addon1" className='label-css'><b>Diagnosis: </b></Form.Label>
-                                                                            <FormControl
-                                                                                as="textarea"
-                                                                                placeholder="Diagnosis"
-                                                                                aria-label="Diagnosis"
-                                                                                id="diagnosis_info"
-                                                                                autoComplete="off"
-                                                                                value=""
-                                                                                required
-                                                                                disabled
-                                                                                type="text"
-                                                                            />
-                                                                        </Form.Group>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row>
-                                                                    <Col md="12">
-                                                                        <Form.Group>
-                                                                            <Form.Label id="basic-addon1" className='label-css'><b>Medical Prescription:</b> </Form.Label>
-                                                                            <FormControl
-                                                                                as="textarea"
-                                                                                placeholder="prescription"
-                                                                                aria-label="prescription"
-                                                                                id="prescription"
-                                                                                autoComplete="off"
-                                                                                value=""
-                                                                                required
-                                                                                disabled
-                                                                                type="text"
-                                                                            />
-                                                                        </Form.Group>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row>
-                                                                    <Col md="12">
-                                                                        <Form.Group>
-                                                                            <Form.Label id="basic-addon1" className='label-css'><b>Suggest Lab tests:</b> </Form.Label>
-                                                                            {(labTests == null || labTests.length == 0) ?
-                                                                                (<h6>No available lab tests!</h6>) :
-                                                                                labTests.map((labtest, index) => {
-                                                                                    return (
-                                                                                        <Form.Check
-                                                                                            inline
-                                                                                            label={labtest.labTestName + " ($" + labtest.labTestCost + ")"}
-                                                                                            name="labtests"
-                                                                                            type="checkbox"
-                                                                                            id={`inline-${labtest.labTestName}-1`}
-                                                                                        >
-                                                                                        </Form.Check>)
-                                                                                })
-                                                                            }
-                                                                        </Form.Group>
-                                                                    </Col>
-                                                                </Row>
-                                                                <Row className="justify-content-md-center"> 
-                                                                    <Col md="3">
-                                                                        <Form.Group className="mb-3">
-                                                                            <Button variant="primary" type="submit" className="submit-button" >
-                                                                                Add Diagnosis
-                                                                            </Button>
-                                                                        </Form.Group>
-                                                                    </Col>
-                                                                    <Col md="3">
-                                                                        <Form.Group className="mb-3">
-                                                                            <Button variant="primary" type="submit" className="submit-button" >
-                                                                                Complete Appointment
-                                                                            </Button>
-                                                                        </Form.Group>
-                                                                    </Col>
-                                                                </Row>
-                                                            </Form>
-                                                        </>
+                                        {
+                                            appointment.diagnoses == null ? <h6 className="red">No Diagnosis!</h6> :
+                                            <Row className="lab-test-parent-1">
+                                                <Row >
+                                                    <h6><b>Diagnosis Info</b></h6>
+                                                    <hr />
+                                                </Row>
+                                                <Row className="mb-3">
+                                                    <Col md="6">
+                                                        <Form.Group>
+                                                            <Form.Label id="basic-addon1" className='label-css'>Diagnosis Information: </Form.Label>
+                                                            <FormControl
+                                                                as="textarea"
+                                                                placeholder="Diagnosis"
+                                                                aria-label="Diagnosis"
+                                                                id="diagnosis_info"
+                                                                autoComplete="off"
+                                                                value={appointment.diagnoses.diagnosis_info || "-"}
+                                                                required
+                                                                disabled
+                                                                type="text"
+                                                            />
+                                                        </Form.Group>
+                                                    </Col>
+                                                    <Col md="6">
+                                                        <Form.Group>
+                                                            <Form.Label id="basic-addon1" className='label-css'>Medical Prescription:</Form.Label>
+                                                            <FormControl
+                                                                as="textarea"
+                                                                placeholder="prescription"
+                                                                aria-label="prescription"
+                                                                id="prescription"
+                                                                autoComplete="off"
+                                                                value={appointment.diagnoses.prescription || "-"}
+                                                                required
+                                                                disabled
+                                                                type="text"
+                                                            />
+                                                        </Form.Group>
+                                                    </Col>
+                                                </Row>
 
-                                                    )
-                                            }
-                                        </Row>
+                                                {
+                                                    appointment.diagnoses.labResult.length > 0 &&
+                                                    <>
+                                                        <Row>
+                                                            <h6><b>Lab Test Results</b></h6>
+                                                        </Row>
+                                                        <Row className="lab-test-parent">
+                                                            {
+                                                                appointment.diagnoses.labResult.map((labres, index) => {
+
+                                                                    return (
+                                                                        <Container className="lab-test">
+                                                                            <Row>
+                                                                                <Col md="4">
+                                                                                    <Row className="mb-3">
+                                                                                        <Col sm="6">
+                                                                                            <b>Lab Test Name:</b>
+                                                                                        </Col>
+                                                                                        <Col sm="6">
+                                                                                            <span>{labres.labtests.labTestName || "-"} </span>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </Col>
+                                                                                <Col md="4">
+                                                                                    <Row className="mb-3">
+                                                                                        <Col sm="6">
+                                                                                            <b>Lab Test Cost:</b>
+                                                                                        </Col>
+                                                                                        <Col sm="6">
+                                                                                            <span>{labres.labtests.labTestCost || "-" } </span>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </Col>
+                                                                                <Col md="4">
+                                                                                    <Row className="mb-3">
+                                                                                        <Col sm="6">
+                                                                                            <b>Lab Test Status:</b>
+                                                                                        </Col>
+                                                                                        <Col sm="6">
+                                                                                            <span>{labres.labResultStatus || "-" } </span>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <Row>
+                                                                                <Col md="4">
+                                                                                    <Row className="mb-3">
+                                                                                        <Col sm="4">
+                                                                                            <b>Result:</b>
+                                                                                        </Col>
+                                                                                        <Col sm="8">
+                                                                                            <span>{labres.result || '-'} </span>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </Col>
+                                                                                <Col md="8">
+                                                                                    <Row className="mb-3">
+                                                                                        <Col sm="3">
+                                                                                            <b>Lab Staff Note:</b>
+                                                                                        </Col>
+                                                                                        <Col sm="9">
+                                                                                            <span>{ labres.labStaffNotes || "-" } </span>
+                                                                                        </Col>
+                                                                                    </Row>
+                                                                                </Col>
+                                                                            </Row>
+                                                                        </Container>
+                                                                    )
+                                                                })
+                                                            }
+
+
+                                                        </Row>
+                                                    </>
+
+                                                }
+
+
+                                            </Row>
+                                        }
+
+
+
                                     </Form>
                                 </Accordion.Body>
                             </Accordion.Item>

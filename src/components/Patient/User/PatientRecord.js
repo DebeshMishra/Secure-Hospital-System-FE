@@ -8,11 +8,13 @@ import { getUserById } from '../../../services/users.service';
 import UserInformation from '../UserInformation/UserInformaton';
 import Appointments from '../Appointments/Appointments';
 import { getAllLabTests } from '../../../services/LabTests.services';
+import LabReports from '../LabReports/LabReports';
 
 
 function PatientRecord(props) {
     
     const [userData, setuserData] = useState(null)
+    // const [labResults, setLabResults] = useState(null);
     const { state } = useLocation();
     const { userId } = state;
 
@@ -31,6 +33,15 @@ function PatientRecord(props) {
                 return 0;
               });
             setuserData(response);
+            // const lr = []
+            // response.appointment.forEach(appointment => {
+            //     if(appointment.diagnoses != null && appointment.diagnoses.labResult != null){
+            //         appointment.diagnoses.labResult.forEach(res => {
+            //             lr.push(res);
+            //         })
+            //     }
+            // });
+            // setLabResults(lr);
         });
         
     }, []);
@@ -53,28 +64,10 @@ function PatientRecord(props) {
                         {(userData == null || userData.appointments.length == 0 ) ? <b className='red'>No Appointments available!</b>: <Appointments appointments = {userData.appointments}/>}
                         </Accordion.Body>
                     </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                        <Accordion.Header>Diagnosis</Accordion.Header>
-                        <Accordion.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                            est laborum.
-                        </Accordion.Body>
-                    </Accordion.Item>
                     <Accordion.Item eventKey="3">
                         <Accordion.Header>Lab Reports</Accordion.Header>
                         <Accordion.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                            est laborum.
+                        {userData == null? <b className='red'>No LabReports available!</b> : <LabReports patientId = {userData.id}/>}
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="4">

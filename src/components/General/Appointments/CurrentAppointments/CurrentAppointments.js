@@ -62,6 +62,11 @@ function CurrentAppointments(props) {
         navigate("/userData", {state: {userId: id}})
     }
 
+    const createDiagnosis = (appointment) => {
+        console.log(appointment)
+        navigate("/createDiagnosis", {state : {appointment: appointment}})
+    }
+
 
     return (
         <div className="coveragesParent">
@@ -113,6 +118,17 @@ function CurrentAppointments(props) {
                                                         <Button variant="primary" className="submit-button"size="sm" onClick={() => viewPatient(appointment.patientId)}>
                                                         {appointment.patientFirstName + " " + appointment.patientLastName}
                                                     </Button>
+                                                    {
+                                                        appointment.diagnosis != null &&
+                                                        <>
+                                                        <hr/>
+                                                        <Button variant="primary" className="submit-button"size="sm" onClick={() => createDiagnosis(appointment)}>
+                                                            Write Diagnosis
+                                                        </Button>
+                                                        </>
+                                                        
+                                                    }
+                                                   
                                                     </td>
                                                 }
                                         </tr>
