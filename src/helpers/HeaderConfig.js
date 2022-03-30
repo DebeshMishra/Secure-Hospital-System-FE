@@ -39,7 +39,7 @@ export const navLinks = {
   links: {
     dashboard: {
       name: "Dashboard",
-      url: "/dashboard",
+      url: "/",
     },
     coverages: {
       name: "Coverages",

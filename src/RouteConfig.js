@@ -19,7 +19,7 @@ import AppointmentConfirmation from "./components/HospitalStaff/AppointmentConfi
 
 export const routes = [
   {
-    path: "/dashboard",
+    path: "/",
     component: <Dashboard />,
   },
   {
