@@ -28,7 +28,7 @@ function AppointmentConfirmation (props) {
     const [doctors, setDoctors] = useState([]);
     const [doctorsAvailability, setDoctorsAvailability] = useState({});
     const {state} = useLocation();
-    const {app} = state
+    const {app} = state;
 
     const [cookies, setCookie, removeCookie] = useCookies([
         "JWTToken",
@@ -47,7 +47,7 @@ function AppointmentConfirmation (props) {
               }).then(response => {
                 const doctors = []
                 Object.keys(response).forEach(res => {
-                    doctors.push(res)
+                    doctors.push(res + " - Name: " + response[res] )
                 });
                 setDoctors(doctors);
                 setDoctorsAvailability(response);
@@ -72,16 +72,19 @@ function AppointmentConfirmation (props) {
 
     const updateAppointmt = (e) => {
         console.log(appointmentData);
-        // updateAppointment({
-
-        // }).then(response => {
-        //     alert(response);
-        //     navigate("/appointments");
-        // })
+        updateAppointment({
+            doctorId: appointmentData.doctorId.split(" - Name: ")[0],
+            appointmentId: app.appointment.id,
+            staffId: userInfo.userData.user.id,
+            status: "APPROVED",
+            staffNote: ""
+        }).then(response => {
+            alert(response);
+            navigate("/appointments");
+        })
     }
 
     function DisabilityCheck(){
-        console.log(appointmentData, doctors);
         if(appointmentData.doctorId != null && doctors.length > 0){
             return(
                 <Button variant="primary" type="submit" className="submit-button" onClick={updateAppointmt}>
@@ -225,7 +228,7 @@ function AppointmentConfirmation (props) {
                             {
                                 doctors.map((doctor, index) => {
                                     return (
-                                        <option key={index} value={doctor}>{'id: '+doctor}</option>
+                                        <option key={index} value={doctor}>{'id: '+ doctor}</option>
                                     )
                                 })
                             }

@@ -15,7 +15,7 @@ import {
     Tab
 } from "react-bootstrap";
 import { useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { getAllLabTests } from "../../../services/LabTests.services";
 import { createDiagnosis } from "../../../services/LabReports.services";
 
@@ -26,6 +26,7 @@ function CreateDaignosis() {
     const [labTests, setLabTests] = useState(null)
     const [diagnosisData, setDiagnosisData] = useState({})
     const [submit, setSubmit] = useState(false);
+    let navigate = useNavigate();
 
     useEffect(() => {
         console.log(appointment);
@@ -49,8 +50,9 @@ function CreateDaignosis() {
         }
         setSubmit(!submit);
         createDiagnosis(diagnosisData).then(response => {
-            alert(response);
+            alert(response.data);
             setSubmit(!submit);
+            navigate("/appointments")
         });
     };
 
