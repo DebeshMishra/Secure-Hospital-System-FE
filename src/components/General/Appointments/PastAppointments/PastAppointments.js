@@ -46,7 +46,10 @@ function PastAppointments(props) {
 
 
     return (
-        <div className="coveragesParent">
+        <>
+        {
+            appointments.length > 0 ?
+            <div className="coveragesParent">
             <Row className="justify-content-md-center header">
                 <Col md="12">
                     <h3>Past Appointments</h3>
@@ -93,7 +96,12 @@ function PastAppointments(props) {
             </Row>
 
 
-        </div>
+        </div>:
+        <h3>No Appointments!</h3>
+        }
+        
+        </>
+    
     );
 }
 

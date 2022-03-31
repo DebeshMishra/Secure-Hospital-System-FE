@@ -111,8 +111,6 @@ function CreateAppointment() {
         setTimeSlots([]);
         setAppointmentData({});
         setAppointmentType(e.target.id);
-
-        
     };
 
     return (
@@ -179,7 +177,7 @@ function CreateAppointment() {
                                 value={appointmentData.date}
                                 onChange={handleChange}
                                 required
-                                min={appointmentData.appointmentType==="GENERAL"? tomorrow.toISOString().split("T")[0] : new Date().toISOString().split("T")[0]}
+                                min={new Date().toISOString().split("T")[0]}
                                 type="date"
                             />
                         </InputGroup>

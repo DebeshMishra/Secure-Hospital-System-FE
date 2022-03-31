@@ -3,12 +3,11 @@ import { Container, Row, Col } from "react-bootstrap";
 
 function Policy(props) {
 
-  
     return (
         <Container>
             {
-                props.policies != null  ?
-                <Row className="justify-content-md-center">
+                props.policies != null ?
+                    <Row className="justify-content-md-center">
                         <h5>Policies</h5>
                         <table>
                             <tr>
@@ -27,19 +26,19 @@ function Policy(props) {
                                             <td>{pol.policyClaimMaximumAmt}</td>
                                             <td>{pol.policyType}</td>
                                             <td>{pol.coverages.map(cov => {
-                                                return cov.coverageName +" (" + cov.description +")" 
+                                                return cov.coverageName + " (" + cov.description + ")"
                                             }).join(", ")}</td>
                                         </tr>
                                     )
                                 })
-}
+                            }
                         </table>
-    
-                </Row>:
-                <h6>No Coverages</h6>
+
+                    </Row> :
+                    <h6>No Coverages</h6>
             }
 
-    </Container>
+        </Container>
     )
 }
 

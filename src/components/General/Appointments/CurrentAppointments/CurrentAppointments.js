@@ -69,7 +69,10 @@ function CurrentAppointments(props) {
 
 
     return (
-        <div className="coveragesParent">
+        <>
+              {
+            appointments.length > 0 ?
+            <div className="coveragesParent">
             <Row className="justify-content-md-center header">
                 <Col md="12">
                     <h3>Current Appointments</h3>
@@ -141,7 +144,12 @@ function CurrentAppointments(props) {
             </Row>
 
 
-        </div>
+        </div>:
+        <h3>No Appointments!</h3>
+        }
+        </>
+  
+       
     );
 }
 
