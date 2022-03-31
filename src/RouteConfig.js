@@ -20,7 +20,7 @@ import CreateDaignosis from "./components/Doctor/CreateDiagnosis/CreateDiagnosis
 
 export const routes = [
   {
-    path: "/dashboard",
+    path: "/",
     component: <Dashboard />,
   },
   {
