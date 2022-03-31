@@ -4,7 +4,7 @@ export const navLinks = {
   roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF", "DOCTOR", "HOSPITAL_STAFF"],
   ADMIN: {
     name: "Administrator",
-    availableLinks: ["dashboard", "users", "logs", "createUser", "transactions"],
+    availableLinks: ["dashboard", "appointments", "users", "logs", "createUser", "transactions", "viewClaims", "viewPolicies"],
   },
   PATIENT: {
     name: "Patient",
@@ -12,7 +12,8 @@ export const navLinks = {
       "dashboard",
       "appointments",
       "createAClaim",
-      "EnrollinPolicy"
+      "EnrollinPolicy",
+      "transactions"
     ],
   },
   DOCTOR: {
@@ -29,11 +30,11 @@ export const navLinks = {
   },
   INSURANCE_STAFF: {
     name: "Insurance Staff",
-    availableLinks: ["dashboard", "viewClaims", "viewPolicies", "coverages"],
+    availableLinks: ["dashboard", "viewClaims", "viewPolicies", "coverages", "users"],
   },
   HOSPITAL_STAFF: {
     name: "Hospital Staff",
-    availableLinks: ["dashboard", "appointments", "users", "createUser"]
+    availableLinks: ["dashboard", "appointments", "users", "createUser", "transactions"]
   },
   links: {
     dashboard: {

@@ -113,7 +113,7 @@ function CurrentAppointments(props) {
                                                     )
                                                 }
                                                 {
-                                                    userInfo.userData.role == "HOSPITAL_STAFF" && 
+                                                    (userInfo.userData.role == "HOSPITAL_STAFF" || userInfo.userData.role == "ADMIN") &&
                                                     <>
                                                     <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status !== "REQUESTED"} onClick={() => attendAppointment(appointment)}>
                                                         {appointment.appointment.status === "CANCELED" ? "CANCELED" : "APPROVE"}

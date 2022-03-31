@@ -146,7 +146,7 @@ const CreateUser = (props) => {
             </InputGroup>
           </Col>
         </Row>
-        {userInfo.isLoggedIn && (
+        {userInfo.isLoggedIn && userInfo.userData.user.roles[0].role == 'ADMIN' && (
           <Row className="justify-content-md-center mb-3">
             <Col md="6">
               <Form.Select
