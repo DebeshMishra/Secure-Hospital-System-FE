@@ -1,0 +1,22 @@
+.floatLeft {
+  text-align: left;
+}
+
+.account {
+  margin-top: 5%;
+}
+
+.account-header {
+  margin-bottom: 2%;
+}
+
+.submit-button {
+}
+
+.cancel-button {
+  margin-left: 10px;
+}
+
+.EditButton{
+  width: 100%;
+}
