@@ -1,3 +1,5 @@
+import Appointments from "../components/General/Appointments/Appointments";
+
 export const navLinks = {
   roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF"],
   ADMIN: {
@@ -6,11 +8,24 @@ export const navLinks = {
   },
   PATIENT: {
     name: "Patient",
-    availableLinks: ["dashboard", "appointments", "diagnoses", "viewUserById", "createAClaim",],
+    availableLinks: [
+      "dashboard",
+      "appointment",
+      "createAClaim",
+      "EnrollinPolicy"
+    ],
+  },
+  DOCTOR: {
+    name: "Doctor",
+    availableLinks: [
+      "dashboard",
+      "appointment",
+      "users"
+    ]
   },
   LAB_STAFF: {
     name: "Lab Staff",
-    availableLinks: ["dashboard", "labTestReports", "labTests", "diagnoses"],
+    availableLinks: ["dashboard", "labTestReports", "labTests", "users"],
   },
   INSURANCE_STAFF: {
     name: "Insurance Staff",
@@ -18,12 +33,12 @@ export const navLinks = {
   },
   HOSPITAL_STAFF: {
     name: "Hospital Staff",
-    availableLinks: ["dashboard", "appointments", "records", "editUserHS", "diagnoses", "prescriptions", "labTestReports", "transactions",],
+    availableLinks: ["dashboard", "appointment", "users", "createUser"]
   },
   links: {
     dashboard: {
       name: "Dashboard",
-      url: "/dashboard",
+      url: "/",
     },
     coverages: {
       name: "Coverages",
@@ -44,6 +59,10 @@ export const navLinks = {
     viewPolicies: {
       name: "View Policies",
       url: "/viewPolicies",
+    },
+    EnrollinPolicy: {
+      name: "Enroll in Policy",
+      url: "/takePolicy"
     },
     users: {
       name: "Users",
@@ -77,10 +96,6 @@ export const navLinks = {
       name: "Lab Tests",
       url: "/labTests",
     },
-    records: {
-      name: "Patient Records",
-      url: "/records",
-    },
     editUser: {
       name: "Edit User",
       url: "/editUser",
@@ -97,5 +112,9 @@ export const navLinks = {
       name: "Transactions",
       url: "/transactions",
     },
+    userData: {
+      name: "Patient Records",
+      url: "/userData"
+    }
   },
 };

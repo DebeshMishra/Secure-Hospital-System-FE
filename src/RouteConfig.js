@@ -4,7 +4,8 @@ import CreateUser from "./components/General/CreateUserComponent/CreateUser";
 import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
 import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
-import Users from "./components/Admin/Users/Users";
+import Users from "./components/Admin/users/Users";
+
 import ViewClaims from "./components/InsuranceStaff/ViewClaims/ViewClaims";
 import Coverages from "./components/InsuranceStaff/Coverages/Coverages";
 import CreatePolicy from "./components/InsuranceStaff/Policies/CreatePolicy/createPolicy";
@@ -17,10 +18,15 @@ import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
 import Transactions from "./components/General/Transactions/Transactions";
 import AdminEditUser from "./components/Admin/EditUsers/EditUser"
 import HospitalStaffEditUser from "./components/HospitalStaff/EditUsers/EditUser"
+import PatientRecord from './components/Patient/User/PatientRecord'
+import AppointmentConfirmation from "./components/HospitalStaff/AppointmentConfirmation/AppointmentConfirmation";
+import CreateDaignosis from "./components/Doctor/CreateDiagnosis/CreateDiagnosis";
+import TakePolicy from "./components/Patient/TakePolicy/TakePolicy";
+import EditUser from "./components/Admin/EditUsers/EditUser";
 
 export const routes = [
   {
-    path: "/dashboard",
+    path: "/",
     component: <Dashboard />,
   },
   {
@@ -37,7 +43,11 @@ export const routes = [
   },
   {
     path: "/users",
-    component: <Users />,
+    component: <Users/>
+  },
+  {
+    path: "/editUser",
+    component: <EditUser />
   },
   {
     path: "/viewClaims",
@@ -87,4 +97,20 @@ export const routes = [
     path: "/editUserHS",
     component: <HospitalStaffEditUser />
   },
+  {
+    path: "/userData",
+    component: <PatientRecord />
+  },
+  {
+    path: "/appointmentConfirmation",
+    component: <AppointmentConfirmation />
+  },
+   {
+    path: "/createDiagnosis",
+    component: <CreateDaignosis />
+  },
+  {
+    path: "/takePolicy",
+    component: <TakePolicy />
+  }
 ];
