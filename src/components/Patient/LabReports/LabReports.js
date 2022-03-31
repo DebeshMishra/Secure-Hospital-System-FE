@@ -97,23 +97,33 @@ function LabReports(props) {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col md="6">
+                                            <Col md="4">
                                                 <Row className="mb-3">
                                                     <Col sm="4">
-                                                        <b>Result:</b>
+                                                        <b>Doctor:</b>
                                                     </Col>
                                                     <Col sm="8">
                                                         <span>{labres.doctorName || '-'} </span>
                                                     </Col>
                                                 </Row>
                                             </Col>
-                                            <Col md="6">
+                                            <Col md="4">
                                                 <Row className="mb-3">
                                                     <Col sm="3">
-                                                        <b>Lab Staff Note:</b>
+                                                        <b>Patient:</b>
                                                     </Col>
                                                     <Col sm="9">
                                                         <span>{labres.patientName || "-"} </span>
+                                                    </Col>
+                                                </Row>
+                                            </Col>
+                                            <Col md="4">
+                                                <Row className="mb-3">
+                                                    <Col sm="3">
+                                                        <b>LabStaff:</b>
+                                                    </Col>
+                                                    <Col sm="9">
+                                                        <span>{labres.labStaffName || "-"} </span>
                                                     </Col>
                                                 </Row>
                                             </Col>

@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { getAllLabTests } from "../../../services/LabTests.services";
 import { createDiagnosis } from "../../../services/LabReports.services";
+import { completeAppointment } from "../../../services/users.service";
 
 function CreateDaignosis() {
 
@@ -30,15 +31,25 @@ function CreateDaignosis() {
 
     useEffect(() => {
         console.log(appointment);
-        setDiagnosisData({
-            doctorId: appointment.doctorId,
-            patientId: appointment.patientId,
-            appointmentId: appointment.appointment.id,
-            labTestIds: []
-
-        })
         getAllLabTests().then(response => {
             setLabTests(response.data);
+            const newData = {
+                doctorId: parseInt(appointment.doctorId),
+                patientId: parseInt(appointment.patientId),
+                appointmentId: parseInt(appointment.appointment.id),
+                diagnosis_info: appointment.appointment.diagnoses?.diagnosis_info || "",
+                prescription: appointment.appointment.diagnoses?.prescription || "",
+                labTestIds: []
+            }
+            response.data.forEach(lab => {
+                newData["lab"+lab.id] = false
+            })
+            appointment.appointment.diagnoses?.labResult.forEach(r => {
+                newData["lab"+r.labtests.id] = true;
+            })
+            setDiagnosisData(newData);
+            console.log(newData)
+            console.log(diagnosisData);
         });
     }, []);
 
@@ -48,8 +59,16 @@ function CreateDaignosis() {
             alert("please enter the diagnosis!");
             return;
         }
+        console.log(diagnosisData)
+        const newData = {...diagnosisData}
+        labTests.forEach(lab => {
+            if(newData["lab"+lab.id])
+                newData['labTestIds'].push(lab.id)
+            delete newData['lab'+lab.id]
+        })
+        console.log(newData);
         setSubmit(!submit);
-        createDiagnosis(diagnosisData).then(response => {
+        createDiagnosis(newData).then(response => {
             alert(response.data);
             setSubmit(!submit);
             navigate("/appointments")
@@ -63,23 +82,35 @@ function CreateDaignosis() {
         console.log(newdata)
     };
 
+    const closeAppointment = (e) => {
+        completeAppointment(diagnosisData.appointmentId).then(res => {
+            alert(res);
+        })
+        navigate("/appointments");
+    }
+
     const handleChangeCheckBox = (e) => {
-        const newdata = { ...diagnosisData };
-        if(newdata['labTestIds'].length == 0){
-            if (e.target.checked) {
-                newdata['labTestIds'] = [parseInt(e.target.value)];
-            }
+        const newData = { ...diagnosisData };
+        if(e.target.checked){
+            newData[e.target.id] = true;
         }else{
-            if (e.target.checked) {
-                newdata['labTestIds'].push(parseInt(e.target.value));
-            }else{
-                const index = newdata['labTestIds'].indexOf(parseInt(e.target.value));
-            if (index > -1) {
-                newdata['labTestIds'].splice(index, 1); // 2nd parameter means remove one item only
-            }
-            }
+            newData[e.target.id] = false;
         }
-        setDiagnosisData(newdata);
+        // if(newdata['labTestIds'].length == 0){
+        //     if (e.target.checked) {
+        //         newdata['labTestIds'] = [parseInt(e.target.value)];
+        //     }
+        // }else{
+        //     if (e.target.checked) {
+        //         newdata['labTestIds'].push(parseInt(e.target.value));
+        //     }else{
+        //         const index = newdata['labTestIds'].indexOf(parseInt(e.target.value));
+        //     if (index > -1) {
+        //         newdata['labTestIds'].splice(index, 1); // 2nd parameter means remove one item only
+        //     }
+        //     }
+        // }
+        setDiagnosisData(newData);
     }
 
     return (
@@ -89,7 +120,7 @@ function CreateDaignosis() {
             </Row>
 
             <Form onSubmit={handleSubmit}>
-                <Row className="mb-3">
+                    <Row className="mb-3">
                     <Col md="12">
                         <Form.Group>
                             <Form.Label id="basic-addon1" className='label-css'><b>Diagnosis: </b></Form.Label>
@@ -98,10 +129,12 @@ function CreateDaignosis() {
                                 placeholder="Diagnosis"
                                 aria-label="Diagnosis"
                                 id="diagnosis_info"
+                                name="diagnosis_info"
                                 autoComplete="off"
                                 onChange={handleChange}
                                 value={diagnosisData.diagnosis_info}
                                 required
+                                disabled={appointment.appointment.diagnoses!=null}
                                 type="text"
                             />
                         </Form.Group>
@@ -115,9 +148,11 @@ function CreateDaignosis() {
                                 as="textarea"
                                 placeholder="prescription"
                                 aria-label="prescription"
+                                name="presciption"
                                 id="prescription"
                                 onChange={handleChange}
                                 autoComplete="off"
+                                disabled={appointment.appointment.diagnoses!=null}
                                 value={diagnosisData.prescription}
                                 required
                                 type="text"
@@ -136,12 +171,14 @@ function CreateDaignosis() {
                                         <Form.Check
                                             inline
                                             key={index}
+                                            checked={diagnosisData["lab"+labtest.id]}
+                                            disabled={appointment.appointment.diagnoses!=null}
                                             label={labtest.labTestName + " ($" + labtest.labTestCost + ")"}
                                             name="labtests"
                                             type="checkbox"
                                             value={labtest.id}
                                             onChange={handleChangeCheckBox}
-                                            id={`inline-${labtest.labTestName}-1`}
+                                            id={"lab"+labtest.id}
                                         >
                                         </Form.Check>)
                                 })
@@ -149,11 +186,20 @@ function CreateDaignosis() {
                         </Form.Group>
                     </Col>
                 </Row>
+                
+                
                 <Row className="justify-content-md-center">
-                    <Col md="6">
+                    <Col md="3">
                         <Form.Group className="mb-3">
-                            <Button variant="primary" disabled={(submit)} type="submit" className="submit-button" >
-                                Add Diagnosis and complete appointment
+                            <Button variant="primary" disabled={(submit || appointment.appointment.diagnoses!=null || diagnosisData.prescription == "" || diagnosisData.diagnosis_info == "")} type="submit" className="submit-button" >
+                                Create Diagnosis
+                            </Button>
+                        </Form.Group>
+                    </Col>
+                    <Col md="3">
+                        <Form.Group className="mb-3">
+                            <Button variant="primary" type="submit" disabled={(diagnosisData?.prescription == "" && diagnosisData?.diagnosis_info == "") || appointment.appointment.status == "COMPLETED"} className="submit-button" onClick={closeAppointment}>
+                                Complete appointment
                             </Button>
                         </Form.Group>
                     </Col>

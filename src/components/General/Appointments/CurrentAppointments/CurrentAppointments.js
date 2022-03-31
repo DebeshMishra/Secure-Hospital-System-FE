@@ -84,7 +84,6 @@ function CurrentAppointments(props) {
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Modifications</th>
-                                {userInfo.userData.role != "PATIENT" && <th>Patient Record</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -93,57 +92,45 @@ function CurrentAppointments(props) {
                                     return (
                                         <tr key={index}>
                                             <td key={1}>{appointment.appointment.id}</td>
-                                            <td key={9}>{appointment.appointment.appointmentType}</td>
-                                            <td key={2}> {appointment.doctorFirstName != null && appointment.doctorLastName != null ? appointment.doctorFirstName + " " + appointment.doctorLastName : "-"}</td>
-                                            <td key={3}>{appointment.staffFirstname != null && appointment.staffLastName != null ? appointment.staffFirstname + " " + appointment.staffLastName : "-"}</td>
-                                            <td key={4}> {appointment.appointment.startTime}</td>
-                                            <td key={5}>{appointment.appointment.date}</td>
+                                            <td key={2}>{appointment.appointment.appointmentType}</td>
+                                            <td key={3}> {appointment.doctorFirstName != null && appointment.doctorLastName != null ? appointment.doctorFirstName + " " + appointment.doctorLastName : "-"}</td>
+                                            <td key={4}>{appointment.staffFirstname != null && appointment.staffLastName != null ? appointment.staffFirstname + " " + appointment.staffLastName : "-"}</td>
+                                            <td key={5}> {appointment.appointment.startTime}</td>
+                                            <td key={6}>{appointment.appointment.date}</td>
                                             <td key={7} >{appointment.appointment.status}</td>
-
-
-                                            {
-                                                (userInfo.userData.role == "DOCTOR" || userInfo.userData.role == "HOSPITAL_STAFF") ?
-                                                    <td key={6}>
-                                                        <div>
-                                                            <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "CANCELED" || appointment.appointment.appointmentType === "SPECIFIC"} onClick={() => attendAppointment(appointment)}>
-                                                                {appointment.appointment.status == "COMPLETED" ? "View" : appointment.appointment.status === "CANCELED" ? "Rejected" : appointment.appointment.appointmentType === "SPECIFIC" ? "Booked" : "Approve"}
-                                                            </Button>
-                                                        </div>
-                                                    </td> :
-                                                    <td key={10}>
-
-                                                        {
-                                                            (appointment.appointment.status === "COMPLETED" && userInfo.userData.role == "PATIENT") ?
-                                                                <Button variant="primary" className="submit-button" size="sm" onClick={() => viewPatient(appointment.patientId)}>
-                                                                    View Diagnosis
-                                                                </Button> :
-                                                                <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "CANCELED" || appointment.appointment.status === "COMPLETED"} onClick={() => cancelAppointmt(appointment.appointment.id)}>
-                                                                    {appointment.appointment.status == "CANCELED" ? "CANCELED" : "CANCEL"}
-                                                                </Button>
-                                                        }
-
-                                                    </td>
-                                            }
-
-                                            {
-                                                (userInfo.userData.role == "DOCTOR" || userInfo.userData.role == "HOSPITAL_STAFF") &&
-                                                <td key={12}>
-                                                    <Button variant="primary" className="submit-button" size="sm" onClick={() => viewPatient(appointment.patientId)}>
-                                                        {appointment.patientFirstName + " " + appointment.patientLastName}
+                                            <td key={8}>
+                                                {
+                                                    (userInfo.userData.role == "PATIENT" && 
+                                                    <>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "CANCELED" || appointment.appointment.status === "COMPLETED" || appointment.appointment.status === "PENDING" } onClick={() => cancelAppointmt(appointment.appointment.id)}>
+                                                        {appointment.appointment.status === "CANCELED" ? "CANCELED" : "CANCEL"}
                                                     </Button>
-                                                    {
-                                                        appointment.diagnosis == null && appointment.appointment.status == "APPROVED" &&
-                                                        <>
-                                                            <hr />
-                                                            <Button variant="primary" className="submit-button" size="sm" onClick={() => createDiagnosis(appointment)}>
-                                                                Write Diagnosis
-                                                            </Button>
-                                                        </>
-
-                                                    }
-
-                                                </td>
-                                            }
+                                                    <hr/>
+                                                    </>
+                                                    )
+                                                }
+                                                {
+                                                    userInfo.userData.role == "HOSPITAL_STAFF" && 
+                                                    <>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status !== "REQUESTED"} onClick={() => attendAppointment(appointment)}>
+                                                        {appointment.appointment.status === "CANCELED" ? "CANCELED" : "APPROVE"}
+                                                    </Button>
+                                                    <hr/>
+                                                    </>
+                                                }
+                                                 {
+                                                    userInfo.userData.role == "DOCTOR" && 
+                                                    <>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "COMPLETED" || appointment.appointment.status === "CANCELED"} onClick={() => createDiagnosis(appointment)}>
+                                                        { "WRITE DIAGNOSIS"}
+                                                    </Button>
+                                                    <hr/>
+                                                    </>
+                                                }
+                                                <Button variant="primary" className="submit-button" size="sm"  onClick={() => viewPatient(appointment.patientId)}>
+                                                        { "VIEW All DIAGNOSIS" }
+                                                    </Button>
+                                            </td>
                                         </tr>
                                     )
                                 })

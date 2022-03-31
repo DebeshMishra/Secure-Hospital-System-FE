@@ -73,9 +73,9 @@ function AppointmentConfirmation (props) {
     const updateAppointmt = (e) => {
         console.log(appointmentData);
         updateAppointment({
-            doctorId: appointmentData.doctorId.split(" - Name: ")[0],
-            appointmentId: app.appointment.id,
-            staffId: userInfo.userData.user.id,
+            doctorId: parseInt(appointmentData.doctorId.split(" - Name: ")[0]),
+            appointmentId: parseInt(app.appointment.id),
+            staffId: parseInt(userInfo.userData.user.id),
             status: "APPROVED",
             staffNote: ""
         }).then(response => {

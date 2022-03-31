@@ -148,3 +148,13 @@ export const updateAppointment = async (data) => {
     })
     return response.data;
 } 
+
+export const completeAppointment = async (data) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/appointment/completeAppointment?appointmentId='+ data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 

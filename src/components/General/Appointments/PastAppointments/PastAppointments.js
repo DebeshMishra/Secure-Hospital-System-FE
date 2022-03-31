@@ -24,6 +24,7 @@ function PastAppointments(props) {
 
     const [appointments, setAppointments] = useState([]);
     const [key, setKey] = useState('Current');
+    let navigate = useNavigate();
 
     const [cookies, setCookie, removeCookie] = useCookies([
         "JWTToken",
@@ -38,11 +39,10 @@ function PastAppointments(props) {
         })
     }, [])
 
-    const triggerBECall = (e) => {
-        if (e) {
-
-        }
-    };
+    const viewPatient = (id) => {
+        console.log(id);
+        navigate("/userData", { state: { userId: id } })
+    }
 
 
     return (
@@ -76,9 +76,12 @@ function PastAppointments(props) {
                                             <td key={5}>{appointment.appointment.date}</td>
                                             <td key={7}>{appointment.appointment.status}</td>
                                             <td key={6}>
-                                                <Button variant="primary" className="submit-button">
-                                                    View diagnosis
+                                                {
+                                                    appointment.appointment.status == "COMPLETED" && <Button variant="primary" className="submit-button" onClick={() => viewPatient(appointment.patientId)}>
+                                                    View All diagnosis
                                                 </Button>
+                                                }
+                                                
                                             </td>
                                         </tr>
                                     )
