@@ -17,6 +17,7 @@ import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
 import PatientRecord from './components/Patient/User/PatientRecord'
 import AppointmentConfirmation from "./components/HospitalStaff/AppointmentConfirmation/AppointmentConfirmation";
 import CreateDaignosis from "./components/Doctor/CreateDiagnosis/CreateDiagnosis";
+import TakePolicy from "./components/Patient/TakePolicy/TakePolicy";
 
 export const routes = [
   {
@@ -85,5 +86,9 @@ export const routes = [
   }, {
     path: "/createDiagnosis",
     component: <CreateDaignosis />
+  },
+  {
+    path: "/takePolicy",
+    component: <TakePolicy />
   }
 ];

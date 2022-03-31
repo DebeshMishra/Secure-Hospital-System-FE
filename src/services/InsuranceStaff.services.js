@@ -44,3 +44,15 @@ export const getPolicies = async () => {
 
     return response;
 }
+
+
+export const addPolicyToUser = async (patientId, policyId) => {
+    const response = await axios.post(SERVER_URL + '/api/insurance/addPolicyToUser?patientId='+patientId+"&policyId="+policyId, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+
+    return response.data;
+}
