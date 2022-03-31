@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Table from "../../Table/table.js";
-import { getUsersByQuery, blockUserByEmailId, unblockUserByEmailId } from "../../../services/users.service.js";
+import { getUsersByQuery, blockUserByEmailId, unblockUserByEmailId, getAllUsersByRole } from "../../../services/users.service.js";
 import {useDispatch, useSelector } from 'react-redux';
 import { getUserByEmailId } from "../../../services/authentication.service.js";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 
 
@@ -13,6 +13,7 @@ const Users = (props) => {
     const [rowData, setRowData] = useState([]);
     const [tableData, setTableData] = useState([])
     const editableUserInfo = useSelector((state) => state.editableUser);
+    const userInfo = useSelector((state) => state.user);
 
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -34,9 +35,16 @@ const Users = (props) => {
     }
 
     useEffect(() => {
-        getUsersByQuery("").then(response => {
-            setTableData(response)
-        })
+        if(userInfo.userData.user.roles[0].role != "ADMIN"){
+            getAllUsersByRole("PATIENT").then(response => {
+                setTableData(response)
+            })
+        }else{
+            getAllUsersByRole("ADMIN").then(response => {
+                setTableData(response)
+            })
+        }
+        
     },[]);
 
     const columns = useMemo(() => [
@@ -110,7 +118,7 @@ const Users = (props) => {
     };
 
     return (
-        <div>
+        <Container>
         <div >
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -138,7 +146,7 @@ const Users = (props) => {
             }}>
                 <Table columns={columns} data={tableData}/>
             </div>
-        </div>
+        </Container>
     )
 }
 export default Users
