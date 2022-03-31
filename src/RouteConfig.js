@@ -5,7 +5,6 @@ import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
 import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
 import Users from "./components/Admin/users/Users";
-import EditUser from "./components/Admin/editUsers/EditUser";
 
 import ViewClaims from "./components/InsuranceStaff/ViewClaims/ViewClaims";
 import Coverages from "./components/InsuranceStaff/Coverages/Coverages";
@@ -16,10 +15,14 @@ import Appointments from "./components/General/Appointments/Appointments";
 import LabTestReports from "./components/LabStaff/LabTestReports/LabTestReports";
 import UpdateLabTestReport from "./components/LabStaff/LabTestReports/UpdateLabTestReport";
 import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
+import Transactions from "./components/General/Transactions/Transactions";
+import AdminEditUser from "./components/Admin/EditUsers/EditUser"
+import HospitalStaffEditUser from "./components/HospitalStaff/EditUsers/EditUser"
 import PatientRecord from './components/Patient/User/PatientRecord'
 import AppointmentConfirmation from "./components/HospitalStaff/AppointmentConfirmation/AppointmentConfirmation";
 import CreateDaignosis from "./components/Doctor/CreateDiagnosis/CreateDiagnosis";
 import TakePolicy from "./components/Patient/TakePolicy/TakePolicy";
+import EditUser from "./components/Admin/EditUsers/EditUser";
 
 export const routes = [
   {
@@ -83,13 +86,26 @@ export const routes = [
     component: <LabTests />,
   },
   {
+    path: "/transactions",
+    component: <Transactions />,
+  },
+  {
+    path: "/editUser",
+    component: <AdminEditUser />
+  },
+  {
+    path: "/editUserHS",
+    component: <HospitalStaffEditUser />
+  },
+  {
     path: "/userData",
     component: <PatientRecord />
   },
   {
     path: "/appointmentConfirmation",
     component: <AppointmentConfirmation />
-  }, {
+  },
+   {
     path: "/createDiagnosis",
     component: <CreateDaignosis />
   },

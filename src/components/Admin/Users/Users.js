@@ -4,6 +4,7 @@ import { getUsersByQuery, blockUserByEmailId, unblockUserByEmailId } from "../..
 import {useDispatch, useSelector } from 'react-redux';
 import { getUserByEmailId } from "../../../services/authentication.service.js";
 import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 
 
 
@@ -68,17 +69,17 @@ const Users = (props) => {
             accessor: 'manage',
             Cell: ({ cell }) => (
                 <div>
-                    <button id="edit" onClick={()=>editRowOnClick(cell.row.values)} >
+                    <Button id="edit" onClick={()=>editRowOnClick(cell.row.values)} >
                     Edit
-                    </button>
+                    </Button>
                     &nbsp;&nbsp;&nbsp;
-                    <button id="block" onClick={()=>blockOnClick(cell.row.values)}>
+                    <Button id="block" onClick={()=>blockOnClick(cell.row.values)}>
                     Block
-                    </button>
+                    </Button>
                     &nbsp;&nbsp;&nbsp;
-                    <button id="block" onClick={()=>unblockOnClick(cell.row.values)}>
+                    <Button id="unblock" onClick={()=>unblockOnClick(cell.row.values)}>
                     Unblock
-                    </button>
+                    </Button>
                 </div>
 
 

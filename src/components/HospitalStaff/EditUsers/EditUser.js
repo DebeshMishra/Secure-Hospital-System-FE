@@ -13,20 +13,23 @@ import {
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import "../styles.css";
-import {
-  getUserByEmailId,
-  updateUserByEmailId,
-} from "../../../services/authentication.service";
+import "./styles.css";
+import { getUserByEmailId, updateUserByEmailId } from "../../../services/authentication.service";
 
-function UpdateLabTestReport(props) {
+function EditUser(props) {
   const [data, setData] = useState({});
-
-  const { state } = useLocation();
-  console.log(state);
-
+  
+  //console.log(state);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    updateUserByEmailId(data).then(response => {
+      console.log(response);
+      alert(response.data);
+      navigate("/users");
+    }, error => {
+      alert("Not Saved!");
+    });
   };
 
   const handleChange = (e) => {
@@ -37,19 +40,15 @@ function UpdateLabTestReport(props) {
 
   let navigate = useNavigate();
   const showForm = () => {
-    navigate("/labTestReports");
+    navigate("/users");
   };
 
-  useEffect(() => {
-    //console.log(state)
-    setData({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      lab_Test_Fee: state.lab_Test_Fee,
-      lab_Result_Status: state.lab_Result_Status,
-      details: state.details,
-    });
-  }, []);
+
+
+
+
+
+ 
 
   return (
     <Container className="account">
@@ -57,11 +56,7 @@ function UpdateLabTestReport(props) {
         <h2>Edit User</h2>
       </Row>
       <Row className="justify-content-md-center">
-        <Col
-          md="auto"
-          style={{
-            width: 1000,
-          }}>
+        <Col md="auto">
           <Form onSubmit={handleSubmit}>
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">First Name</InputGroup.Text>
@@ -69,7 +64,6 @@ function UpdateLabTestReport(props) {
                 placeholder="First Name"
                 aria-label="First Name"
                 id="firstName"
-                value={data.firstName}
                 onChange={handleChange}
                 required
                 type="text"
@@ -81,55 +75,37 @@ function UpdateLabTestReport(props) {
                 placeholder="Last Name"
                 aria-label="Last Name"
                 id="lastName"
-                value={data.lastName}
                 onChange={handleChange}
                 type="text"
                 required
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">Fee</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">Email</InputGroup.Text>
               <FormControl
-                placeholder="Fee"
-                aria-label="Fee"
-                id="lab_Test_Fee"
-                value={data.lab_Test_Fee}
+                placeholder="Email Address"
+                aria-label="Email Address"
+                id="email"
                 onChange={handleChange}
-                type="text"
+                type="email"
                 required
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">Status</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">Phone</InputGroup.Text>
               <FormControl
-                placeholder="Status"
-                aria-label="Status"
-                id="lab_Result_Status"
-                value={data.lab_Result_Status}
+                placeholder="Phone"
+                aria-label="Phone"
+                id="phone"
                 onChange={handleChange}
                 type="text"
                 required
               />
-            </InputGroup>
-            <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">Details</InputGroup.Text>
-              <textarea
-                rows = "10"
-                class="form-control"
-                placeholder="Details"
-                aria-label="Details"
-                id="details"
-                value={data.details}
-                onChange={handleChange}
-                type="text"
-                required
-              />
-              
             </InputGroup>
             <Form.Group className="mb-3">
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
+              <Button variant="primary"
+                type="submit"
+              >Submit</Button>
               <Button
                 type="Button"
                 className="cancel-button"
@@ -144,4 +120,4 @@ function UpdateLabTestReport(props) {
   );
 }
 
-export default UpdateLabTestReport;
+export default EditUser;

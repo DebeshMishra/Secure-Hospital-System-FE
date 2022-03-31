@@ -19,7 +19,7 @@ import {
   updateUserByEmailId,
 } from "../../../services/authentication.service";
 
-function UpdateLabTestReport(props) {
+function CreateLabTestReport(props) {
   const [data, setData] = useState({});
 
   const handleSubmit = async (e) => {
@@ -40,7 +40,7 @@ function UpdateLabTestReport(props) {
   return (
     <Container className="account">
       <Row className="justify-content-md-center account-header">
-        <h2>Edit User</h2>
+        <h2>CreateLabTestReport</h2>
       </Row>
       <Row className="justify-content-md-center">
         <Col
@@ -96,6 +96,7 @@ function UpdateLabTestReport(props) {
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">Details</InputGroup.Text>
               <textarea
+                rows = "10"
                 class="form-control"
                 placeholder="Details"
                 aria-label="Details"
@@ -123,4 +124,4 @@ function UpdateLabTestReport(props) {
   );
 }
 
-export default UpdateLabTestReport;
+export default CreateLabTestReport;

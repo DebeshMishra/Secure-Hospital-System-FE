@@ -7,7 +7,7 @@ function Table({ columns, data }) {
         headerGroups,
         rows,
         prepareRow
-    } = useTable({columns, data});
+    } = useTable({ columns, data });
 
 
     return (
@@ -19,10 +19,11 @@ function Table({ columns, data }) {
                     <tr {...headerGroup.getHeaderGroupProps()}
                     >
                         {headerGroup.headers.map(column => (
-                            <th 
-                                style={{padding: '10px',border: 'solid 2px Black',
-                              }}
-                              {...column.getHeaderProps()}>{column.render("Header")}</th>
+                            <th
+                                style={{
+                                    padding: '10px', border: 'solid 2px Black',
+                                }}
+                                {...column.getHeaderProps()}>{column.render("Header")}</th>
                         ))}
                     </tr>
                 ))}
@@ -31,10 +32,17 @@ function Table({ columns, data }) {
                 {rows.map((row, i) => {
                     prepareRow(row);
                     return (
-                        <tr {...row.getRowProps()}>
+                        <tr
+                            style={{
+                                padding: '10px', border: 'solid 2px Black',
+                            }}
+                            {...row.getRowProps()}>
                             {row.cells.map(cell => {
-                                return <td style={{padding: '10px',border: 'solid 2px Black',}}
-                                {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                                return <td
+                                    style={{
+                                        padding: '10px', border: 'solid 2px Black', maxWidth: '800px'
+                                    }}
+                                    {...cell.getCellProps()}>{cell.render("Cell")}</td>;
                             })}
                         </tr>
                     );

@@ -13,7 +13,7 @@ import {
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
-import "../styles.css";
+import "./styles.css";
 import {
   getUserByEmailId,
   updateUserByEmailId,
@@ -21,9 +21,6 @@ import {
 
 function UpdateLabTestReport(props) {
   const [data, setData] = useState({});
-
-  const { state } = useLocation();
-  console.log(state);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,17 +36,6 @@ function UpdateLabTestReport(props) {
   const showForm = () => {
     navigate("/labTestReports");
   };
-
-  useEffect(() => {
-    //console.log(state)
-    setData({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      lab_Test_Fee: state.lab_Test_Fee,
-      lab_Result_Status: state.lab_Result_Status,
-      details: state.details,
-    });
-  }, []);
 
   return (
     <Container className="account">
@@ -69,7 +55,6 @@ function UpdateLabTestReport(props) {
                 placeholder="First Name"
                 aria-label="First Name"
                 id="firstName"
-                value={data.firstName}
                 onChange={handleChange}
                 required
                 type="text"
@@ -81,7 +66,6 @@ function UpdateLabTestReport(props) {
                 placeholder="Last Name"
                 aria-label="Last Name"
                 id="lastName"
-                value={data.lastName}
                 onChange={handleChange}
                 type="text"
                 required
@@ -93,7 +77,6 @@ function UpdateLabTestReport(props) {
                 placeholder="Fee"
                 aria-label="Fee"
                 id="lab_Test_Fee"
-                value={data.lab_Test_Fee}
                 onChange={handleChange}
                 type="text"
                 required
@@ -105,7 +88,6 @@ function UpdateLabTestReport(props) {
                 placeholder="Status"
                 aria-label="Status"
                 id="lab_Result_Status"
-                value={data.lab_Result_Status}
                 onChange={handleChange}
                 type="text"
                 required
@@ -114,17 +96,14 @@ function UpdateLabTestReport(props) {
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">Details</InputGroup.Text>
               <textarea
-                rows = "10"
                 class="form-control"
                 placeholder="Details"
                 aria-label="Details"
                 id="details"
-                value={data.details}
                 onChange={handleChange}
                 type="text"
                 required
               />
-              
             </InputGroup>
             <Form.Group className="mb-3">
               <Button variant="primary" type="submit">

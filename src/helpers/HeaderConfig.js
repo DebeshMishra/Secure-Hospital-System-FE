@@ -4,7 +4,7 @@ export const navLinks = {
   roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF"],
   ADMIN: {
     name: "Administrator",
-    availableLinks: ["dashboard", "users", "logs", "createUser"],
+    availableLinks: ["dashboard", "users", "logs", "createUser", "transactions"],
   },
   PATIENT: {
     name: "Patient",
@@ -72,13 +72,13 @@ export const navLinks = {
       name: "Logs",
       url: "/logs",
     },
-    appointment: {
+    appointments: {
       name: "Appointments",
       url: "/appointments",
     },
-    diagnosis: {
-      name: "Diagnosis",
-      url: "/diagnosis",
+    diagnoses: {
+      name: "Diagnoses",
+      url: "/diagnoses",
     },
     viewUserById: {
       name: "View user",
@@ -95,6 +95,22 @@ export const navLinks = {
     labTests: {
       name: "Lab Tests",
       url: "/labTests",
+    },
+    editUser: {
+      name: "Edit User",
+      url: "/editUser",
+    },
+    editUserHS: {
+      name: "Edit User",
+      url: "/editUserHS",
+    },
+    prescriptions: {
+      name: "View Prescriptions",
+      url: "/prescriptions",
+    },
+    transactions: {
+      name: "Transactions",
+      url: "/transactions",
     },
     userData: {
       name: "Patient Records",
