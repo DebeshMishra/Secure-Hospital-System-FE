@@ -1,21 +1,42 @@
 import React, { useEffect, useMemo, useState } from "react";
-import "./Users.css";
 import Table from "../../Table/table.js";
-import { getUsersByQuery } from "../../../services/users.service.js";
+import { getUsersByQuery, blockUserByEmailId, unblockUserByEmailId } from "../../../services/users.service.js";
+import {useDispatch, useSelector } from 'react-redux';
+import { getUserByEmailId } from "../../../services/authentication.service.js";
+import { useNavigate } from "react-router-dom";
 
 
 
 const Users = (props) => {
     const [data, setData] = useState({ query: "" });
-    const [rowData, setRowData] = useState("");
+    const [rowData, setRowData] = useState([]);
+    const [tableData, setTableData] = useState([])
+    const editableUserInfo = useSelector((state) => state.editableUser);
+
+    const dispatch = useDispatch();
+    let navigate = useNavigate();
 
     const editRowOnClick = (rowInfo) =>{
-        setRowData(rowInfo)
+        navigate("/editUser", {state: rowInfo})
     }
 
-    const deleteRowOnClick = (rowInfo) =>{
-        setRowData(rowInfo)
+    const blockOnClick = (rowInfo) =>{
+        blockUserByEmailId(rowInfo, data.query).then(response => {
+            setTableData(response)
+        })
     }
+
+    const unblockOnClick = (rowInfo) =>{
+        unblockUserByEmailId(rowInfo, data.query).then(response => {
+            setTableData(response)
+        })
+    }
+
+    useEffect(() => {
+        getUsersByQuery("").then(response => {
+            setTableData(response)
+        })
+    },[]);
 
     const columns = useMemo(() => [
         {
@@ -30,16 +51,33 @@ const Users = (props) => {
             Header: 'Email',
             accessor: 'email'
         },
+        {     
+            Header: 'Enabled',
+            accessor: e => {
+                let str = e.enabled.toString()
+                let output = str.substring(0, 1).toUpperCase() + str.substring(1);
+                return output;
+            }
+        },
+        {
+            Header: 'Phone',
+            accessor: 'phone'
+        },
         {
             Header: 'Manage Users',
             accessor: 'manage',
             Cell: ({ cell }) => (
                 <div>
-                    <button id="edit" onClick={()=>editRowOnClick(cell.row.values)}>
+                    <button id="edit" onClick={()=>editRowOnClick(cell.row.values)} >
                     Edit
                     </button>
-                    <button id="delete" onClick={()=>deleteRowOnClick(cell.row.values)}>
-                    Delete
+                    &nbsp;&nbsp;&nbsp;
+                    <button id="block" onClick={()=>blockOnClick(cell.row.values)}>
+                    Block
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button id="block" onClick={()=>unblockOnClick(cell.row.values)}>
+                    Unblock
                     </button>
                 </div>
 
@@ -47,54 +85,16 @@ const Users = (props) => {
               )
         }
     ])
-    //let tableData = useState([]) 
-    //place holder data to see formatting of table
-    let tableData = useMemo(() => [
-        {
-            lastName: 'Parrish',
-            firstName: 'Kim',
-            email: 'kparrish@asu.edu',
-
-        },
-        {
-            lastName: 'Smith',
-            firstName: 'John',
-            email: 'jsmith@asu.edu',
-        },
-        {
-            lastName: 'Doe',
-            firstName: 'John',
-            email: 'jdoe@asu.edu',
-        },
-        {
-            lastName: 'Doe',
-            firstName: 'Jane',
-            email: 'jdoe2@asu.edu',
-        },
-        {
-            lastName: 'Castle',
-            firstName: 'Frank',
-            email: 'fcastle@asu.edu',
-        },
-        {
-            lastName: 'Allen',
-            firstName: 'Barry',
-            email: 'ballen@asu.edu',
-        },
-        {
-            lastName: 'obscenely',
-            firstName: 'random',
-            email: 'robscenelylongusernameemailpassword@asu.edu',
-        },
-    ])
-
-
+   
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(data);
-        console.log(data.email);
+        //console.log(data);
         //TODO handle Search API here
-        tableData = getUsersByQuery(data)
+        getUsersByQuery(data.query).then(response => {
+            setTableData(response)
+        })
+              
     }
 
     //useEffect(() => {
@@ -110,9 +110,9 @@ const Users = (props) => {
 
     return (
         <div>
+        <div >
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Search</label>
                     <br />
                     <input type="string"
                         className="form-control"
@@ -128,8 +128,15 @@ const Users = (props) => {
                 </button>
             </form>
             <br />
-            <Table columns={columns} data={tableData} />
-
+        </div>
+            <div
+            style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+            }}>
+                <Table columns={columns} data={tableData}/>
+            </div>
         </div>
     )
 }
