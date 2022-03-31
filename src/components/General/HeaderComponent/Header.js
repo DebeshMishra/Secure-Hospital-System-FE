@@ -90,6 +90,7 @@ function Header(props) {
                   {userInfo.userData.role &&
                     navLinks[userInfo.userData.role].availableLinks.map(
                       (item, index) => {
+                        console.log(item);
                         return (
                           <Nav.Item key={index}>
                             <Nav.Link

@@ -1,7 +1,7 @@
 import Appointments from "../components/General/Appointments/Appointments";
 
 export const navLinks = {
-  roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF"],
+  roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF", "DOCTOR", "HOSPITAL_STAFF"],
   ADMIN: {
     name: "Administrator",
     availableLinks: ["dashboard", "users", "logs", "createUser", "transactions"],
@@ -10,7 +10,7 @@ export const navLinks = {
     name: "Patient",
     availableLinks: [
       "dashboard",
-      "appointment",
+      "appointments",
       "createAClaim",
       "EnrollinPolicy"
     ],
@@ -19,7 +19,7 @@ export const navLinks = {
     name: "Doctor",
     availableLinks: [
       "dashboard",
-      "appointment",
+      "appointments",
       "users"
     ]
   },
@@ -33,7 +33,7 @@ export const navLinks = {
   },
   HOSPITAL_STAFF: {
     name: "Hospital Staff",
-    availableLinks: ["dashboard", "appointment", "users", "createUser"]
+    availableLinks: ["dashboard", "appointments", "users", "createUser"]
   },
   links: {
     dashboard: {
