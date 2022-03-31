@@ -20,12 +20,12 @@ export const navLinks = {
     availableLinks: [
       "dashboard",
       "appointment",
-      "diagnosis"
+      "users"
     ]
   },
   LAB_STAFF: {
     name: "Lab Staff",
-    availableLinks: ["dashboard", "labTestReports", "labTests"],
+    availableLinks: ["dashboard", "labTestReports", "labTests", "users"],
   },
   INSURANCE_STAFF: {
     name: "Insurance Staff",
