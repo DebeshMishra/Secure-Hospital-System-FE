@@ -82,12 +82,7 @@ function CreateDaignosis() {
         console.log(newdata)
     };
 
-    const closeAppointment = (e) => {
-        completeAppointment(diagnosisData.appointmentId).then(res => {
-            alert(res);
-        })
-        navigate("/appointments");
-    }
+    
 
     const handleChangeCheckBox = (e) => {
         const newData = { ...diagnosisData };
@@ -196,13 +191,13 @@ function CreateDaignosis() {
                             </Button>
                         </Form.Group>
                     </Col>
-                    <Col md="3">
+                    {/* <Col md="3">
                         <Form.Group className="mb-3">
                             <Button variant="primary" type="submit" disabled={(diagnosisData?.prescription == "" && diagnosisData?.diagnosis_info == "") || appointment.appointment.status == "COMPLETED"} className="submit-button" onClick={closeAppointment}>
                                 Complete appointment
                             </Button>
                         </Form.Group>
-                    </Col>
+                    </Col> */}
                 </Row>
             </Form>
         </Container>

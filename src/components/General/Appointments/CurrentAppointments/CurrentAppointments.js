@@ -18,7 +18,7 @@ import {
 } from "react-bootstrap";
 import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
-import { cancelAppointment, getAllAppointments, getAllFutureAppointments } from "../../../../services/users.service";
+import { cancelAppointment, completeAppointment, getAllAppointments, getAllFutureAppointments } from "../../../../services/users.service";
 
 function CurrentAppointments(props) {
 
@@ -45,6 +45,17 @@ function CurrentAppointments(props) {
 
         }
     };
+
+    const closeAppointment = (appointment) => {
+        console.log(appointment);
+        completeAppointment(appointment.appointment.id).then(res => {
+            alert(res);
+            getAllFutureAppointments("").then(response => {
+                setAppointments(response);
+            });
+        })
+        
+    }
 
     const cancelAppointmt = (id) => {
         cancelAppointment(id).then(response => {
@@ -122,13 +133,19 @@ function CurrentAppointments(props) {
                                                     </>
                                                 }
                                                  {
-                                                    userInfo.userData.role == "DOCTOR" && 
+                                                    userInfo.userData.role == "DOCTOR"? appointment.appointment.status !== "PENDING"? 
                                                     <>
                                                     <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "COMPLETED" || appointment.appointment.status === "CANCELED"} onClick={() => createDiagnosis(appointment)}>
                                                         { "WRITE DIAGNOSIS"}
                                                     </Button>
                                                     <hr/>
-                                                    </>
+                                                    </>:
+                                                    <>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "COMPLETED" || appointment.appointment.status === "CANCELED"} onClick={() => closeAppointment(appointment)}>
+                                                        { "Complete Appointment"}
+                                                    </Button>
+                                                    <hr/>
+                                                    </>: ""
                                                 }
                                                 <Button variant="primary" className="submit-button" size="sm"  onClick={() => viewPatient(appointment.patientId)}>
                                                         { "VIEW All DIAGNOSIS" }

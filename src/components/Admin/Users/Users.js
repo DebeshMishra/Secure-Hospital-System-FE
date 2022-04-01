@@ -40,14 +40,26 @@ const Users = (props) => {
                 setTableData(response)
             })
         }else{
-            getAllUsersByRole("ADMIN").then(response => {
+            getAllUsersByRole("").then(response => {
                 setTableData(response)
             })
         }
         
     },[]);
 
+    const viewPatient = (user) => {
+        navigate("/userData", { state: { userId: user.id } })
+    }
+
     const columns = useMemo(() => [
+        {
+            Header: 'Id',
+            accessor: 'id'
+        },
+        {
+            Header: 'Role',
+            accessor: 'roles[0].role'
+        },
         {
             Header: 'Last Name',
             accessor: 'lastName'
@@ -72,6 +84,7 @@ const Users = (props) => {
             Header: 'Phone',
             accessor: 'phone'
         },
+   
         {
             Header: 'Manage Users',
             accessor: 'manage',
@@ -87,6 +100,10 @@ const Users = (props) => {
                     &nbsp;&nbsp;&nbsp;
                     <Button id="unblock" onClick={()=>unblockOnClick(cell.row.values)}>
                     Unblock
+                    </Button>
+                    &nbsp;&nbsp;&nbsp;
+                    <Button id="View User"  onClick={() => viewPatient(cell.row.values)}>
+                        { "VIEW All DIAGNOSIS" }
                     </Button>
                 </div>
 

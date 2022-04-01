@@ -82,7 +82,7 @@ function Header(props) {
     <>
       <Navbar className="navbar-dark bg-dark" sticky="top">
         <Container>
-          <Navbar.Brand href={"/"}>{AppConstants.appName}</Navbar.Brand>
+          <Navbar.Brand>{AppConstants.appName}</Navbar.Brand>
           <Navbar.Collapse id="responsive-navbar-nav">
             {userInfo.isLoggedIn && (
               <>
