@@ -21,9 +21,15 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
+import { requestOTP, confirmOTP } from "../../../services/ForgotPwd.service";
 
 const ForgotPwd = (props) => {
-  const [data, setData] = useState({ email: "", password: "" });
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    otp: "",
+    password1: "",
+  });
   const [cookies, setCookie, removeCookie] = useCookies([
     "JWTToken",
     "emailId",
@@ -38,6 +44,14 @@ const ForgotPwd = (props) => {
   const handleOTP = async (e) => {
     e.preventDefault();
     setToggleOTP(!toggleOTPSection);
+    requestOTP(data).then((response) => {
+      setData(response.data);
+      console.log(data);
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     // dispatch(removeUserData());
     // loginAPI(data).then((response) => {
     //   dispatch(
@@ -46,22 +60,8 @@ const ForgotPwd = (props) => {
     //       userData: { email: data.email, user: {} },
     //     })
     //   );
-    //   navigate("/");
+    //   navigate("/createNewPwd");
     // });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    dispatch(removeUserData());
-    loginAPI(data).then((response) => {
-      dispatch(
-        setAllData({
-          jwtToken: response.data.token,
-          userData: { email: data.email, user: {} },
-        })
-      );
-      navigate("/createNewPwd");
-    });
   };
 
   // when chrome refresh happens
@@ -95,6 +95,7 @@ const ForgotPwd = (props) => {
                   value={data.email}
                   onChange={handleChange}
                   type="email"
+                  required={true}
                 />
                 <InputGroup.Text id="basic-addon2">
                   @example.com
@@ -147,6 +148,41 @@ const ForgotPwd = (props) => {
                   value={data.otp}
                   onChange={handleChange}
                   type="text"
+                  required={true}
+                />
+              </InputGroup>
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center mb-3">
+            <Col md="4">
+              <InputGroup>
+                <InputGroup.Text id="basic-addon1">Password</InputGroup.Text>
+                <FormControl
+                  placeholder="Password"
+                  aria-label="Password"
+                  id="password"
+                  required={true}
+                  value={data.password}
+                  onChange={handleChange}
+                  type="password"
+                />
+              </InputGroup>
+            </Col>
+          </Row>
+          <Row className="justify-content-md-center mb-3">
+            <Col md="4">
+              <InputGroup>
+                <InputGroup.Text id="basic-addon1">
+                  Re-Enter Password
+                </InputGroup.Text>
+                <FormControl
+                  placeholder="Password"
+                  aria-label="Password"
+                  id="password"
+                  required={true}
+                  value={data.password1}
+                  onChange={handleChange}
+                  type="password"
                 />
               </InputGroup>
             </Col>

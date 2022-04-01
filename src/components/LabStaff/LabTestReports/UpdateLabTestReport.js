@@ -54,7 +54,7 @@ function UpdateLabTestReport(props) {
   return (
     <Container className="account">
       <Row className="justify-content-md-center account-header">
-        <h2>Edit User</h2>
+        <h2>Edit Lab Test Report</h2>
       </Row>
       <Row className="justify-content-md-center">
         <Col
@@ -64,36 +64,50 @@ function UpdateLabTestReport(props) {
           }}>
           <Form onSubmit={handleSubmit}>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">First Name</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">Patient Name</InputGroup.Text>
               <FormControl
-                placeholder="First Name"
-                aria-label="First Name"
-                id="firstName"
-                value={data.firstName}
+                placeholder="Patient Name"
+                aria-label="Patient Name"
+                id="patientName"
+                value={data.patientName}
                 onChange={handleChange}
                 required
                 type="text"
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">Last Name</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">Doctor Name</InputGroup.Text>
               <FormControl
-                placeholder="Last Name"
-                aria-label="Last Name"
-                id="lastName"
-                value={data.lastName}
+                placeholder="Doctor Name"
+                aria-label="Doctor Name"
+                id="doctorName"
+                value={data.doctorName}
                 onChange={handleChange}
                 type="text"
                 required
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">Fee</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">
+                Lab Staff Name
+              </InputGroup.Text>
               <FormControl
-                placeholder="Fee"
-                aria-label="Fee"
-                id="lab_Test_Fee"
-                value={data.lab_Test_Fee}
+                placeholder="Lab Staff Name"
+                aria-label="Lab Staff Name"
+                id="labStaffName"
+                value={data.labStaffName}
+                onChange={handleChange}
+                type="text"
+                required
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">Lab Test</InputGroup.Text>
+              <FormControl
+                placeholder="Lab Test"
+                aria-label="Lab Test"
+                id="labTestId"
+                value={data.labTestId}
                 onChange={handleChange}
                 type="text"
                 required
@@ -104,27 +118,40 @@ function UpdateLabTestReport(props) {
               <FormControl
                 placeholder="Status"
                 aria-label="Status"
-                id="lab_Result_Status"
-                value={data.lab_Result_Status}
+                id="labResultStatus"
+                value={data.labResultStatus}
                 onChange={handleChange}
                 type="text"
                 required
               />
             </InputGroup>
             <InputGroup className="mb-3">
-              <InputGroup.Text id="basic-addon1">Details</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">
+                Lab Staff Notes
+              </InputGroup.Text>
               <textarea
-                rows = "10"
+                rows="10"
                 class="form-control"
-                placeholder="Details"
-                aria-label="Details"
-                id="details"
-                value={data.details}
+                placeholder="Lab Staff Notes"
+                aria-label="Lab Staff Notes"
+                id="labStaffNotes"
+                value={data.labStaffNotes}
                 onChange={handleChange}
                 type="text"
                 required
               />
-              
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">Result</InputGroup.Text>
+              <FormControl
+                placeholder="Result"
+                aria-label="Result"
+                id="result"
+                value={data.result}
+                onChange={handleChange}
+                type="text"
+                required
+              />
             </InputGroup>
             <Form.Group className="mb-3">
               <Button variant="primary" type="submit">

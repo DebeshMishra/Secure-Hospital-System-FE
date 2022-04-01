@@ -18,7 +18,6 @@ import { routes } from "./RouteConfig";
 import { history } from "./helpers/history";
 import Logs from "./components/Admin/Logs";
 import ForgotPwd from "./components/General/LoginComponent/ForgotPwd";
-import CreateNewPwd from "./components/General/LoginComponent/CreateNewPwd";
 
 function App() {
   const [userData, setUserData] = useState({ isLoggedIn: false });
@@ -61,7 +60,7 @@ function App() {
   const ProtectRouteLogin = (props) => {
     const user = useSelector((state) => state.user);
 
-    const route = !user.isLoggedIn ? <Outlet /> : <Navigate to="/dashboard" />;
+    const route = !user.isLoggedIn ? <Outlet /> : <Navigate to="/" />;
     console.log(route);
     return route;
   };
@@ -96,14 +95,8 @@ function App() {
                   })}
                 </Route>
                 <Route exact path="/" element={<ProtectRouteLogin />}>
-                  <Route exact path="/" element={<Login />} />
                   <Route exact path="/login" element={<Login />} />
                   <Route exact path="/forgotPwd" element={<ForgotPwd />} />
-                  <Route
-                    exact
-                    path="/createNewPwd"
-                    element={<CreateNewPwd />}
-                  />
                 </Route>
                 <Route exact path="/createUser" element={<CreateUser />} />
                 <Route exact path="/logs" element={<Logs />} />

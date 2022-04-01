@@ -76,7 +76,7 @@ const CreateUser = (props) => {
                 id="firstName"
                 value={registrationdata.firstName}
                 onChange={handleChange}
-                required
+                required={true}
                 type="text"
               />
             </InputGroup>
@@ -92,7 +92,7 @@ const CreateUser = (props) => {
                 id="lastName"
                 value={registrationdata.lastName}
                 onChange={handleChange}
-                required
+                required={true}
                 type="text"
               />
             </InputGroup>
@@ -107,11 +107,28 @@ const CreateUser = (props) => {
                 aria-label="Email address"
                 id="email"
                 value={registrationdata.email}
-                required
+                required={true}
                 onChange={handleChange}
                 type="email"
               />
               <InputGroup.Text id="basic-addon2">@example.com</InputGroup.Text>
+            </InputGroup>
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center mb-3">
+          <Col md="6">
+            <InputGroup>
+              <InputGroup.Text id="basic-addon1">Date of Birth</InputGroup.Text>
+              <FormControl
+                placeholder="Date of Birth"
+                aria-label="Date of Birth"
+                id="date"
+                autoComplete="off"
+                value={registrationdata.dob}
+                onChange={handleChange}
+                required={true}
+                type="date"
+              />
             </InputGroup>
           </Col>
         </Row>
@@ -123,7 +140,7 @@ const CreateUser = (props) => {
                 placeholder="Password"
                 aria-label="Password"
                 id="password"
-                required
+                required={true}
                 value={registrationdata.password}
                 onChange={handleChange}
                 type="password"
@@ -146,25 +163,26 @@ const CreateUser = (props) => {
             </InputGroup>
           </Col>
         </Row>
-        {userInfo.isLoggedIn && userInfo.userData.user.roles[0].role == 'ADMIN' && (
-          <Row className="justify-content-md-center mb-3">
-            <Col md="6">
-              <Form.Select
-                aria-label="Default select example"
-                value={registrationdata.role}
-                id="role"
-                onChange={handleChange}>
-                <option>Select Roles</option>
-                <option value="PATIENT">Patient</option>
-                <option value="ADMIN">Admin</option>
-                <option value="HOSPITAL_STAFF">Hospital Staff</option>
-                <option value="LAB_STAFF">Lab Staff</option>
-                <option value="INSURANCE_STAFF">Insurance Staff</option>
-                <option value="DOCTOR">Doctor</option>
-              </Form.Select>
-            </Col>
-          </Row>
-        )}
+        {userInfo.isLoggedIn &&
+          userInfo.userData.user.roles[0].role == "ADMIN" && (
+            <Row className="justify-content-md-center mb-3">
+              <Col md="6">
+                <Form.Select
+                  aria-label="Default select example"
+                  value={registrationdata.role}
+                  id="role"
+                  onChange={handleChange}>
+                  <option>Select Roles</option>
+                  <option value="PATIENT">Patient</option>
+                  <option value="ADMIN">Admin</option>
+                  <option value="HOSPITAL_STAFF">Hospital Staff</option>
+                  <option value="LAB_STAFF">Lab Staff</option>
+                  <option value="INSURANCE_STAFF">Insurance Staff</option>
+                  <option value="DOCTOR">Doctor</option>
+                </Form.Select>
+              </Col>
+            </Row>
+          )}
 
         <Row className="justify-content-md-center mb-3">
           <Col md="6">
