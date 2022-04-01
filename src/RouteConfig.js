@@ -4,7 +4,7 @@ import CreateUser from "./components/General/CreateUserComponent/CreateUser";
 import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
 import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
-import Users from "./components/Admin/users/Users";
+import Users from "./components/Admin/Users/Users";
 
 import ViewClaims from "./components/InsuranceStaff/ViewClaims/ViewClaims";
 import Coverages from "./components/InsuranceStaff/Coverages/Coverages";
@@ -16,9 +16,9 @@ import LabTestReports from "./components/LabStaff/LabTestReports/LabTestReports"
 import UpdateLabTestReport from "./components/LabStaff/LabTestReports/UpdateLabTestReport";
 import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
 import Transactions from "./components/General/Transactions/Transactions";
-import AdminEditUser from "./components/Admin/EditUsers/EditUser"
-import HospitalStaffEditUser from "./components/HospitalStaff/EditUsers/EditUser"
-import PatientRecord from './components/Patient/User/PatientRecord'
+import AdminEditUser from "./components/Admin/EditUsers/EditUser";
+import HospitalStaffEditUser from "./components/HospitalStaff/EditUsers/EditUser";
+import PatientRecord from "./components/Patient/User/PatientRecord";
 import AppointmentConfirmation from "./components/HospitalStaff/AppointmentConfirmation/AppointmentConfirmation";
 import CreateDaignosis from "./components/Doctor/CreateDiagnosis/CreateDiagnosis";
 import TakePolicy from "./components/Patient/TakePolicy/TakePolicy";
@@ -43,11 +43,11 @@ export const routes = [
   },
   {
     path: "/users",
-    component: <Users/>
+    component: <Users />,
   },
   {
     path: "/editUser",
-    component: <EditUser />
+    component: <EditUser />,
   },
   {
     path: "/viewClaims",
@@ -91,26 +91,26 @@ export const routes = [
   },
   {
     path: "/editUser",
-    component: <AdminEditUser />
+    component: <AdminEditUser />,
   },
   {
     path: "/editUserHS",
-    component: <HospitalStaffEditUser />
+    component: <HospitalStaffEditUser />,
   },
   {
     path: "/userData",
-    component: <PatientRecord />
+    component: <PatientRecord />,
   },
   {
     path: "/appointmentConfirmation",
-    component: <AppointmentConfirmation />
+    component: <AppointmentConfirmation />,
   },
-   {
+  {
     path: "/createDiagnosis",
-    component: <CreateDaignosis />
+    component: <CreateDaignosis />,
   },
   {
     path: "/takePolicy",
-    component: <TakePolicy />
-  }
+    component: <TakePolicy />,
+  },
 ];
