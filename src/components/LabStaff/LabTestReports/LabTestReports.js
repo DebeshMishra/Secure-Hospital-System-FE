@@ -2,134 +2,94 @@ import React, { useEffect, useMemo, useState } from "react";
 import Table from "../../Table/table.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { getAllLabReports } from "../../../services/LabReports.services.js";
 
 const LabTestReports = (props) => {
   const [data, setData] = useState({ query: "" });
+  const [labTests, setLabTests] = useState(null);
   const [rowData, setRowData] = useState([]);
-  //const [tableData, setTableData] = useState([])
+  const [tableData, setTableData] = useState([])
   const editableUserInfo = useSelector((state) => state.editableUser);
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
-  const updateRowOnClick = (rowInfo) => {
-    console.log(rowInfo);
-    navigate("/updateLabTestReport", { state: rowInfo });
-  };
-
   const deleteOnClick = (rowInfo) => {};
 
-  const createReport = () => {
-    navigate("/createLabTests");
+  const updateReport = (e) => {
+    console.log(e)
+    navigate("/updateLabTestReport", {state: { report: e}});
   };
 
-  useEffect(() => {
-    //Get Lab Reports Here
-  }, []);
+  const viewUser = (e) => {
+    console.log(e)
+  }
 
-  //Placeholder Data
-  let tableData = useMemo(() => [
-    {
-      reportID: "0",
-      lastName: "Parrish",
-      firstName: "Kim",
-      lab_Test_Fee: 1000.19,
-      lab_Result_Status: "Complete",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor diam est. Cras semper pharetra augue vehicula gravida. Cras semper eget lectus eu maximus. Etiam pharetra, magna posuere maximus placerat, velit mauris tristique est, eget ornare ex justo vel ex. Pellentesque tortor elit, pulvinar eget porta eget, dapibus ac felis. In tempus tempor lectus eu tempus. Aliquam odio libero, consequat sit amet ullamcorper venenatis, porta eu nibh. Suspendisse consectetur tincidunt maximus. Quisque ac mi quis dui suscipit rhoncus non sit amet ipsum. Ut velit ligula, aliquet in diam ut, feugiat mollis ante. Pellentesque ultricies mauris mauris, ut suscipit tortor rhoncus id. Nulla ante orci, varius sed finibus at, eleifend vitae arcu. Suspendisse potenti. Suspendisse id placerat magna, eget vulputate augue. Mauris dui augue, scelerisque in nisl sit amet, aliquam egestas urna. Cras iaculis ante sem, vulputate fermentum turpis vulputate quis.",
-    },
-    {
-      reportID: "1",
-      lastName: "Smith",
-      firstName: "John",
-      lab_Test_Fee: 2000.19,
-      lab_Result_Status: "Complete",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor diam est. Cras semper pharetra augue vehicula gravida. Cras semper eget lectus eu maximus. Etiam pharetra, magna posuere maximus placerat, velit mauris tristique est, eget ornare ex justo vel ex. Pellentesque tortor elit, pulvinar eget porta eget, dapibus ac felis. In tempus tempor lectus eu tempus. Aliquam odio libero, consequat sit amet ullamcorper venenatis, porta eu nibh. Suspendisse consectetur tincidunt maximus. Quisque ac mi quis dui suscipit rhoncus non sit amet ipsum. Ut velit ligula, aliquet in diam ut, feugiat mollis ante. Pellentesque ultricies mauris mauris, ut suscipit tortor rhoncus id. Nulla ante orci, varius sed finibus at, eleifend vitae arcu. Suspendisse potenti. Suspendisse id placerat magna, eget vulputate augue. Mauris dui augue, scelerisque in nisl sit amet, aliquam egestas urna. Cras iaculis ante sem, vulputate fermentum turpis vulputate quis.",
-    },
-    {
-      reportID: "2",
-      lastName: "Doe",
-      firstName: "John",
-      lab_Test_Fee: 399.99,
-      lab_Result_Status: "Complete",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor diam est. Cras semper pharetra augue vehicula gravida. Cras semper eget lectus eu maximus. Etiam pharetra, magna posuere maximus placerat, velit mauris tristique est, eget ornare ex justo vel ex. Pellentesque tortor elit, pulvinar eget porta eget, dapibus ac felis. In tempus tempor lectus eu tempus. Aliquam odio libero, consequat sit amet ullamcorper venenatis, porta eu nibh. Suspendisse consectetur tincidunt maximus. Quisque ac mi quis dui suscipit rhoncus non sit amet ipsum. Ut velit ligula, aliquet in diam ut, feugiat mollis ante. Pellentesque ultricies mauris mauris, ut suscipit tortor rhoncus id. Nulla ante orci, varius sed finibus at, eleifend vitae arcu. Suspendisse potenti. Suspendisse id placerat magna, eget vulputate augue. Mauris dui augue, scelerisque in nisl sit amet, aliquam egestas urna. Cras iaculis ante sem, vulputate fermentum turpis vulputate quis.",
-    },
-    {
-      reportID: "3",
-      lastName: "Doe",
-      firstName: "Jane",
-      lab_Test_Fee: 188.88,
-      lab_Result_Status: "Complete",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor diam est. Cras semper pharetra augue vehicula gravida. Cras semper eget lectus eu maximus. Etiam pharetra, magna posuere maximus placerat, velit mauris tristique est, eget ornare ex justo vel ex. Pellentesque tortor elit, pulvinar eget porta eget, dapibus ac felis. In tempus tempor lectus eu tempus. Aliquam odio libero, consequat sit amet ullamcorper venenatis, porta eu nibh. Suspendisse consectetur tincidunt maximus. Quisque ac mi quis dui suscipit rhoncus non sit amet ipsum. Ut velit ligula, aliquet in diam ut, feugiat mollis ante. Pellentesque ultricies mauris mauris, ut suscipit tortor rhoncus id. Nulla ante orci, varius sed finibus at, eleifend vitae arcu. Suspendisse potenti. Suspendisse id placerat magna, eget vulputate augue. Mauris dui augue, scelerisque in nisl sit amet, aliquam egestas urna. Cras iaculis ante sem, vulputate fermentum turpis vulputate quis.",
-    },
-    {
-      reportID: "4",
-      lastName: "Castle",
-      firstName: "Frank",
-      lab_Test_Fee: 333.33,
-      lab_Result_Status: "Incomplete",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor diam est. Cras semper pharetra augue vehicula gravida. Cras semper eget lectus eu maximus. Etiam pharetra, magna posuere maximus placerat, velit mauris tristique est, eget ornare ex justo vel ex. Pellentesque tortor elit, pulvinar eget porta eget, dapibus ac felis. In tempus tempor lectus eu tempus. Aliquam odio libero, consequat sit amet ullamcorper venenatis, porta eu nibh. Suspendisse consectetur tincidunt maximus. Quisque ac mi quis dui suscipit rhoncus non sit amet ipsum. Ut velit ligula, aliquet in diam ut, feugiat mollis ante. Pellentesque ultricies mauris mauris, ut suscipit tortor rhoncus id. Nulla ante orci, varius sed finibus at, eleifend vitae arcu. Suspendisse potenti. Suspendisse id placerat magna, eget vulputate augue. Mauris dui augue, scelerisque in nisl sit amet, aliquam egestas urna. Cras iaculis ante sem, vulputate fermentum turpis vulputate quis.",
-    },
-    {
-      reportID: "5",
-      lastName: "Allen",
-      firstName: "Barry",
-      lab_Test_Fee: 999.99,
-      lab_Result_Status: "Complete",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor diam est. Cras semper pharetra augue vehicula gravida. Cras semper eget lectus eu maximus. Etiam pharetra, magna posuere maximus placerat, velit mauris tristique est, eget ornare ex justo vel ex. Pellentesque tortor elit, pulvinar eget porta eget, dapibus ac felis. In tempus tempor lectus eu tempus. Aliquam odio libero, consequat sit amet ullamcorper venenatis, porta eu nibh. Suspendisse consectetur tincidunt maximus. Quisque ac mi quis dui suscipit rhoncus non sit amet ipsum. Ut velit ligula, aliquet in diam ut, feugiat mollis ante. Pellentesque ultricies mauris mauris, ut suscipit tortor rhoncus id. Nulla ante orci, varius sed finibus at, eleifend vitae arcu. Suspendisse potenti. Suspendisse id placerat magna, eget vulputate augue. Mauris dui augue, scelerisque in nisl sit amet, aliquam egestas urna. Cras iaculis ante sem, vulputate fermentum turpis vulputate quis.",
-    },
-    {
-      reportID: "6",
-      lastName: "obscenely",
-      firstName: "random",
-      lab_Test_Fee: 444.44,
-      lab_Result_Status: "Incomplete",
-      details:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tempor diam est. Cras semper pharetra augue vehicula gravida. Cras semper eget lectus eu maximus. Etiam pharetra, magna posuere maximus placerat, velit mauris tristique est, eget ornare ex justo vel ex. Pellentesque tortor elit, pulvinar eget porta eget, dapibus ac felis. In tempus tempor lectus eu tempus. Aliquam odio libero, consequat sit amet ullamcorper venenatis, porta eu nibh. Suspendisse consectetur tincidunt maximus. Quisque ac mi quis dui suscipit rhoncus non sit amet ipsum. Ut velit ligula, aliquet in diam ut, feugiat mollis ante. Pellentesque ultricies mauris mauris, ut suscipit tortor rhoncus id. Nulla ante orci, varius sed finibus at, eleifend vitae arcu. Suspendisse potenti. Suspendisse id placerat magna, eget vulputate augue. Mauris dui augue, scelerisque in nisl sit amet, aliquam egestas urna. Cras iaculis ante sem, vulputate fermentum turpis vulputate quis.",
-    },
-  ]);
+  useEffect(() => {
+    getAllLabReports().then(resp => {
+      setLabTests(resp.labTest);
+      const reports = [];
+      resp.labReports.forEach(report => {
+        const rep = {...report}
+        rep['labTestId'] = resp.labTest[report.labTestId].id;
+        rep['labTestName'] = resp.labTest[report.labTestId].labTestName;
+        rep['labTestCost'] = resp.labTest[report.labTestId].labTestCost;
+        reports.push(rep);
+      });
+      setTableData(reports);
+      console.log(reports);
+    });
+  }, []);
 
   const columns = useMemo(() => [
     {
       Header: "Report ID",
-      accessor: "reportID",
+      accessor: "id",
     },
     {
-      Header: "Last Name",
-      accessor: "lastName",
+      Header: "Patient Name",
+      accessor: "patientName",
     },
     {
-      Header: "First Name",
-      accessor: "firstName",
+      Header: "Doctor Name",
+      accessor: "doctorName",
+    },
+    {
+      Header: "Staff Name",
+      accessor: "labStaffName",
+    },
+    {
+      Header: "LabStaff Notes",
+      accessor: "labStaffNotes",
+    },
+    {
+      Header: "Test Id",
+      accessor: "labTestId",
+    },
+    {
+      Header: "Test Name",
+      accessor: "labTestName",
     },
     {
       Header: "Fee",
-      accessor: "lab_Test_Fee",
+      accessor: "labTestCost",
+    },
+    {
+      Header: "Result",
+      accessor: "result",
     },
     {
       Header: "Status",
-      accessor: "lab_Result_Status",
-    },
-    {
-      Header: "Details",
-      accessor: "details",
+      accessor: "labResultStatus",
     },
     {
       Header: "Manage Reports",
       accessor: "manage",
       Cell: ({ cell }) => (
         <div>
-          <button id="Update" onClick={() => updateRowOnClick(cell.row.values)}>
-            Update
-          </button>
-          &nbsp;&nbsp;&nbsp;
-          <button id="block" onClick={() => deleteOnClick(cell.row.values)}>
-            Delete
+          <button id="Update" disabled={cell.row.values.labResultStatus == "COMPLETED"} onClick={() => updateReport(cell.row.values)}>
+            { "Update & Submit"}
           </button>
         </div>
       ),
@@ -138,8 +98,7 @@ const LabTestReports = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //console.log(data);
-    //TODO handle Search API here
+
   };
 
   const handleChange = (e) => {
@@ -150,7 +109,7 @@ const LabTestReports = (props) => {
   };
 
   return (
-    <div>
+    <Container>
       <div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -161,19 +120,11 @@ const LabTestReports = (props) => {
               placeholder="Search"
               id="query"
               value={data.query}
-              onChange={handleChange}
             />
           </div>
           <br />
           <button type="submit" className="btn btn-dark btn-lg btn-block">
             Search
-          </button>
-          &nbsp;&nbsp;&nbsp;
-          <button
-            type="button"
-            className="btn btn-dark btn-lg btn-block"
-            onClick={() => createReport()}>
-            Create
           </button>
         </form>
         <br />
@@ -190,7 +141,7 @@ const LabTestReports = (props) => {
 
       <br />
       <br />
-    </div>
+    </Container>
   );
 };
 export default LabTestReports;

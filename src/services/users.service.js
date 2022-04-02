@@ -1,17 +1,19 @@
+
+
 const axios = require('axios');
 
 const SERVER_URL = "http://localhost:8080";
 
-export const getUsersByQuery = async (data) => {
-    console.log(data)
-    const response = await axios.get(SERVER_URL + '/api/users/getAllUsersBysearchTerm?searchTerm=' + data, {
-        headers: {
-            'Accept': "application/json",
-            "Content-Type": "application/json", 
-        },
-    })
-    return response.data;
-}
+// export const getUsersByQuery = async (data) => {
+//     console.log(data)
+//     const response = await axios.get(SERVER_URL + '/api/users/getAllUsersBysearchTerm?searchTerm=' + data, {
+//         headers: {
+//             'Accept': "application/json",
+//             "Content-Type": "application/json", 
+//         },
+//     })
+//     return response.data;
+// }
 
 export const getUserByEmailId = async (data) => {
     const response = await axios.get(SERVER_URL + '/api/users/getUserByEmailId?emailId=' + data, {
@@ -34,7 +36,7 @@ export const getUserById = async (data) => {
     return response.data;
 }
 
-export const blockUserByEmailId = async (data, query) => {
+export const blockUserByEmailId = async (data, query, role) => {
     console.log(data)
     await axios.post(SERVER_URL + '/api/users/blockAccountByEmailId?emailId=' + data.email, {
         headers: {
@@ -42,10 +44,10 @@ export const blockUserByEmailId = async (data, query) => {
             "Content-Type": "application/json",
         },
     })
-    return getUsersByQuery(query);
+    return getAllUsersByRole(role, query);
 }
 
-export const unblockUserByEmailId = async (data, query) => {
+export const unblockUserByEmailId = async (data, query, role) => {
     console.log(data)
     await axios.post(SERVER_URL + '/api/users/activateAccountByEmailId?emailId=' +  data.email, {
         headers: {
@@ -54,7 +56,7 @@ export const unblockUserByEmailId = async (data, query) => {
         },
     })
     
-    return getUsersByQuery(query);
+    return getAllUsersByRole(role, query);
 } 
 
 
@@ -68,8 +70,8 @@ export const getAllUserByTerm = async (data) => {
     return response.data;
 } 
 
-export const getAllUsersByRole = async (data) => {
-    const response = await axios.get('http://127.0.0.1:8080/api/users/getAllUsersByRole?role=' + data, {
+export const getAllUsersByRole = async (data, searchTerm) => {
+    const response = await axios.get('http://127.0.0.1:8080/api/users/getAllUsersByRole?role=' + data +"&searchTerm="+ searchTerm, {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",

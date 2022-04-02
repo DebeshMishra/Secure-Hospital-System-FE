@@ -97,7 +97,7 @@ function CreateLabTestReport(props) {
               <InputGroup.Text id="basic-addon1">Details</InputGroup.Text>
               <textarea
                 rows = "10"
-                class="form-control"
+                className="form-control"
                 placeholder="Details"
                 aria-label="Details"
                 id="details"

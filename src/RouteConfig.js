@@ -4,7 +4,6 @@ import CreateUser from "./components/General/CreateUserComponent/CreateUser";
 import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
 import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
-import Users from "./components/Admin/Users/Users";
 
 import ViewClaims from "./components/InsuranceStaff/ViewClaims/ViewClaims";
 import Coverages from "./components/InsuranceStaff/Coverages/Coverages";
@@ -23,6 +22,7 @@ import AppointmentConfirmation from "./components/HospitalStaff/AppointmentConfi
 import CreateDaignosis from "./components/Doctor/CreateDiagnosis/CreateDiagnosis";
 import TakePolicy from "./components/Patient/TakePolicy/TakePolicy";
 import EditUser from "./components/Admin/EditUsers/EditUser";
+import Users from "./components/Admin/Users/Users";
 
 export const routes = [
   {

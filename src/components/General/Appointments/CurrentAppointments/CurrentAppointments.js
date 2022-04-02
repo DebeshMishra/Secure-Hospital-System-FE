@@ -78,6 +78,10 @@ function CurrentAppointments(props) {
         navigate("/createDiagnosis", { state: { appointment: appointment } })
     }
 
+    const makeAPayment = (appointment) => {
+        
+    }
+
 
     return (
         <>
@@ -98,6 +102,7 @@ function CurrentAppointments(props) {
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Modifications</th>
+                                { userInfo.userData.role == "PATIENT" && <th>Payment</th>}
                             </tr>
                         </thead>
                         <tbody>
@@ -151,6 +156,20 @@ function CurrentAppointments(props) {
                                                         { "VIEW All DIAGNOSIS" }
                                                     </Button>
                                             </td>
+                                            {
+                                                userInfo.userData.role == "HOSPITAL_STAFF" &&
+                                                <td>
+                                                    {
+                                                        appointment.appointment.status === "COMPLETED" &&
+                                                        <Button variant="primary" className="submit-button" size="sm"  onClick={() => makeAPayment(appointment.patientId)}>
+                                                            { "Make a Payment" }
+                                                        </Button>
+
+                                                    }
+                                                
+                                                </td>
+                                            }
+                                           
                                         </tr>
                                     )
                                 })

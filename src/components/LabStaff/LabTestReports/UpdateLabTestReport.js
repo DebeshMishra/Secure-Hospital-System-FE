@@ -18,38 +18,50 @@ import {
   getUserByEmailId,
   updateUserByEmailId,
 } from "../../../services/authentication.service";
+import { updateLabReportByPatientId } from "../../../services/LabReports.services";
 
 function UpdateLabTestReport(props) {
   const [data, setData] = useState({});
+  const userInfo = useSelector((state) => state.user);
+  const [submit, setSubmit] = useState(false);
 
   const { state } = useLocation();
-  console.log(state);
+  const { report } = state;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(data);
   };
 
   const handleChange = (e) => {
     const newdata = { ...data };
     newdata[e.target.id] = e.target.value;
     setData(newdata);
+    console.log(newdata);
   };
 
   let navigate = useNavigate();
-  const showForm = () => {
-    navigate("/labTestReports");
-  };
 
   useEffect(() => {
-    //console.log(state)
-    setData({
-      firstName: state.firstName,
-      lastName: state.lastName,
-      lab_Test_Fee: state.lab_Test_Fee,
-      lab_Result_Status: state.lab_Result_Status,
-      details: state.details,
-    });
+    const newData = {...report}
+    newData['labStaffId'] = userInfo.userData.user.id;
+    newData['labStaffName'] = userInfo.userData.user.firstName + " " + userInfo.userData.user.lastName;
+    setData(newData);
   }, []);
+
+  const updateReport = (e) => {
+    console.log(data);
+    setSubmit(!submit);
+    updateLabReportByPatientId(data).then(res => {
+      alert(res);
+      setSubmit(!submit);
+      navigate("/labTestReports")
+    })
+  }
+
+  const cancel = (e) => {
+    navigate("/labTestReports");
+  }
 
   return (
     <Container className="account">
@@ -69,6 +81,8 @@ function UpdateLabTestReport(props) {
                 placeholder="Patient Name"
                 aria-label="Patient Name"
                 id="patientName"
+                autoComplete="off"
+                disabled
                 value={data.patientName}
                 onChange={handleChange}
                 required
@@ -81,6 +95,8 @@ function UpdateLabTestReport(props) {
                 placeholder="Doctor Name"
                 aria-label="Doctor Name"
                 id="doctorName"
+                autoComplete="off"
+                disabled
                 value={data.doctorName}
                 onChange={handleChange}
                 type="text"
@@ -95,7 +111,23 @@ function UpdateLabTestReport(props) {
                 placeholder="Lab Staff Name"
                 aria-label="Lab Staff Name"
                 id="labStaffName"
-                value={data.labStaffName}
+                disabled
+                value={data.labStaffName || ""}
+                onChange={handleChange}
+                autoComplete="off"
+                type="text"
+                required
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="basic-addon1">Lab Test Id</InputGroup.Text>
+              <FormControl
+                placeholder="Lab Test"
+                aria-label="Lab Test"
+                id="labTestId"
+                disabled
+                autoComplete="off"
+                value={data.labTestId}
                 onChange={handleChange}
                 type="text"
                 required
@@ -106,8 +138,10 @@ function UpdateLabTestReport(props) {
               <FormControl
                 placeholder="Lab Test"
                 aria-label="Lab Test"
-                id="labTestId"
-                value={data.labTestId}
+                id="labTestName"
+                autoComplete="off"
+                disabled
+                value={data.labTestName || ""}
                 onChange={handleChange}
                 type="text"
                 required
@@ -119,6 +153,8 @@ function UpdateLabTestReport(props) {
                 placeholder="Status"
                 aria-label="Status"
                 id="labResultStatus"
+                autoComplete="off"
+                disabled
                 value={data.labResultStatus}
                 onChange={handleChange}
                 type="text"
@@ -127,15 +163,16 @@ function UpdateLabTestReport(props) {
             </InputGroup>
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">
-                Lab Staff Notes
+                Lab Staff Note
               </InputGroup.Text>
               <textarea
-                rows="10"
-                class="form-control"
-                placeholder="Lab Staff Notes"
+                rows="5"
+                className="form-control"
+                placeholder="Lab Staff Note"
                 aria-label="Lab Staff Notes"
                 id="labStaffNotes"
-                value={data.labStaffNotes}
+                autoComplete="off"
+                value={data.labStaffNotes || ""}
                 onChange={handleChange}
                 type="text"
                 required
@@ -143,24 +180,27 @@ function UpdateLabTestReport(props) {
             </InputGroup>
             <InputGroup className="mb-3">
               <InputGroup.Text id="basic-addon1">Result</InputGroup.Text>
-              <FormControl
+              <textarea
+                rows="5"
+                className="form-control"
                 placeholder="Result"
                 aria-label="Result"
                 id="result"
-                value={data.result}
+                autoComplete="off"
+                value={data.result || ""}
                 onChange={handleChange}
                 type="text"
                 required
               />
             </InputGroup>
             <Form.Group className="mb-3">
-              <Button variant="primary" type="submit">
+              <Button variant="primary" disabled={!submit && (data.result == null || data.result.length == 0 || data.labStaffNotes == null || data.labStaffNotes.length == 0)} type="submit" onClick={updateReport}>
                 Submit
               </Button>
               <Button
                 type="Button"
                 className="cancel-button"
-                onClick={showForm}>
+                onClick={cancel}>
                 Cancel
               </Button>
             </Form.Group>

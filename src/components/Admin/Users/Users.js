@@ -1,12 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Table from "../../Table/table.js";
-import { getUsersByQuery, blockUserByEmailId, unblockUserByEmailId, getAllUsersByRole } from "../../../services/users.service.js";
-import {useDispatch, useSelector } from 'react-redux';
+import { blockUserByEmailId, unblockUserByEmailId, getAllUsersByRole } from "../../../services/users.service.js";
+import { useDispatch, useSelector } from 'react-redux';
 import { getUserByEmailId } from "../../../services/authentication.service.js";
 import { useNavigate } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
-
-
 
 const Users = (props) => {
     const [data, setData] = useState({ query: "" });
@@ -18,34 +16,42 @@ const Users = (props) => {
     const dispatch = useDispatch();
     let navigate = useNavigate();
 
-    const editRowOnClick = (rowInfo) =>{
-        navigate("/editUser", {state: rowInfo})
+    const editRowOnClick = (rowInfo) => {
+        navigate("/editUser", { state: rowInfo })
     }
 
-    const blockOnClick = (rowInfo) =>{
-        blockUserByEmailId(rowInfo, data.query).then(response => {
+    const blockOnClick = (rowInfo) => {
+        const r = "";
+        if (userInfo.userData.user.roles[0].role != "ADMIN") {
+            r = "PATIENT";
+        }
+        blockUserByEmailId(rowInfo, data.query, r).then(response => {
             setTableData(response)
         })
     }
 
-    const unblockOnClick = (rowInfo) =>{
-        unblockUserByEmailId(rowInfo, data.query).then(response => {
+    const unblockOnClick = (rowInfo) => {
+        const r = "";
+        if (userInfo.userData.user.roles[0].role != "ADMIN") {
+            r = "PATIENT";
+        }
+        unblockUserByEmailId(rowInfo, data.query, r).then(response => {
             setTableData(response)
         })
     }
 
     useEffect(() => {
-        if(userInfo.userData.user.roles[0].role != "ADMIN"){
-            getAllUsersByRole("PATIENT").then(response => {
+        if (userInfo.userData.user.roles[0].role != "ADMIN") {
+            getAllUsersByRole("PATIENT", "").then(response => {
                 setTableData(response)
             })
-        }else{
-            getAllUsersByRole("").then(response => {
+        } else {
+            getAllUsersByRole("", "").then(response => {
                 setTableData(response)
             })
         }
-        
-    },[]);
+
+    }, []);
 
     const viewPatient = (user) => {
         navigate("/userData", { state: { userId: user.id } })
@@ -72,7 +78,7 @@ const Users = (props) => {
             Header: 'Email',
             accessor: 'email'
         },
-        {     
+        {
             Header: 'Enabled',
             accessor: e => {
                 let str = e.enabled.toString()
@@ -84,43 +90,54 @@ const Users = (props) => {
             Header: 'Phone',
             accessor: 'phone'
         },
-   
+
         {
             Header: 'Manage Users',
             accessor: 'manage',
             Cell: ({ cell }) => (
                 <div>
-                    <Button id="edit" onClick={()=>editRowOnClick(cell.row.values)} >
-                    Edit
-                    </Button>
+                    {
+                        (userInfo.userData.user.roles[0].role == "HOSPITAL_STAFF" || userInfo.userData.user.roles[0].role == "ADMIN") &&
+                        <>
+                            <Button id="edit" onClick={() => editRowOnClick(cell.row.values)} >
+                                Edit
+                            </Button>
+                            &nbsp;&nbsp;&nbsp;
+                            <Button id="block" onClick={() => blockOnClick(cell.row.values)}>
+                                Block
+                            </Button>
+                            &nbsp;&nbsp;&nbsp;
+                            <Button id="unblock" onClick={() => unblockOnClick(cell.row.values)}>
+                                Unblock
+                            </Button>
+                        </>
+                    }
+
                     &nbsp;&nbsp;&nbsp;
-                    <Button id="block" onClick={()=>blockOnClick(cell.row.values)}>
-                    Block
-                    </Button>
-                    &nbsp;&nbsp;&nbsp;
-                    <Button id="unblock" onClick={()=>unblockOnClick(cell.row.values)}>
-                    Unblock
-                    </Button>
-                    &nbsp;&nbsp;&nbsp;
-                    <Button id="View User"  onClick={() => viewPatient(cell.row.values)}>
-                        { "VIEW All DIAGNOSIS" }
+                    <Button id="View User" onClick={() => viewPatient(cell.row.values)}>
+                        {"VIEW All DIAGNOSIS"}
                     </Button>
                 </div>
 
 
-              )
+            )
         }
     ])
-   
-    
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         //console.log(data);
-        //TODO handle Search API here
-        getUsersByQuery(data.query).then(response => {
-            setTableData(response)
-        })
-              
+        if (userInfo.userData.user.roles[0].role != "ADMIN") {
+            getAllUsersByRole("PATIENT", data.query).then(response => {
+                setTableData(response)
+            })
+        } else {
+            getAllUsersByRole("", data.query).then(response => {
+                setTableData(response)
+            })
+        }
+
     }
 
     //useEffect(() => {
@@ -136,34 +153,34 @@ const Users = (props) => {
 
     return (
         <Container>
-        <div >
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
+            <div >
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <br />
+                        <input type="string"
+                            className="form-control"
+                            placeholder="Search"
+                            id="query"
+                            value={data.query}
+                            onChange={handleChange} />
+                    </div>
                     <br />
-                    <input type="string"
-                        className="form-control"
-                        placeholder="Search"
-                        id="query"
-                        value={data.query}
-                        onChange={handleChange} />
-                </div>
+                    <button type="submit"
+                        className="btn btn-dark btn-lg btn-block"
+                    >Search
+                    </button>
+                </form>
                 <br />
-                <button type="submit"
-                    className="btn btn-dark btn-lg btn-block"
-                >Search
-                </button>
-            </form>
-            <br />
-        </div>
+            </div>
             <div
-            style={{
+                style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-            }}>
-                <Table columns={columns} data={tableData}/>
+                }}>
+                <Table columns={columns} data={tableData} />
             </div>
         </Container>
     )
 }
-export default Users
+export default Users;
