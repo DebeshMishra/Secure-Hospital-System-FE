@@ -14,7 +14,7 @@ import Appointments from "./components/General/Appointments/Appointments";
 import LabTestReports from "./components/LabStaff/LabTestReports/LabTestReports";
 import UpdateLabTestReport from "./components/LabStaff/LabTestReports/UpdateLabTestReport";
 import LabTests from "./components/LabStaff/LabTests/ViewLabTests";
-import Transactions from "./components/General/Transactions/Transactions";
+import Transactions from "./components/General/Transactions/Admin/ViewAllTransactions";
 import AdminEditUser from "./components/Admin/EditUsers/EditUser";
 import HospitalStaffEditUser from "./components/HospitalStaff/EditUsers/EditUser";
 import PatientRecord from "./components/Patient/User/PatientRecord";
@@ -23,6 +23,7 @@ import CreateDaignosis from "./components/Doctor/CreateDiagnosis/CreateDiagnosis
 import TakePolicy from "./components/Patient/TakePolicy/TakePolicy";
 import EditUser from "./components/Admin/EditUsers/EditUser";
 import Users from "./components/Admin/Users/Users";
+import PayBill from "./components/Patient/Transactions/PayBill";
 
 export const routes = [
   {
@@ -112,5 +113,9 @@ export const routes = [
   {
     path: "/takePolicy",
     component: <TakePolicy />,
+  },
+  {
+    path: "/payBill",
+    component: <PayBill />,
   },
 ];

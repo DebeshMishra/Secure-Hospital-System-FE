@@ -1,10 +1,26 @@
 import Appointments from "../components/General/Appointments/Appointments";
 
 export const navLinks = {
-  roles: ["ADMIN", "PATIENT", "INSURANCE_STAFF", "LAB_STAFF", "DOCTOR", "HOSPITAL_STAFF"],
+  roles: [
+    "ADMIN",
+    "PATIENT",
+    "INSURANCE_STAFF",
+    "LAB_STAFF",
+    "DOCTOR",
+    "HOSPITAL_STAFF",
+  ],
   ADMIN: {
     name: "Administrator",
-    availableLinks: ["dashboard", "appointments", "users", "logs", "createUser", "transactions", "viewClaims", "viewPolicies"],
+    availableLinks: [
+      "dashboard",
+      "appointments",
+      "users",
+      "logs",
+      "createUser",
+      "transactions",
+      "viewClaims",
+      "viewPolicies",
+    ],
   },
   PATIENT: {
     name: "Patient",
@@ -13,16 +29,12 @@ export const navLinks = {
       "appointments",
       "createAClaim",
       "EnrollinPolicy",
-      "transactions"
+      "transactions",
     ],
   },
   DOCTOR: {
     name: "Doctor",
-    availableLinks: [
-      "dashboard",
-      "appointments",
-      "users"
-    ]
+    availableLinks: ["dashboard", "appointments", "users"],
   },
   LAB_STAFF: {
     name: "Lab Staff",
@@ -30,11 +42,23 @@ export const navLinks = {
   },
   INSURANCE_STAFF: {
     name: "Insurance Staff",
-    availableLinks: ["dashboard", "viewClaims", "viewPolicies", "coverages", "users"],
+    availableLinks: [
+      "dashboard",
+      "viewClaims",
+      "viewPolicies",
+      "coverages",
+      "users",
+    ],
   },
   HOSPITAL_STAFF: {
     name: "Hospital Staff",
-    availableLinks: ["dashboard", "appointments", "users", "createUser", "transactions"]
+    availableLinks: [
+      "dashboard",
+      "appointments",
+      "users",
+      "createUser",
+      "transactions",
+    ],
   },
   links: {
     dashboard: {
@@ -63,7 +87,7 @@ export const navLinks = {
     },
     EnrollinPolicy: {
       name: "Enroll in Policy",
-      url: "/takePolicy"
+      url: "/takePolicy",
     },
     users: {
       name: "Users",
@@ -115,7 +139,11 @@ export const navLinks = {
     },
     userData: {
       name: "Patient Records",
-      url: "/userData"
-    }
+      url: "/userData",
+    },
+    viewTransactions: {
+      name: "Transaction",
+      url: "/viewTransaction",
+    },
   },
 };
