@@ -90,7 +90,14 @@ const Users = (props) => {
             Header: 'Phone',
             accessor: 'phone'
         },
-
+        {
+            Header: 'Rolee',
+            accessor: 'role'
+        },
+        {
+            Header: 'Date Of Birth',
+            accessor: 'dob'
+        },
         {
             Header: 'Manage Users',
             accessor: 'manage',
