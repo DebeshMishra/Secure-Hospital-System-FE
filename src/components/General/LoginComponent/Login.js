@@ -52,7 +52,7 @@ const Login = (props) => {
     // if (cookies.JWTToken != null) {
     //     navigate('/dashboard')
     // }
-  });
+  }, []);
 
   const handleChange = (e) => {
     const newdata = { ...data };

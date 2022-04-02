@@ -11,16 +11,23 @@ import {
 import Login from "./components/General/LoginComponent/Login";
 import CreateUser from "./components/General/CreateUserComponent/CreateUser";
 import { useSelector, useDispatch } from "react-redux";
-import { useLocation } from "react-router";
 import ThemeProvider from "react-bootstrap/ThemeProvider";
 import { useState } from "react";
 import { routes } from "./RouteConfig";
 import { history } from "./helpers/history";
 import Logs from "./components/Admin/Logs";
 import ForgotPwd from "./components/General/LoginComponent/ForgotPwd";
+import Cookies from 'universal-cookie';
+import { useCookies } from "react-cookie";
+
+
 
 function App() {
   const [userData, setUserData] = useState({ isLoggedIn: false });
+  const [cookies, setCookie, removeCookie] = useCookies([
+    "JWTToken",
+    "emailId",
+  ]);
 
   // const ProtectedRoute = ({component: Component, ...rest}) => {
   //   const user = useSelector((state) => state.user)
@@ -59,6 +66,10 @@ function App() {
 
   const ProtectRouteLogin = (props) => {
     const user = useSelector((state) => state.user);
+
+    // if(cookies.JWTToken == null){
+    //   return <Navigate to="/login" />;
+    // }
 
     const route = !user.isLoggedIn ? <Outlet /> : <Navigate to="/" />;
     console.log(route);

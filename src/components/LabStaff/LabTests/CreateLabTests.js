@@ -28,7 +28,7 @@ function CreateLabTests(props) {
     })
     if(!Object.keys(labTestData).every((k) => (labTestData[k] != null && labTestData[k].trim().length > 0))){
       alert("please fill all the values");
-    }else{
+    } else {
       createLabTest(labTestData).then((response) => {
         alert(response.data);
         props.onSubmitted(true);

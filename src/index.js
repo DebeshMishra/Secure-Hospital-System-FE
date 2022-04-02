@@ -12,6 +12,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
+
 // Add a request interceptor
 axios.interceptors.request.use((request) => {
   // Do something before request is sent
@@ -25,15 +26,15 @@ axios.interceptors.request.use((request) => {
 });
 
 // Add a response interceptor
-axios.interceptors.response.use((response) => {
-  // Any status code that lie within the range of 2xx cause this function to trigger
-  // Do something with response data
-  return response;
-}, function (error) {
-  // Any status codes that falls outside the range of 2xx cause this function to trigger
-  // Do something with response error
-  return Promise.reject(error);
-});
+// axios.interceptors.response.use((response) => {
+//   // Any status code that lie within the range of 2xx cause this function to trigger
+//   // Do something with response data
+//   return response;
+// }, function (error) {
+//   // Any status codes that falls outside the range of 2xx cause this function to trigger
+//   // Do something with response error
+//   return Promise.reject(error);
+// });
 
 
 ReactDOM.render(

@@ -80,7 +80,7 @@ function CreateAppointment() {
     useEffect(() => {
         setDoctors([])
         if(appointmentType=="SPECIFIC"){
-            getAllUsersByRole("DOCTOR").then(response => {
+            getAllUsersByRole("DOCTOR", "").then(response => {
                 setDoctors(response);
             })
         }
