@@ -79,7 +79,7 @@ function CurrentAppointments(props) {
     }
 
     const makeAPayment = (appointment) => {
-        
+        navigate("/payBill", {state: { appointment: appointment }});
     }
 
 
@@ -157,11 +157,11 @@ function CurrentAppointments(props) {
                                                     </Button>
                                             </td>
                                             {
-                                                userInfo.userData.role == "HOSPITAL_STAFF" &&
+                                                userInfo.userData.role == "PATIENT" &&
                                                 <td>
                                                     {
                                                         appointment.appointment.status === "COMPLETED" &&
-                                                        <Button variant="primary" className="submit-button" size="sm"  onClick={() => makeAPayment(appointment.patientId)}>
+                                                        <Button variant="primary" className="submit-button" size="sm"  onClick={() => makeAPayment(appointment)}>
                                                             { "Make a Payment" }
                                                         </Button>
 

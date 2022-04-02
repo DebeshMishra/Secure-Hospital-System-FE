@@ -9,21 +9,21 @@ export const userSlice = createSlice({
     initialState: { isLoggedIn: false, userData: initialUserState, jwtToken: undefined },
     reducers: {
         setUserToken: (state, action) => {
-            cookies.set('JWTToken', action.payload.jwtToken, {maxAge: 3600});
+            cookies.set('JWTToken', action.payload.jwtToken, {maxAge: 36000});
             state.jwtToken = action.payload.jwtToken;
             state.isLoggedIn = true;
         },
 
         setUserData: (state, action) => {
-            cookies.set('emailId', action.payload.userData.email, {maxAge: 3600});
+            cookies.set('emailId', action.payload.userData.email, {maxAge: 36000});
             state.userData = action.payload.userData;
             state.isLoggedIn = true;
             
         },
 
         setAllData: (state, action) => {
-            cookies.set('emailId', action.payload.userData.email, {maxAge: 3600});
-            cookies.set('JWTToken', action.payload.jwtToken, {maxAge: 3600});
+            cookies.set('emailId', action.payload.userData.email, {maxAge: 36000});
+            cookies.set('JWTToken', action.payload.jwtToken, {maxAge: 36000});
             state.userData = action.payload.userData;
             state.jwtToken = action.payload.jwtToken;
             state.isLoggedIn = true;
