@@ -46,7 +46,7 @@ function CreateAppointment() {
             setAppointmentData({});
             setDoctors([]);
             setTimeSlots([]);
-            navigate('/dashboard');
+            navigate('/');
             setsubmit(!submit);
         });
         

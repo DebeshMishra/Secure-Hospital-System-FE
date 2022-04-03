@@ -80,7 +80,7 @@ function PastAppointments(props) {
                                             <td key={7}>{appointment.appointment.status}</td>
                                             <td key={6}>
                                                 {
-                                                    appointment.appointment.status == "COMPLETED" && <Button variant="primary" className="submit-button" onClick={() => viewPatient(appointment.patientId)}>
+                                                    appointment.appointment.status == "DIAGNOSIED" && <Button variant="primary" className="submit-button" onClick={() => viewPatient(appointment.patientId)}>
                                                     View All diagnosis
                                                 </Button>
                                                 }

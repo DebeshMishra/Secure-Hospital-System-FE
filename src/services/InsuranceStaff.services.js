@@ -56,3 +56,38 @@ export const addPolicyToUser = async (patientId, policyId) => {
 
     return response.data;
 }
+
+
+export const getAllPoliciesByuserId = async (patientId) => {
+    const response = await axios.get(SERVER_URL + '/api/insurance/getAllPoliciesByuserId?patientId='+patientId, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+
+    return response.data;
+}
+
+export const createClaim = async (data) => {
+    const response = await axios.post(SERVER_URL + '/api/claims/createClaim', data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+
+    return response.data;
+}
+
+
+export const getAllClaims = async (data) => {
+    const response = await axios.get(SERVER_URL + '/api/claims/getAllClaims', {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+
+    return response.data;
+}

@@ -193,7 +193,7 @@ function CreateDaignosis() {
                     </Col>
                     {/* <Col md="3">
                         <Form.Group className="mb-3">
-                            <Button variant="primary" type="submit" disabled={(diagnosisData?.prescription == "" && diagnosisData?.diagnosis_info == "") || appointment.appointment.status == "COMPLETED"} className="submit-button" onClick={closeAppointment}>
+                            <Button variant="primary" type="submit" disabled={(diagnosisData?.prescription == "" && diagnosisData?.diagnosis_info == "") || appointment.appointment.status == "DIAGNOSIED"} className="submit-button" onClick={closeAppointment}>
                                 Complete appointment
                             </Button>
                         </Form.Group>

@@ -10,68 +10,90 @@ import {
     Dropdown,
     Table,
 } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { getAllClaims } from "../../../services/InsuranceStaff.services";
 
 function ViewClaims() {
+    const [claims, setClaims] = useState([]);
 
-    // API integrations needed
+    useEffect(() => {
+        getAllClaims().then(response => {
+            setClaims(response);
+        })
+    }, [])
 
-    const claims = [
-        {
-            id: 1,
-            user_id: 123,
-            appointmentId: 12,
-            claimAmount: 10000,
-            policyName: "A1",
-            status: "Accepted"
-        },
-        {
-            id: 1,
-            user_id: 123,
-            appointmentId: 12,
-            claimAmount: 10000,
-            policyName: "A2",
-            status: "Accepted"
-        },
-    ]
+    const approveClaim = (claimId) => {
+
+    }
+    const rejectClaim = (claimId) => {
+        
+    }
+    const viewPatient = (patientId) => {
+        
+    }
 
     return (
-        <div>
-        <Row className="justify-content-md-center header">
-            <Col md="12">
-                <h3>Claims</h3>
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>user Id</th>
-                            <th>Appointment Id</th>
-                            <th>Claim Amount</th>
-                            <th>Policy Name</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            claims.map((policy, index) => {
-                                return (
+        <>
+            { 
+                claims != null && claims.length > 0 &&
+                <Container>
+                    <Row className="justify-content-md-center header">
+                        <Col md="12">
+                            <h3>Claims</h3>
+                            <Table striped bordered hover>
+                                <thead>
                                     <tr>
-                                        <td>{policy.id}</td>
-                                        <td>{policy.user_id}</td>
-                                        <td>{policy.appointmentId}</td>
-                                        <td>{policy.claimAmount}</td>
-                                        <td>{policy.policyName}</td>
-                                        <td>{policy.status}</td>
+                                        <th>Claim Id</th>
+                                        <th>Patient Name</th>
+                                        <th>Policy Name</th>
+                                        <th>Appointment Id</th>
+                                        <th>Amount Required</th>
+                                        <th>Status</th>
+                                        <th>Tasks</th>
                                     </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </Table>
-            </Col>
-        </Row>
+                                </thead>
+                                <tbody>
+                                    {
+                                        claims.map((claim, index) => {
+                                            return (
+                                                <tr>
+                                                    <td>{claim.claimId}</td>
+                                                    <td>{claim.patientName}</td>
+                                                    <td>{claim.policy.policyName}</td>
+                                                    <td>{claim.appointmentId}</td>
+                                                    <td>{claim.amountRequired}</td>
+                                                    <td>{claim.status}</td>
+                                                    <td>{
+                                                        <>
+                                                         <Button variant="primary" disabled={claim.status!="PENDING"}  onClick={approveClaim(claim.claimId)}>
+                                                         Approve Claim
+                                                       </Button>
+                                                       <span> | </span>
+                                                       <Button variant="primary" disabled={claim.status!="PENDING"} onClick={rejectClaim(claim.claimId)}>
+                                                       Deny Claim
+                                                     </Button>
+                                                     <span> | </span>
+                                                       <Button variant="primary" onClick={viewPatient(claim.patientId)}>
+                                                       View Patient
+                                                     </Button>
+                                                        </>
+                                                        
+
+                                        }</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
 
 
-    </div>
+                </Container>
+            }
+        </>
+
     )
 }
 

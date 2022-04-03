@@ -175,3 +175,15 @@ export const completeAppointment = async (data) => {
     })
     return response.data;
 } 
+
+
+export const createTransaction = async (data) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/transaction/createTransaction', data, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+

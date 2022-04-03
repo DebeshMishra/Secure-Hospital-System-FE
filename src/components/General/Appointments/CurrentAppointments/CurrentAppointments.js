@@ -82,6 +82,10 @@ function CurrentAppointments(props) {
         navigate("/payBill", {state: { appointment: appointment }});
     }
 
+    const raiseaClaim = (appointment) => {
+        navigate("/raiseClaim", {state: { appointment: appointment }})
+    }
+
 
     return (
         <>
@@ -121,7 +125,7 @@ function CurrentAppointments(props) {
                                                 {
                                                     (userInfo.userData.role == "PATIENT" && 
                                                     <>
-                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "CANCELED" || appointment.appointment.status === "COMPLETED" || appointment.appointment.status === "PENDING" } onClick={() => cancelAppointmt(appointment.appointment.id)}>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "CANCELED" || appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "PENDING" } onClick={() => cancelAppointmt(appointment.appointment.id)}>
                                                         {appointment.appointment.status === "CANCELED" ? "CANCELED" : "CANCEL"}
                                                     </Button>
                                                     <hr/>
@@ -140,13 +144,13 @@ function CurrentAppointments(props) {
                                                  {
                                                     userInfo.userData.role == "DOCTOR"? appointment.appointment.status !== "PENDING"? 
                                                     <>
-                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "COMPLETED" || appointment.appointment.status === "CANCELED"} onClick={() => createDiagnosis(appointment)}>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "CANCELED"} onClick={() => createDiagnosis(appointment)}>
                                                         { "WRITE DIAGNOSIS"}
                                                     </Button>
                                                     <hr/>
                                                     </>:
                                                     <>
-                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "COMPLETED" || appointment.appointment.status === "CANCELED"} onClick={() => closeAppointment(appointment)}>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "CANCELED"} onClick={() => closeAppointment(appointment)}>
                                                         { "Complete Appointment"}
                                                     </Button>
                                                     <hr/>
@@ -160,9 +164,16 @@ function CurrentAppointments(props) {
                                                 userInfo.userData.role == "PATIENT" &&
                                                 <td>
                                                     {
-                                                        appointment.appointment.status === "COMPLETED" &&
+                                                        appointment.appointment.status === "DIAGNOSIED" &&
                                                         <Button variant="primary" className="submit-button" size="sm"  onClick={() => makeAPayment(appointment)}>
                                                             { "Make a Payment" }
+                                                        </Button>
+
+                                                    }
+                                                    {
+                                                        appointment.appointment.status === "DIAGNOSIED" &&
+                                                        <Button variant="primary" className="submit-button" size="sm"  onClick={() => raiseaClaim(appointment)}>
+                                                            { "Raise a Claim" }
                                                         </Button>
 
                                                     }

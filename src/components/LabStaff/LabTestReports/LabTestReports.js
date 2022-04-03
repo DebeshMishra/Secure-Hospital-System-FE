@@ -88,7 +88,7 @@ const LabTestReports = (props) => {
       accessor: "manage",
       Cell: ({ cell }) => (
         <div>
-          <button id="Update" disabled={cell.row.values.labResultStatus == "COMPLETED"} onClick={() => updateReport(cell.row.values)}>
+          <button id="Update" disabled={cell.row.values.labResultStatus == "DIAGNOSIED"} onClick={() => updateReport(cell.row.values)}>
             { "Update & Submit"}
           </button>
         </div>

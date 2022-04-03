@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router";
+import { createTransaction } from "../../../services/users.service";
 
 const PayBill = () => {
   const [data, setData] = useState([]);
@@ -24,7 +25,7 @@ const PayBill = () => {
     let cost1 = 0
     cost1 += appointment.appointment.fees;
     appointment?.appointment?.diagnoses?.labResult.map(lr => {
-      if(lr.labResultStatus == "COMPLETED")
+      if(lr.labResultStatus == "DIAGNOSIED")
         cost1 += lr.labtests.labTestCost;
     })
     setCost(cost1)
@@ -40,12 +41,17 @@ const PayBill = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(data);
+    createTransaction(data).then(res => {
+      alert(res);
+      navigate("/appointments");
+    });
   };
 
   return (
     <>
       {
-        appointment.appointment.status == "COMPLETED" &&
+        appointment.appointment.status == "DIAGNOSIED" &&
         <Container className="login">
           <div className="container mt-5">
             <table className="table table-dark table-striped">
