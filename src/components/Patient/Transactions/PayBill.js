@@ -25,7 +25,6 @@ const PayBill = () => {
     let cost1 = 0
     cost1 += appointment.appointment.fees;
     appointment?.appointment?.diagnoses?.labResult.map(lr => {
-      if(lr.labResultStatus == "DIAGNOSIED")
         cost1 += lr.labtests.labTestCost;
     })
     setCost(cost1)

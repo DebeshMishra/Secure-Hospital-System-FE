@@ -4,13 +4,15 @@ import { useLocation } from 'react-router';
 
 import { Accordion, Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
-import { getUserById } from '../../../services/users.service';
+import { getAllBills, getAllTransactions, getUserById } from '../../../services/users.service';
 import UserInformation from '../UserInformation/UserInformaton';
 import Appointments from '../Appointments/Appointments';
 import { getAllLabTests } from '../../../services/LabTests.services';
 import LabReports from '../LabReports/LabReports';
 import Policy from '../Policies/Policy';
 import Claims from '../Claims/Claims';
+import Bills from '../Bills/Bills';
+import Transactions from '../Transactions/Transactions';
 
 
 function PatientRecord(props) {
@@ -19,6 +21,8 @@ function PatientRecord(props) {
     // const [labResults, setLabResults] = useState(null);
     const { state } = useLocation();
     const { userId } = state;
+    const [bills, setBills] = useState([])
+    const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
         console.log(userId);
@@ -35,15 +39,17 @@ function PatientRecord(props) {
                 return 0;
               });
             setuserData(response);
-            // const lr = []
-            // response.appointment.forEach(appointment => {
-            //     if(appointment.diagnoses != null && appointment.diagnoses.labResult != null){
-            //         appointment.diagnoses.labResult.forEach(res => {
-            //             lr.push(res);
-            //         })
-            //     }
-            // });
-            // setLabResults(lr);
+            const tran = [];
+            getAllTransactions(response.id).then(resp => {
+                setTransactions(resp);
+                console.log(resp);
+            });
+
+            getAllBills(response.id).then(response => {
+                setBills(response);
+            })
+         
+            
         });
         
     }, []);
@@ -64,18 +70,6 @@ function PatientRecord(props) {
                         <Accordion.Header>Appointments</Accordion.Header>
                         <Accordion.Body>
                         {(userData == null || userData.appointments.length == 0 ) ? <b className='red'>No Appointments available!</b>: <Appointments appointments = {userData.appointments}/>}
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                        <Accordion.Header> diagnoses</Accordion.Header>
-                        <Accordion.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                            est laborum.
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="3">
@@ -99,25 +93,13 @@ function PatientRecord(props) {
                     <Accordion.Item eventKey="6">
                         <Accordion.Header> Bills</Accordion.Header>
                         <Accordion.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                            est laborum.
+                        {bills == null? <b className='red'>No bills present!</b> : <Bills bills={bills}/>}
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="7">
                         <Accordion.Header> Transactions</Accordion.Header>
                         <Accordion.Body>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-                            est laborum.
+                        {transactions == null || transactions.length ==0 ? <b className='red'>No Transactions present!</b> : <Transactions transactions={transactions}/>}
                         </Accordion.Body>
                     </Accordion.Item>
                 </Accordion>

@@ -27,7 +27,7 @@ const Transactions = () => {
   };
 
   useEffect(() => {
-    getAllTransactions().then(resp => {
+    getAllTransactions("").then(resp => {
       setTransactions(resp);
     });
   }, [])
@@ -35,7 +35,7 @@ const Transactions = () => {
   const approveTransactionf = ( transactionId, appointmentId) => {
     approveTransaction(userInfo.userData.user.id, transactionId, appointmentId).then(response => {
       alert(response);
-      getAllTransactions().then(resp => {
+      getAllTransactions("").then(resp => {
         setTransactions(resp);
       });
     });
@@ -45,7 +45,7 @@ const Transactions = () => {
   const rejectTransactionf = ( transactionId, appointmentId) => {
     cancelTransaction(userInfo.userData.user.id, transactionId, appointmentId).then(response => {
       alert(response);
-      getAllTransactions().then(resp => {
+      getAllTransactions("").then(resp => {
         setTransactions(resp);
       });
     });
