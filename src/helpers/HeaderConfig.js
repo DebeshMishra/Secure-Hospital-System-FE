@@ -27,9 +27,7 @@ export const navLinks = {
     availableLinks: [
       "dashboard",
       "appointments",
-      "createAClaim",
-      "EnrollinPolicy",
-      "transactions",
+      "EnrollinPolicy"
     ],
   },
   DOCTOR: {
@@ -68,10 +66,6 @@ export const navLinks = {
     coverages: {
       name: "Coverages",
       url: "/coverages",
-    },
-    createAClaim: {
-      name: "Raise a Claim",
-      url: "/raiseClaim",
     },
     viewClaims: {
       name: "View Claims",

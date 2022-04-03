@@ -187,3 +187,33 @@ export const createTransaction = async (data) => {
     return response.data;
 } 
 
+export const getAllTransactions = async () => {
+    const response = await axios.get('http://127.0.0.1:8080/api/transaction/getAllTransactions', {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+
+export const approveTransaction = async (staffId, transactionId, appointmentId) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/transaction/approveTransaction?staffId='+staffId+"&transactionId="+transactionId+"&appointmentId="+appointmentId, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+
+export const cancelTransaction = async (staffId, transactionId,appointmentId) => {
+    const response = await axios.post('http://127.0.0.1:8080/api/transaction/cancelTransaction?staffId='+staffId+"&transactionId="+transactionId+"&appointmentId="+appointmentId, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+    return response.data;
+} 
+

@@ -11,10 +11,12 @@ import {
     Table,
 } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getAllClaims } from "../../../services/InsuranceStaff.services";
+import { getAllClaims, rejectClaim, approveClaim } from "../../../services/InsuranceStaff.services";
+import { useNavigate } from "react-router";
 
 function ViewClaims() {
     const [claims, setClaims] = useState([]);
+    let navigate = useNavigate();
 
     useEffect(() => {
         getAllClaims().then(response => {
@@ -22,19 +24,29 @@ function ViewClaims() {
         })
     }, [])
 
-    const approveClaim = (claimId) => {
-
+    const approveClaimf = (claimId) => {
+        approveClaim(claimId).then(response => {
+            alert(response);
+            getAllClaims().then(response => {
+                setClaims(response);
+            })
+        })
     }
-    const rejectClaim = (claimId) => {
-        
+    const rejectClaimf = (claimId) => {
+        rejectClaim(claimId).then(response => {
+            alert(response);
+            getAllClaims().then(response => {
+                setClaims(response);
+            })
+        })
     }
     const viewPatient = (patientId) => {
-        
+        navigate("/userData", { state: { userId: patientId } })
     }
 
     return (
         <>
-            { 
+            {
                 claims != null && claims.length > 0 &&
                 <Container>
                     <Row className="justify-content-md-center header">
@@ -65,21 +77,19 @@ function ViewClaims() {
                                                     <td>{claim.status}</td>
                                                     <td>{
                                                         <>
-                                                         <Button variant="primary" disabled={claim.status!="PENDING"}  onClick={approveClaim(claim.claimId)}>
-                                                         Approve Claim
-                                                       </Button>
-                                                       <span> | </span>
-                                                       <Button variant="primary" disabled={claim.status!="PENDING"} onClick={rejectClaim(claim.claimId)}>
-                                                       Deny Claim
-                                                     </Button>
-                                                     <span> | </span>
-                                                       <Button variant="primary" onClick={viewPatient(claim.patientId)}>
-                                                       View Patient
-                                                     </Button>
+                                                            <Button variant="primary" disabled={claim.status != "PENDING"} onClick={() => approveClaimf(claim.claimId)}>
+                                                                Approve Claim
+                                                            </Button>
+                                                            <span> | </span>
+                                                            <Button variant="primary" disabled={claim.status != "PENDING"} onClick={() => rejectClaimf(claim.claimId)}>
+                                                                Deny Claim
+                                                            </Button>
+                                                            <span> | </span>
+                                                            <Button variant="primary" onClick={() => viewPatient(claim.patientId)}>
+                                                                View Patient
+                                                            </Button>
                                                         </>
-                                                        
-
-                                        }</td>
+                                                    }</td>
                                                 </tr>
                                             )
                                         })

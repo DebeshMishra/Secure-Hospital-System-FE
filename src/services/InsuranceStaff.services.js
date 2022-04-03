@@ -91,3 +91,25 @@ export const getAllClaims = async (data) => {
 
     return response.data;
 }
+
+export const approveClaim = async (claimId) => {
+    const response = await axios.get(SERVER_URL + '/api/claims/approveClaim?claimId='+claimId, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+
+    return response.data;
+}
+
+export const rejectClaim = async (claimId) => {
+    const response = await axios.get(SERVER_URL + '/api/claims/rejectClaim?claimId='+claimId, {
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+        },
+    })
+
+    return response.data;
+}

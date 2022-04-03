@@ -10,6 +10,7 @@ import Appointments from '../Appointments/Appointments';
 import { getAllLabTests } from '../../../services/LabTests.services';
 import LabReports from '../LabReports/LabReports';
 import Policy from '../Policies/Policy';
+import Claims from '../Claims/Claims';
 
 
 function PatientRecord(props) {
@@ -65,14 +66,8 @@ function PatientRecord(props) {
                         {(userData == null || userData.appointments.length == 0 ) ? <b className='red'>No Appointments available!</b>: <Appointments appointments = {userData.appointments}/>}
                         </Accordion.Body>
                     </Accordion.Item>
-                    <Accordion.Item eventKey="3">
-                        <Accordion.Header>Lab Reports</Accordion.Header>
-                        <Accordion.Body>
-                        {userData == null? <b className='red'>No LabReports available!</b> : <LabReports patientId = {userData.id}/>}
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="4">
-                        <Accordion.Header>Claims</Accordion.Header>
+                    <Accordion.Item eventKey="2">
+                        <Accordion.Header> diagnoses</Accordion.Header>
                         <Accordion.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                             tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
@@ -83,6 +78,18 @@ function PatientRecord(props) {
                             est laborum.
                         </Accordion.Body>
                     </Accordion.Item>
+                    <Accordion.Item eventKey="3">
+                        <Accordion.Header>Lab Reports</Accordion.Header>
+                        <Accordion.Body>
+                        {userData == null? <b className='red'>No LabReports available!</b> : <LabReports patientId = {userData.id}/>}
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="4">
+                        <Accordion.Header>Claims</Accordion.Header>
+                        <Accordion.Body>
+                        {userData == null || userData.policies == null || userData.policies.length == 0 || userData.claims == null || userData.claims.length == 0 ? <b className='red'>No Policies taken!</b> : <Claims policies={userData.policies} claims={userData.claims}/>}
+                        </Accordion.Body>
+                    </Accordion.Item>
                     <Accordion.Item eventKey="5">
                         <Accordion.Header>Policies</Accordion.Header>
                         <Accordion.Body>
@@ -90,6 +97,18 @@ function PatientRecord(props) {
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="6">
+                        <Accordion.Header> Bills</Accordion.Header>
+                        <Accordion.Body>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+                            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+                            est laborum.
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="7">
                         <Accordion.Header> Transactions</Accordion.Header>
                         <Accordion.Body>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

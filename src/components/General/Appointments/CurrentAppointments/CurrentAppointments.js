@@ -125,7 +125,7 @@ function CurrentAppointments(props) {
                                                 {
                                                     (userInfo.userData.role == "PATIENT" && 
                                                     <>
-                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "CANCELED" || appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "PENDING" } onClick={() => cancelAppointmt(appointment.appointment.id)}>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status !== "REQUESTED"} onClick={() => cancelAppointmt(appointment.appointment.id)}>
                                                         {appointment.appointment.status === "CANCELED" ? "CANCELED" : "CANCEL"}
                                                     </Button>
                                                     <hr/>
@@ -144,7 +144,7 @@ function CurrentAppointments(props) {
                                                  {
                                                     userInfo.userData.role == "DOCTOR"? appointment.appointment.status !== "PENDING"? 
                                                     <>
-                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "CANCELED"} onClick={() => createDiagnosis(appointment)}>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "CANCELED" || appointment.appointment.status === "COMPLETED" } onClick={() => createDiagnosis(appointment)}>
                                                         { "WRITE DIAGNOSIS"}
                                                     </Button>
                                                     <hr/>
