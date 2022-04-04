@@ -1,4 +1,3 @@
-import Appointments from "../components/General/Appointments/Appointments";
 
 export const navLinks = {
   roles: [
@@ -20,6 +19,8 @@ export const navLinks = {
       "transactions",
       "viewClaims",
       "viewPolicies",
+      "coverages",
+      "labTestReports"
     ],
   },
   PATIENT: {
@@ -32,7 +33,7 @@ export const navLinks = {
   },
   DOCTOR: {
     name: "Doctor",
-    availableLinks: ["dashboard", "appointments", "users"],
+    availableLinks: ["dashboard", "appointments", "users", "labTestReports"],
   },
   LAB_STAFF: {
     name: "Lab Staff",
@@ -61,14 +62,14 @@ export const navLinks = {
   links: {
     dashboard: {
       name: "Dashboard",
-      url: "/",
+      url: "/dashboard",
     },
     coverages: {
       name: "Coverages",
       url: "/coverages",
     },
     viewClaims: {
-      name: "View Claims",
+      name: "Claims",
       url: "/viewClaims",
     },
     createPolicy: {
@@ -76,7 +77,7 @@ export const navLinks = {
       url: "/createPolicy",
     },
     viewPolicies: {
-      name: "View Policies",
+      name: "Policies",
       url: "/viewPolicies",
     },
     EnrollinPolicy: {
@@ -122,10 +123,6 @@ export const navLinks = {
     editUserHS: {
       name: "Edit User",
       url: "/editUserHS",
-    },
-    prescriptions: {
-      name: "View Prescriptions",
-      url: "/prescriptions",
     },
     transactions: {
       name: "Transactions",

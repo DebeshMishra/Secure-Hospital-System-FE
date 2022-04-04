@@ -33,7 +33,6 @@ function CreateLabTests(props) {
         alert(response.data);
         props.onSubmitted(true);
         setSubmit(!submit);
-        setLabTestData({});
       });
     }
   

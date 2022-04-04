@@ -24,6 +24,7 @@ const Dashboard = () => {
       <div className='info'>
         <h3>This is the CSE 545 - Software Security Project</h3>
         <p>Developed By Group - 3</p>
+        <p>This application is not a mobile friendly application. So please view in desktop for better UI interaction.</p>
       </div>
     </>
   )

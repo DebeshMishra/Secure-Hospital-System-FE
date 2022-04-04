@@ -102,6 +102,8 @@ function AppointmentConfirmation (props) {
         cancelAppointment(id).then(res => {
             alert(res);
             navigate("/appointments");
+        }, error => {
+            alert("Error occurred!");
         })
         
     }

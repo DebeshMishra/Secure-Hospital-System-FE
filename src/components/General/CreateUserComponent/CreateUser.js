@@ -12,6 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import validator from 'validator'
 
 import {
   Form,
@@ -33,19 +34,36 @@ const CreateUser = (props) => {
     "emailId",
   ]);
   const userInfo = useSelector((state) => state.user);
+  const [errorMessage, setErrorMessage] = useState('')
+  const [submit, setSubmit] = useState(true);
+  let navigate = useNavigate();
+
+
+  //password validator
+  const validate = (value) => {
+
+    if (validator.isStrongPassword(value, {
+      minLength: 8, minLowercase: 1,
+      minUppercase: 1, minNumbers: 1, minSymbols: 1
+    })) {
+      setErrorMessage('Strong is Password')
+    } else {
+      setErrorMessage('Password is Not Strong ')
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     registrationdata.roles = [registrationdata.role];
+    setSubmit(!submit);
     registerUser(registrationdata).then(
       (response) => {
+        setSubmit(!submit);
         console.log(response);
-        if (response.status == 200) {
-          alert(
-            "Successfully registered!!! please view your email to confirm your account."
-          );
-          Navigate("/login");
-        }
+        alert(
+          response.data
+        );
+        navigate("/login");
       },
       (error) => {
         alert("Error occurred!!! Please try again.");
@@ -58,7 +76,34 @@ const CreateUser = (props) => {
     const newdata = { ...registrationdata };
     newdata[e.target.id] = e.target.value;
     setRegistrationData(newdata);
+    if (e.target.id == "password") {
+      validate(e.target.value);
+    }
   };
+
+  const isValid = () => {
+    Object.keys(registrationdata).forEach(key => {
+      if (key == "password") {
+        if (validator.isStrongPassword(registrationdata[key], {
+          minLength: 8, minLowercase: 1,
+          minUppercase: 1, minNumbers: 1, minSymbols: 1
+        })) {
+
+        } else {
+          console.log(false);
+          return false;
+        }
+      } else {
+        if (registrationdata[key] == null || registrationdata[key].trim().length == 0) {
+          console.log(false);
+          return false;
+        }
+      }
+
+    });
+    console.log(true);
+    return true;
+  }
 
   return (
     <Container className="login">
@@ -74,9 +119,11 @@ const CreateUser = (props) => {
                 placeholder="First Name"
                 aria-label="First Name"
                 id="firstName"
+                autoComplete="off"
                 value={registrationdata.firstName}
                 onChange={handleChange}
                 required={true}
+                minLength={2}
                 type="text"
               />
             </InputGroup>
@@ -90,6 +137,8 @@ const CreateUser = (props) => {
                 placeholder="Last Name"
                 aria-label="Last Name"
                 id="lastName"
+                autoComplete="off"
+                minLength={2}
                 value={registrationdata.lastName}
                 onChange={handleChange}
                 required={true}
@@ -106,6 +155,7 @@ const CreateUser = (props) => {
                 placeholder="Email address"
                 aria-label="Email address"
                 id="email"
+                autoComplete="off"
                 value={registrationdata.email}
                 required={true}
                 onChange={handleChange}
@@ -127,6 +177,8 @@ const CreateUser = (props) => {
                 value={registrationdata.dob}
                 onChange={handleChange}
                 required={true}
+                max={new Date().toISOString().split("T")[0]}
+                min="1950-01-02"
                 type="date"
               />
             </InputGroup>
@@ -140,22 +192,38 @@ const CreateUser = (props) => {
                 placeholder="Password"
                 aria-label="Password"
                 id="password"
+                minLength={8}
+                maxLength={15}
+                autoComplete="off"
                 required={true}
                 value={registrationdata.password}
                 onChange={handleChange}
                 type="password"
               />
+
             </InputGroup>
+            <div>
+              <p style={{ color: 'blue' }}> Min Length: 8, Max Length: 15, Min Lowercase: 1, Min Uppercase: 1, Min Numbers: 1, Min Symbols: 1</p>
+              <span style={{
+                fontWeight: 'bold',
+                color: 'red',
+              }}>{errorMessage}</span>
+            </div>
+
           </Col>
         </Row>
         <Row className="justify-content-md-center mb-3">
           <Col md="6">
             <InputGroup>
-              <InputGroup.Text id="basic-addon1">Phone Number</InputGroup.Text>
+              <InputGroup.Text id="basic-addon1">Phone Number (Enter +1 at the start)</InputGroup.Text>
               <FormControl
                 placeholder="Phone Number"
                 aria-label="Phone Number"
                 id="phoneNumber"
+                autoComplete="off"
+                minLength={12}
+                maxLength={12}
+                required
                 value={registrationdata.phoneNumber}
                 onChange={handleChange}
                 type="text"
@@ -171,6 +239,7 @@ const CreateUser = (props) => {
                   aria-label="Default select example"
                   value={registrationdata.role}
                   id="role"
+                  required
                   onChange={handleChange}>
                   <option>Select Roles</option>
                   <option value="PATIENT">Patient</option>
@@ -187,7 +256,10 @@ const CreateUser = (props) => {
         <Row className="justify-content-md-center mb-3">
           <Col md="6">
             <Form.Group className="mb-3">
-              <Button variant="primary" type="submit" className="submit-button">
+              <Button variant="primary" disabled={!validator.isStrongPassword(registrationdata["password"] || "", {
+          minLength: 8, minLowercase: 1,
+          minUppercase: 1, minNumbers: 1, minSymbols: 1
+        }) || !submit} type="submit" className="submit-button">
                 Submit
               </Button>
             </Form.Group>

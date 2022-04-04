@@ -25,6 +25,7 @@ function PastAppointments(props) {
     const [appointments, setAppointments] = useState([]);
     const [key, setKey] = useState('Current');
     let navigate = useNavigate();
+    const [fectching, setFecteching] = useState(true)
 
     const [cookies, setCookie, removeCookie] = useCookies([
         "JWTToken",
@@ -34,7 +35,9 @@ function PastAppointments(props) {
 
     // needs API integration
     useEffect(() => {
+        setFecteching(true)
         getAllPastAppointments("").then(response => {
+            setFecteching(false)
             setAppointments(response);
         })
     }, [])
@@ -97,6 +100,7 @@ function PastAppointments(props) {
 
 
         </div>:
+         fectching ? <h3>Feteching Appoinments!</h3>:
         <h3>No Appointments!</h3>
         }
         

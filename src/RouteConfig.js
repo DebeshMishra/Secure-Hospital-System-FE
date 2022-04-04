@@ -3,8 +3,6 @@ import Login from "./components/General/LoginComponent/Login";
 import CreateUser from "./components/General/CreateUserComponent/CreateUser";
 import Account from "./components/General/Account/Account";
 import EditAccount from "./components/General/Account/EditAccount";
-import Diagnosis from "./components/Patient/Diagnosis/Diagnosis";
-
 import ViewClaims from "./components/InsuranceStaff/ViewClaims/ViewClaims";
 import Coverages from "./components/InsuranceStaff/Coverages/Coverages";
 import CreatePolicy from "./components/InsuranceStaff/Policies/CreatePolicy/createPolicy";
@@ -24,98 +22,101 @@ import TakePolicy from "./components/Patient/TakePolicy/TakePolicy";
 import EditUser from "./components/Admin/EditUsers/EditUser";
 import Users from "./components/Admin/Users/Users";
 import PayBill from "./components/Patient/Transactions/PayBill";
+import Logs from "./components/Admin/Logs";
+
+export const permissions = {
+  "ADMIN": ["dashboard", "logs", "profile", "editAccount", "users", "editUser", "viewClaims", "viewPolicies",
+   "createPolicy", "coverages", "appointments", "labTestReports", "labTests", "transactions", "userData", "appointmentConfirmation"],
+  "PATIENT": ["dashboard", "profile", "editAccount", "raiseClaim", "appointments", "userData", "takePolicy", "payBill"],
+  "INSURANCE_STAFF": ["dashboard", "profile", "editAccount", "users", "viewClaims", "viewPolicies", "createPolicy", "coverages", "updateLabTestReport", "userData"],
+  "LAB_STAFF": ["dashboard", "profile", "editAccount", "users", "labTestReports", "updateLabTestReport", "labTests", "userData"],
+  "DOCTOR": ["dashboard", "profile", "editAccount", "users", "appointments", "labTestReports", "userData",  "createDiagnosis"],
+  "HOSPITAL_STAFF": ["dashboard", "profile", "editAccount", "users", "editUser", "appointments", "labTestReports", "transactions", "userData", "appointmentConfirmation"]
+}
 
 export const routes = [
   {
-    path: "/",
+    path: "/dashboard",
     component: <Dashboard />,
   },
   {
-    path: "/profile",
+    path: "/logs",
+    component: <Logs />
+  },
+  {
+    path: "profile",
     component: <Account />,
   },
   {
-    path: "/editAccount",
+    path: "editAccount",
     component: <EditAccount />,
   },
   {
-    path: "/diagnosis",
-    component: <Diagnosis />,
-  },
-  {
-    path: "/users",
+    path: "users",
     component: <Users />,
   },
   {
-    path: "/editUser",
+    path: "editUser",
     component: <EditUser />,
   },
   {
-    path: "/viewClaims",
+    path: "viewClaims",
     component: <ViewClaims />,
   },
   {
-    path: "/viewPolicies",
+    path: "viewPolicies",
     component: <Policies />,
   },
   {
-    path: "/createPolicy",
+    path: "createPolicy",
     component: <CreatePolicy />,
   },
   {
-    path: "/coverages",
+    path: "coverages",
     component: <Coverages />,
   },
   {
-    path: "/raiseClaim",
+    path: "raiseClaim",
     component: <CreateClaim />,
   },
   {
-    path: "/appointments",
+    path: "appointments",
     component: <Appointments />,
   },
   {
-    path: "/labTestReports",
+    path: "labTestReports",
     component: <LabTestReports />,
   },
   {
-    path: "/updateLabTestReport",
+    path: "updateLabTestReport",
     component: <UpdateLabTestReport />,
   },
   {
-    path: "/labTests",
+    path: "labTests",
     component: <LabTests />,
   },
   {
-    path: "/transactions",
+    path: "transactions",
     component: <Transactions />,
   },
   {
-    path: "/editUser",
-    component: <AdminEditUser />,
-  },
-  {
-    path: "/editUserHS",
-    component: <HospitalStaffEditUser />,
-  },
-  {
-    path: "/userData",
+    path: "userData",
     component: <PatientRecord />,
   },
   {
-    path: "/appointmentConfirmation",
+    path: "appointmentConfirmation",
     component: <AppointmentConfirmation />,
   },
   {
-    path: "/createDiagnosis",
+    path: "createDiagnosis",
     component: <CreateDaignosis />,
   },
   {
-    path: "/takePolicy",
+    path: "takePolicy",
     component: <TakePolicy />,
   },
   {
-    path: "/payBill",
+    path: "payBill",
     component: <PayBill />,
   },
 ];

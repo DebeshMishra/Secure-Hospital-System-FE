@@ -21,21 +21,24 @@ const Users = (props) => {
     }
 
     const blockOnClick = (rowInfo) => {
-        const r = "";
+        let r = "";
+        console.log(rowInfo)
         if (userInfo.userData.user.roles[0].role != "ADMIN") {
             r = "PATIENT";
         }
         blockUserByEmailId(rowInfo, data.query, r).then(response => {
+            alert("User Blocked!");
             setTableData(response)
         })
     }
 
     const unblockOnClick = (rowInfo) => {
-        const r = "";
+        let r = "";
         if (userInfo.userData.user.roles[0].role != "ADMIN") {
             r = "PATIENT";
         }
         unblockUserByEmailId(rowInfo, data.query, r).then(response => {
+            alert("User Activated!");
             setTableData(response)
         })
     }
@@ -54,6 +57,7 @@ const Users = (props) => {
     }, []);
 
     const viewPatient = (user) => {
+        console.log(user);
         navigate("/userData", { state: { userId: user.id } })
     }
 
@@ -102,21 +106,28 @@ const Users = (props) => {
                             <Button id="edit" onClick={() => editRowOnClick(cell.row.values)} >
                                 Edit
                             </Button>
-                            &nbsp;&nbsp;&nbsp;
+                            <span>|</span>
                             <Button id="block" onClick={() => blockOnClick(cell.row.values)}>
                                 Block
                             </Button>
-                            &nbsp;&nbsp;&nbsp;
+                            <span>|</span>
                             <Button id="unblock" onClick={() => unblockOnClick(cell.row.values)}>
                                 Unblock
                             </Button>
                         </>
                     }
-
-                    &nbsp;&nbsp;&nbsp;
-                    <Button id="View User" onClick={() => viewPatient(cell.row.values)}>
+                   
+                    {
+                       cell.row.values['roles[0].role'] == "PATIENT" &&
+                       <>
+                       <span>|</span>
+                        <Button id="View User"  onClick={() => viewPatient(cell.row.values)}>
                         {"VIEW All DIAGNOSIS"}
                     </Button>
+                       </>
+                       
+                    }
+                    
                 </div>
 
 
@@ -127,7 +138,6 @@ const Users = (props) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //console.log(data);
         if (userInfo.userData.user.roles[0].role != "ADMIN") {
             getAllUsersByRole("PATIENT", data.query).then(response => {
                 setTableData(response)
@@ -148,7 +158,6 @@ const Users = (props) => {
         const newdata = { ...data };
         newdata[e.target.id] = e.target.value;
         setData(newdata);
-        console.log(data);
     };
 
     return (
@@ -161,6 +170,7 @@ const Users = (props) => {
                             className="form-control"
                             placeholder="Search"
                             id="query"
+                            autoComplete="off"
                             value={data.query}
                             onChange={handleChange} />
                     </div>

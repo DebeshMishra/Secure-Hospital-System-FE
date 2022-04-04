@@ -13,14 +13,88 @@ import CreateUser from "./components/General/CreateUserComponent/CreateUser";
 import { useSelector, useDispatch } from "react-redux";
 import ThemeProvider from "react-bootstrap/ThemeProvider";
 import { useState } from "react";
-import { routes } from "./RouteConfig";
+import { permissions, routes } from "./RouteConfig";
 import { history } from "./helpers/history";
 import Logs from "./components/Admin/Logs";
 import ForgotPwd from "./components/General/LoginComponent/ForgotPwd";
 import Cookies from 'universal-cookie';
 import { useCookies } from "react-cookie";
+import { useLocation } from "react-router";
+import Unauthorized from "./components/General/Unauthorized"
+import Chat from "./components/General/Chat";
+
+const ProtectRouteLogin = (
+  { redirectPath = '/dashboard' }
+) => {
+  const user = useSelector((state) => state.user);
+
+  const location = useLocation();
+  console.log(location.pathname);
+
+  if (user.isLoggedIn) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  return <Outlet />;
+};
+
+const NoMatch = () => {
+  return (<h3>There's nothing here: 404!</h3>);
+};
+
+// const ProtectedRoute = (props) => {
+//   const user = useSelector((state) => state.user);
+
+//   const route = user.isLoggedIn ? <Outlet /> : <Navigate to="/login" replace/>;
+//   console.log(route);
+//   return route;
+// };
+
+const ProtectedRoute = ({ redirectPath = '/login' }) => {
+  const user = useSelector((state) => state.user);
+  const location = useLocation();
+
+  if (!user.isLoggedIn) {
+    return <Navigate to={redirectPath} replace />;
+  }
+
+  if(user.isLoggedIn && location.pathname.split("/")[1]=="dashboard"){
+    return <Outlet />;
+  }
+
+  if(!permissions[user.userData.user.roles[0].role].includes(location.pathname.split("/")[1])){
+    return <Navigate to="/unauthorized" replace />;
+  }
+
+  return <Outlet />;
+};
 
 
+const Navigation = () => {
+  return (
+    <Routes>
+      <Route element={<ProtectedRoute />}>
+        {routes.map((item, index) => {
+          return (
+            <Route
+              key={index}
+              index={item.path == "/dashboard"}
+              path={item.path}
+              element={item.component}
+            />
+          );
+        })}
+      </Route>
+      <Route exact path="/" element={<ProtectRouteLogin />}>
+        <Route path="/login" element={<Login />} />
+        <Route path="/forgotPwd" element={<ForgotPwd />} />
+      </Route>
+      <Route path="/createUser" element={<CreateUser />} />
+      <Route path="/unauthorized" element={<Unauthorized /> } />
+      <Route path="*" element={<NoMatch />} />
+    </Routes>
+  )
+}
 
 function App() {
   const [userData, setUserData] = useState({ isLoggedIn: false });
@@ -29,96 +103,19 @@ function App() {
     "emailId",
   ]);
 
-  // const ProtectedRoute = ({component: Component, ...rest}) => {
-  //   const user = useSelector((state) => state.user)
-  //   const location = useLocation();
-  //   return (
-  //     <Route
-  //       {...rest}
-  //       render={props => {
-  //         if(user.isLoggedIn){
-  //           return <component {...props}/>
-  //         }else{
-  //           return <Navigate to={
-  //             {
-  //               pathname: "/login",
-  //               state: {from: props.location}
-  //             }
-  //           }/>
-  //         }
-  //       }}
-  //     />
-  //   )
-  // }
-
-  // function ProtectedRoute({ component, ...restOfProps }) {
-  //   const user = useSelector((state) => state.user)
-  //   console.log(component, restOfProps);
-  //   return (
-  //     <Route
-  //       {...restOfProps}
-  //       render={(props) =>
-  //         user.isLoggedIn ? <component {...props} /> : <Navigate to="/login" />
-  //       }
-  //     />
-  //   );
-  // }
-
-  const ProtectRouteLogin = (props) => {
-    const user = useSelector((state) => state.user);
-
-    // if(cookies.JWTToken == null){
-    //   return <Navigate to="/login" />;
-    // }
-
-    const route = !user.isLoggedIn ? <Outlet /> : <Navigate to="/" />;
-    console.log(route);
-    return route;
-  };
-
-  const PrivateRoute = (props) => {
-    const user = useSelector((state) => state.user);
-
-    const route = user.isLoggedIn ? <Outlet /> : <Navigate to="/login" />;
-    console.log(route);
-    return route;
-  };
-
   return (
-    <BrowserRouter>
-      <ThemeProvider
-        breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}>
-        <div className="App">
-          <Header userData={userData} setUserData={setUserData} />
-          <div className="outer">
-            <div className="inner">
-              <Routes>
-                <Route exact path="/" element={<PrivateRoute />}>
-                  {routes.map((item, index) => {
-                    return (
-                      <Route
-                        key={index}
-                        exact
-                        path={item.path}
-                        element={item.component}
-                      />
-                    );
-                  })}
-                </Route>
-                <Route exact path="/" element={<ProtectRouteLogin />}>
-                  <Route exact path="/login" element={<Login />} />
-                  <Route exact path="/forgotPwd" element={<ForgotPwd />} />
-                </Route>
-                <Route exact path="/createUser" element={<CreateUser />} />
-                <Route exact path="/logs" element={<Logs />} />
-
-                {/* <ProtectedRoute exact path="/dashboard" element={<Dashboard />} /> */}
-              </Routes>
-            </div>
+    <ThemeProvider
+      breakpoints={["xxxl", "xxl", "xl", "lg", "md", "sm", "xs", "xxs"]}>
+      <div className="App">
+        <Header userData={userData} setUserData={setUserData} />
+        <Chat />
+        <div className="outer">
+          <div className="inner">
+            <Navigation />
           </div>
         </div>
-      </ThemeProvider>
-    </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 export default App;

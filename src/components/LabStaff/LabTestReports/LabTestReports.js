@@ -11,6 +11,7 @@ const LabTestReports = (props) => {
   const [rowData, setRowData] = useState([]);
   const [tableData, setTableData] = useState([])
   const editableUserInfo = useSelector((state) => state.editableUser);
+  const user = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   let navigate = useNavigate();
@@ -87,7 +88,7 @@ const LabTestReports = (props) => {
       Header: "Manage Reports",
       accessor: "manage",
       Cell: ({ cell }) => (
-        <div>
+         user.userData.user.roles[0].role=="LAB_STAFF" && <div>
           <button id="Update" disabled={cell.row.values.labResultStatus == "DIAGNOSIED"} onClick={() => updateReport(cell.row.values)}>
             { "Update & Submit"}
           </button>
@@ -96,22 +97,23 @@ const LabTestReports = (props) => {
     },
   ]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
 
-  };
+  // };
 
-  const handleChange = (e) => {
-    const newdata = { ...data };
-    newdata[e.target.id] = e.target.value;
-    setData(newdata);
-    console.log(data);
-  };
+  // const handleChange = (e) => {
+  //   const newdata = { ...data };
+  //   newdata[e.target.id] = e.target.value;
+  //   setData(newdata);
+  //   console.log(data);
+  // };
 
   return (
     <Container>
+      <h3>Lab Test Reports</h3>
       <div>
-        <form onSubmit={handleSubmit}>
+        {/* <form onSubmit={handleSubmit}>
           <div className="form-group">
             <br />
             <input
@@ -126,7 +128,7 @@ const LabTestReports = (props) => {
           <button type="submit" className="btn btn-dark btn-lg btn-block">
             Search
           </button>
-        </form>
+        </form> */}
         <br />
       </div>
       <div

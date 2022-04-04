@@ -56,6 +56,7 @@ const Transactions = () => {
       {
         transactions != null && transactions.length > 0 &&
         <div className="container mt-5">
+          <h3>Transactions</h3>
           <table className="table table-dark table-striped">
             <thead>
               <tr>

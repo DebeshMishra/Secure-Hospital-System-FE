@@ -1,7 +1,6 @@
+import { SERVER_URL } from '../helpers/Constants';
 
 const axios = require('axios');
-
-const SERVER_URL = "http://localhost:8080";
 
 export const loginAPI = async (data) => {
     const response = await axios.post(SERVER_URL + '/api/auth/login', data, {

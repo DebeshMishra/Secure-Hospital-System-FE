@@ -1,6 +1,6 @@
-const axios = require("axios");
+import { SERVER_URL } from "../helpers/Constants";
 
-const SERVER_URL = "http://127.0.0.1:8080";
+const axios = require("axios");
 
 export const getLabReportsById = async (patientId) => {
   const response = await axios.get(SERVER_URL + "/api/labResults/getAllLabReportsByPatientId?patientId=" + patientId, {

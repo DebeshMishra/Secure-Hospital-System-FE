@@ -43,7 +43,7 @@ const Login = (props) => {
           userData: { email: data.email, user: {} },
         })
       );
-      navigate("/");
+      navigate("/dashboard");
     });
   };
 
@@ -95,13 +95,6 @@ const Login = (props) => {
                 type="password"
               />
             </InputGroup>
-          </Col>
-        </Row>
-        <Row className="justify-content-md-center mb-3">
-          <Col md="4">
-            <Form.Group>
-              <Form.Check className="floatLeft" label="Remember" />
-            </Form.Group>
           </Col>
         </Row>
         <Row className="justify-content-md-center mb-3">

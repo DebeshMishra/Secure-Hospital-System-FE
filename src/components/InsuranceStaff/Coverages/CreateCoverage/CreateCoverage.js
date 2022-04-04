@@ -27,12 +27,18 @@ function CreateCoverage(props) {
         "emailId",
     ]);
     const userInfo = useSelector((state) => state.user);
+    const [submit, setSubmit] = useState(true);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSubmit(!submit);
         createCoverage(coverageData).then(response => {
+            setSubmit(!submit);
             alert("Successfully created a coverage!");
             props.onSubmitted(true);
+        }, (error) => {
+            alert("Error in creating record!")
         });
     };
 
@@ -56,13 +62,15 @@ function CreateCoverage(props) {
                                 placeholder="Coverage Name"
                                 aria-label="Coverage Name"
                                 id="coverageName"
-                                autocomplete="off"
+                                autoComplete="off"
                                 value={coverageData.coverageName}
                                 onChange={handleChange}
+                                minLength="3"
                                 required
                                 type="text"
                             />
                         </InputGroup>
+                        <span style={{color: 'blue'}}>Coverage name should be unique!</span>
                 </Row>
                 <Row className="justify-content-md-center mb-3">
                         <InputGroup>
@@ -71,7 +79,8 @@ function CreateCoverage(props) {
                                 placeholder="Coverage Description"
                                 aria-label="Coverage Description"
                                 id="description"
-                                autocomplete="off"
+                                autoComplete="off"
+                                minLength="3"
                                 value={coverageData.description}
                                 onChange={handleChange}
                                 as="textarea"
@@ -81,7 +90,7 @@ function CreateCoverage(props) {
                 </Row>
                 <Row className="justify-content-md-center mb-3">
                         <Form.Group className="mb-3">
-                            <Button variant="primary" type="submit" className="submit-button">
+                            <Button variant="primary" disabled={coverageData.coverageName == null} type="submit" className="submit-button">
                                 Submit
                             </Button>
                         </Form.Group>

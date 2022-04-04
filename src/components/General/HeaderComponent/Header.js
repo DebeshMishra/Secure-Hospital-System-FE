@@ -75,7 +75,7 @@ function Header(props) {
   };
 
   const profileNav = () => {
-    navigate("profile");
+    navigate("/profile");
   };
 
   return (
@@ -90,7 +90,6 @@ function Header(props) {
                   {userInfo.userData.role &&
                     navLinks[userInfo.userData.role].availableLinks.map(
                       (item, index) => {
-                        console.log(item);
                         return (
                           <Nav.Item key={index}>
                             <Nav.Link
@@ -115,9 +114,6 @@ function Header(props) {
                     <Dropdown.Menu>
                       <Dropdown.Item onClick={profileNav}>
                         {AppConstants.profile[0]}
-                      </Dropdown.Item>
-                      <Dropdown.Item href="/settings">
-                        {AppConstants.profile[1]}
                       </Dropdown.Item>
                       <Dropdown.Item onClick={logout}>
                         {AppConstants.profile[2]}

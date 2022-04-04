@@ -53,11 +53,7 @@ function EditUser(props) {
         phone: state.phone,
         email: state.email
       })
-  },[])
-
-
-
- 
+  },[]);
 
   return (
     <Container className="account">

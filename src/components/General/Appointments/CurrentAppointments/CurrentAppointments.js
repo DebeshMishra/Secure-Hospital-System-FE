@@ -25,6 +25,7 @@ function CurrentAppointments(props) {
     const [appointments, setAppointments] = useState([]);
     const [anyCancelled, setAnyCancelled] = useState(true);
     let navigate = useNavigate();
+    const [fectching, setFecteching] = useState(true)
 
 
     const [cookies, setCookie, removeCookie] = useCookies([
@@ -35,8 +36,10 @@ function CurrentAppointments(props) {
 
     // needs API integration
     useEffect(() => {
+        setFecteching(true)
         getAllFutureAppointments("").then(response => {
             setAppointments(response);
+            setFecteching(false);
         })
     }, [anyCancelled])
 
@@ -89,6 +92,7 @@ function CurrentAppointments(props) {
 
     return (
         <>
+        
               {
             appointments.length > 0 ?
             <div className="coveragesParent">
@@ -144,13 +148,13 @@ function CurrentAppointments(props) {
                                                  {
                                                     userInfo.userData.role == "DOCTOR"? appointment.appointment.status !== "PENDING"? 
                                                     <>
-                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "CANCELED" || appointment.appointment.status === "COMPLETED" } onClick={() => createDiagnosis(appointment)}>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "PAYMENT_AUTHORIZED" || appointment.appointment.status === "CANCELED" || appointment.appointment.status === "COMPLETED" } onClick={() => createDiagnosis(appointment)}>
                                                         { "WRITE DIAGNOSIS"}
                                                     </Button>
                                                     <hr/>
                                                     </>:
                                                     <>
-                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "CANCELED"} onClick={() => closeAppointment(appointment)}>
+                                                    <Button variant="primary" className="submit-button" size="sm" disabled={appointment.appointment.status === "DIAGNOSIED" || appointment.appointment.status === "PAYMENT_AUTHORIZED" || appointment.appointment.status === "CANCELED"} onClick={() => closeAppointment(appointment)}>
                                                         { "Complete Appointment"}
                                                     </Button>
                                                     <hr/>
@@ -192,6 +196,7 @@ function CurrentAppointments(props) {
 
 
         </div>:
+        fectching ? <h3>Feteching Appoinments!</h3>:
         <h3>No Appointments!</h3>
         }
         </>

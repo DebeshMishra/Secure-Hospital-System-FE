@@ -20,8 +20,9 @@ function CreatePolicy(props) {
 
     // Validation are pending.
 
-    const [policyData, setPolicyData] = useState({coverages : []});
+    const [policyData, setPolicyData] = useState({coverages : [], policyType: "BASIC"});
     const [coverages, setCoverages] = useState([]);
+    const [submit, setSubmit] = useState(false);
 
     const [cookies, setCookie, removeCookie] = useCookies([
         "JWTToken",
@@ -35,9 +36,13 @@ function CreatePolicy(props) {
             alert("need atleat one coverage!");
             return;
         }
+        setSubmit(true);
         createPolicy(policyData).then(response => {
             alert("Policy Created Successfully!");
             props.onSubmitted(true);
+            setSubmit(false);
+        }, error => {
+            alert("some error creating the policy!");
         })
     };
 
@@ -86,7 +91,8 @@ function CreatePolicy(props) {
                             placeholder="Policy Name"
                             aria-label="Policy Name"
                             id="policyName"
-                            autocomplete="off"
+                            minLength={3}
+                            autoComplete="off"
                             value={policyData.policyName}
                             onChange={handleChange}
                             required
@@ -102,10 +108,11 @@ function CreatePolicy(props) {
                             aria-label="Default select example"
                             value={policyData.policyType}
                             id="policyType"
+                            required
                             onChange={handleChange}
                         >
                             <option>Select Policy Type</option>
-                            <option value="BASIC">Basic</option>
+                            <option value="BASIC" selected>Basic</option>
                             <option value="PREMIUM">Premium</option>
                         </Form.Select>
                     </Form.Group>
@@ -117,11 +124,11 @@ function CreatePolicy(props) {
                             placeholder="Maximum Amount"
                             aria-label="Maximum Amount"
                             id="policyClaimMaximumAmt"
-                            autocomplete="off"
+                            autoComplete="off"
                             value={policyData.policyClaimMaximumAmt}
                             onChange={handleChange}
                             required
-                            type="text"
+                            type="number"
                         />
                     </Form.Group>
                 </Row>
@@ -131,10 +138,11 @@ function CreatePolicy(props) {
                         <FormControl
                             placeholder="Insurance Company Name"
                             aria-label="Insurance Company Name"
-                            autocomplete="off"
+                            autoComplete="off"
                             id="insuranceProviderName"
                             value={policyData.insuranceProviderName}
                             onChange={handleChange}
+                            minLength="5"
                             required
                             type="text"
                         />
@@ -160,7 +168,7 @@ function CreatePolicy(props) {
                 </Row>
                 <Row className="justify-content-md-center mb-3">
                     <Form.Group className="mb-3">
-                        <Button variant="primary" type="submit" className="submit-button">
+                        <Button variant="primary" disabled={submit} type="submit" className="submit-button">
                             Submit
                         </Button>
                     </Form.Group>

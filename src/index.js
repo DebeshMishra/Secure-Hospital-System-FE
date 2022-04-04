@@ -9,6 +9,7 @@ import { userReducer } from './features/user';
 import store from './app/store';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import { BrowserRouter } from 'react-router-dom';
 
 const cookies = new Cookies();
 
@@ -38,11 +39,13 @@ axios.interceptors.response.use((response) => {
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
+    <React.StrictMode>
     <Provider store={store}>
       <App />
     </Provider>
-  </React.StrictMode>,
+  </React.StrictMode>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

@@ -1,6 +1,6 @@
-const axios = require("axios");
+import { SERVER_URL } from "../helpers/Constants";
 
-const SERVER_URL = "http://localhost:8080";
+const axios = require("axios");
 
 export const requestOTP = async (data) => {
   const response = await axios.post(
