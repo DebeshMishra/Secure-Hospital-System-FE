@@ -36,7 +36,6 @@ export const getUserById = async (data) => {
 }
 
 export const blockUserByEmailId = async (data, query, role) => {
-    console.log(data)
     await axios.post(SERVER_URL + '/api/users/blockAccountByEmailId?emailId=' + data.email, {
         headers: {
             'Accept': "application/json",
@@ -47,7 +46,6 @@ export const blockUserByEmailId = async (data, query, role) => {
 }
 
 export const unblockUserByEmailId = async (data, query, role) => {
-    console.log(data)
     await axios.post(SERVER_URL + '/api/users/activateAccountByEmailId?emailId=' +  data.email, {
         headers: {
             'Accept': "application/json",

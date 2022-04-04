@@ -1,15 +1,9 @@
 import "./CreateUser.css";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  loginAPI,
   registerUser,
 } from "../../../services/authentication.service";
-import {
-  setUserData,
-  removeUserData,
-  setUserToken,
-} from "../../../features/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import validator from 'validator'
@@ -22,10 +16,7 @@ import {
   InputGroup,
   FormControl,
   Button,
-  DropdownButton,
-  Dropdown,
 } from "react-bootstrap";
-import { Navigate } from "react-router";
 
 const CreateUser = (props) => {
   const [registrationdata, setRegistrationData] = useState({ role: "PATIENT" });
@@ -59,7 +50,6 @@ const CreateUser = (props) => {
     registerUser(registrationdata).then(
       (response) => {
         setSubmit(!submit);
-        console.log(response);
         alert(
           response.data
         );
@@ -67,7 +57,6 @@ const CreateUser = (props) => {
       },
       (error) => {
         alert("Error occurred!!! Please try again.");
-        console.log(error);
       }
     );
   };
@@ -90,18 +79,15 @@ const CreateUser = (props) => {
         })) {
 
         } else {
-          console.log(false);
           return false;
         }
       } else {
         if (registrationdata[key] == null || registrationdata[key].trim().length == 0) {
-          console.log(false);
           return false;
         }
       }
 
     });
-    console.log(true);
     return true;
   }
 
@@ -109,6 +95,7 @@ const CreateUser = (props) => {
     <Container className="login">
       <Row className="justify-content-md-center login-header">
         <h2>Register</h2>
+        <p>Please make sure you active your account within 15 minutes of registration!</p>
       </Row>
       <Form onSubmit={handleSubmit}>
         <Row className="justify-content-md-center mb-3">
@@ -257,9 +244,9 @@ const CreateUser = (props) => {
           <Col md="6">
             <Form.Group className="mb-3">
               <Button variant="primary" disabled={!validator.isStrongPassword(registrationdata["password"] || "", {
-          minLength: 8, minLowercase: 1,
-          minUppercase: 1, minNumbers: 1, minSymbols: 1
-        }) || !submit} type="submit" className="submit-button">
+                minLength: 8, minLowercase: 1,
+                minUppercase: 1, minNumbers: 1, minSymbols: 1
+              }) || !submit} type="submit" className="submit-button">
                 Submit
               </Button>
             </Form.Group>

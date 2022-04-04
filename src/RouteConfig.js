@@ -26,11 +26,11 @@ import Logs from "./components/Admin/Logs";
 
 export const permissions = {
   "ADMIN": ["dashboard", "logs", "profile", "editAccount", "users", "editUser", "viewClaims", "viewPolicies",
-   "createPolicy", "coverages", "appointments", "labTestReports", "labTests", "transactions", "userData", "appointmentConfirmation"],
+    "createPolicy", "coverages", "appointments", "labTestReports", "labTests", "transactions", "userData", "appointmentConfirmation"],
   "PATIENT": ["dashboard", "profile", "editAccount", "raiseClaim", "appointments", "userData", "takePolicy", "payBill"],
   "INSURANCE_STAFF": ["dashboard", "profile", "editAccount", "users", "viewClaims", "viewPolicies", "createPolicy", "coverages", "updateLabTestReport", "userData"],
   "LAB_STAFF": ["dashboard", "profile", "editAccount", "users", "labTestReports", "updateLabTestReport", "labTests", "userData"],
-  "DOCTOR": ["dashboard", "profile", "editAccount", "users", "appointments", "labTestReports", "userData",  "createDiagnosis"],
+  "DOCTOR": ["dashboard", "profile", "editAccount", "users", "appointments", "labTestReports", "userData", "createDiagnosis"],
   "HOSPITAL_STAFF": ["dashboard", "profile", "editAccount", "users", "editUser", "appointments", "labTestReports", "transactions", "userData", "appointmentConfirmation"]
 }
 

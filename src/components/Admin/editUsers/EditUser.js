@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Form,
@@ -10,22 +9,19 @@ import {
   FormControl,
   Button,
 } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import "./styles.css";
-import { getUserByEmailId, updateUserByEmailId } from "../../../services/authentication.service";
+import { updateUserByEmailId } from "../../../services/authentication.service";
 
 function EditUser(props) {
   const [data, setData] = useState({});
   
   const { state } = useLocation();
-  //console.log(state);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     updateUserByEmailId(data).then(response => {
-      console.log(response);
       alert(response.data);
       navigate("/users");
     }, error => {
@@ -46,7 +42,6 @@ function EditUser(props) {
 
 
   useEffect(() => {
-    //console.log(state)
       setData({
         firstName: state.firstName,
         lastName: state.lastName,

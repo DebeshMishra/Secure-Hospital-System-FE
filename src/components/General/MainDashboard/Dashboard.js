@@ -1,20 +1,12 @@
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './Dashboard.css'
-import { useCookies } from 'react-cookie';
-import { useNavigate } from "react-router-dom";
-import { Container, Row, Col, Button } from 'react-bootstrap';
-import { navLinks } from '../../../helpers/HeaderConfig';
 
 
 const Dashboard = () => {
 
-  const [cookies, setCookie, removeCookie] = useCookies(['JWTToken', 'emailId']);
-  const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-  let navigate = useNavigate();
 
-  // console.log(userInfo);
   return (
     <>
       <div className="jumbotron">

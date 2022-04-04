@@ -1,18 +1,15 @@
 import { Nav, Navbar, Container, NavDropdown } from "react-bootstrap";
 import { navLinks } from "../../../helpers/HeaderConfig";
 import { AppConstants } from "../../../AppConstants";
-import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import {
   setUserData,
   removeUserData,
   setAllData,
-  setUserToken,
   checkCookiesForToken,
 } from "../../../features/user";
 import { getUserByEmailId } from "../../../services/authentication.service";
-import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { Dropdown } from "react-bootstrap";
 import "./Header.css";
@@ -25,13 +22,11 @@ function Header(props) {
   ]);
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
-  const [isLogoutClicked, setIsLogoutClicked] = useState(false);
   let navigate = useNavigate();
 
   useEffect(() => {
     //if user is logged in
     dispatch(checkCookiesForToken());
-    console.log(userInfo);
 
     if (userInfo.isLoggedIn || cookies.JWTToken != undefined) {
       if (cookies.emailId) {

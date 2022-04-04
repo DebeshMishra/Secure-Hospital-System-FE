@@ -4,21 +4,13 @@ import {
     Row,
     Container,
     Col,
-    InputGroup,
     FormControl,
     Button,
-    Table,
-    DropdownButton,
-    Dropdown,
-    Accordion,
-    Tabs,
-    Tab
 } from "react-bootstrap";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { getAllLabTests } from "../../../services/LabTests.services";
 import { createDiagnosis } from "../../../services/LabReports.services";
-import { completeAppointment } from "../../../services/users.service";
 
 function CreateDaignosis() {
 
@@ -30,7 +22,6 @@ function CreateDaignosis() {
     let navigate = useNavigate();
 
     useEffect(() => {
-        console.log(appointment);
         getAllLabTests().then(response => {
             setLabTests(response.data);
             const newData = {
@@ -48,8 +39,6 @@ function CreateDaignosis() {
                 newData["lab"+r.labtests.id] = true;
             })
             setDiagnosisData(newData);
-            console.log(newData)
-            console.log(diagnosisData);
         });
     }, []);
 
@@ -59,14 +48,12 @@ function CreateDaignosis() {
             alert("please enter the diagnosis!");
             return;
         }
-        console.log(diagnosisData)
         const newData = {...diagnosisData}
         labTests.forEach(lab => {
             if(newData["lab"+lab.id])
                 newData['labTestIds'].push(lab.id)
             delete newData['lab'+lab.id]
         })
-        console.log(newData);
         setSubmit(!submit);
         createDiagnosis(newData).then(response => {
             alert(response.data);
@@ -79,7 +66,6 @@ function CreateDaignosis() {
         const newdata = { ...diagnosisData };
         newdata[e.target.id] = e.target.value;
         setDiagnosisData(newdata);
-        console.log(newdata)
     };
 
     
@@ -91,20 +77,6 @@ function CreateDaignosis() {
         }else{
             newData[e.target.id] = false;
         }
-        // if(newdata['labTestIds'].length == 0){
-        //     if (e.target.checked) {
-        //         newdata['labTestIds'] = [parseInt(e.target.value)];
-        //     }
-        // }else{
-        //     if (e.target.checked) {
-        //         newdata['labTestIds'].push(parseInt(e.target.value));
-        //     }else{
-        //         const index = newdata['labTestIds'].indexOf(parseInt(e.target.value));
-        //     if (index > -1) {
-        //         newdata['labTestIds'].splice(index, 1); // 2nd parameter means remove one item only
-        //     }
-        //     }
-        // }
         setDiagnosisData(newData);
     }
 

@@ -26,7 +26,6 @@ function UserInformation(props) {
     };
 
     useEffect(() => {
-        console.log(props);
     }, []);
 
     return (

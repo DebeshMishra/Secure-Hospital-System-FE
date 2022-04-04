@@ -19,12 +19,10 @@ const LabTestReports = (props) => {
   const deleteOnClick = (rowInfo) => {};
 
   const updateReport = (e) => {
-    console.log(e)
     navigate("/updateLabTestReport", {state: { report: e}});
   };
 
   const viewUser = (e) => {
-    console.log(e)
   }
 
   useEffect(() => {
@@ -39,7 +37,6 @@ const LabTestReports = (props) => {
         reports.push(rep);
       });
       setTableData(reports);
-      console.log(reports);
     });
   }, []);
 
@@ -96,18 +93,6 @@ const LabTestReports = (props) => {
       ),
     },
   ]);
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  // };
-
-  // const handleChange = (e) => {
-  //   const newdata = { ...data };
-  //   newdata[e.target.id] = e.target.value;
-  //   setData(newdata);
-  //   console.log(data);
-  // };
 
   return (
     <Container>

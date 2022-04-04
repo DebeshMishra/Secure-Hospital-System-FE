@@ -1,22 +1,17 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import {
     Form,
     Row,
-    Container,
     Col,
     InputGroup,
     FormControl,
     Button,
-    DropdownButton,
-    Dropdown,
 } from "react-bootstrap";
-import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
-import { bookAppointment, getAllUserByTerm, getAllUsersByRole, getAppointmentTimings } from "../../../../services/users.service";
-import { CodeSlash } from "react-bootstrap-icons";
+import { bookAppointment, getAllUsersByRole, getAppointmentTimings } from "../../../../services/users.service";
 
 function CreateAppointment() {
     const [appointmentData, setAppointmentData] = useState({});
@@ -73,7 +68,6 @@ function CreateAppointment() {
             setTimeSlots([]);
         }
         setAppointmentData(newdata);
-        console.log(newdata);
 
     };
 
@@ -93,7 +87,6 @@ function CreateAppointment() {
     }, [appointmentType])
 
     function Allset() {
-        console.log(appointmentData);
         if(( (appointmentData.date != null && appointmentData.startTime != null && appointmentData.startTime != 'Select' && appointmentData.appointmentType == "GENERAL") 
         || (appointmentData.date != null && appointmentData.startTime != null && appointmentData.startTime != 'Select' && appointmentData.appointmentType == "SPECIFIC" && appointmentData.doctorId != null && appointmentData.doctorId != "Select")) && !submit){
             return (<Button variant="primary" type="submit" className="submit-button">

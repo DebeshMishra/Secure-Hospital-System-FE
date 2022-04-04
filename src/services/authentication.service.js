@@ -8,7 +8,7 @@ export const loginAPI = async (data) => {
             'Accept': "application/json",
             "Content-Type": "application/json",
         },
-    })
+    });
 
     return response;
 }

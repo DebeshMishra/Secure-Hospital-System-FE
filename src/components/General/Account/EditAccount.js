@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
@@ -26,7 +25,6 @@ function EditAccount() {
     e.preventDefault();
     // TODO API signUp Data to backend.
     updateUserByEmailId(data).then(response => {
-      console.log(response);
       alert(response.data);
       navigate("/profile");
     }, error => {
@@ -50,7 +48,6 @@ function EditAccount() {
     if ((userInfo.isLoggedIn || cookies.JWTToken != undefined)) {
       if (cookies.emailId) {
         getUserByEmailId(cookies.emailId).then(response => {
-          console.log(response);
           setData({
             firstName: response.firstName,
             lastName: response.lastName,
@@ -61,7 +58,6 @@ function EditAccount() {
       }
       else if (userInfo.userData.email) {
         getUserByEmailId(userInfo.userData.email).then(response => {
-          console.log(response);
           setData({
             firstName: response.firstName,
             lastName: response.lastName,

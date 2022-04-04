@@ -9,7 +9,6 @@ export const getLabReportsById = async (patientId) => {
       "Content-Type": "application/json",
     },
   });
-  console.log(response);
   return response;
 };
 

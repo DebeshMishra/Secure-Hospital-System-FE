@@ -1,23 +1,12 @@
 import './Appointments.css';
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 
 import {
-    Form,
-    Row,
     Container,
-    Col,
-    InputGroup,
-    FormControl,
-    Button,
-    Table,
-    DropdownButton,
-    Dropdown,
     Tabs,
     Tab
 } from "react-bootstrap";
-import { Navigate } from "react-router";
 import React, { useEffect, useState } from "react";
 import PastAppointments from './PastAppointments/PastAppointments';
 import CurrentAppointments from './CurrentAppointments/CurrentAppointments';
@@ -48,7 +37,7 @@ function Appointments() {
                 <Tab eventKey="Past" title="Past Appointments">
                     <PastAppointments />
                 </Tab>
-                {userInfo.userData.role && userInfo.userData.role==="PATIENT" && <Tab eventKey="Book" title="Book Appointment">
+                {userInfo.userData.role && userInfo.userData.role === "PATIENT" && <Tab eventKey="Book" title="Book Appointment">
                     <CreateAppointment />
                 </Tab>}
             </Tabs>

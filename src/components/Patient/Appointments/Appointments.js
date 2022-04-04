@@ -22,7 +22,6 @@ function Appointments(props) {
 
     const handleChange = (appointment, e) => {
         e.preventDefault();
-        console.log(appointment);
     };
 
     useEffect(() => {

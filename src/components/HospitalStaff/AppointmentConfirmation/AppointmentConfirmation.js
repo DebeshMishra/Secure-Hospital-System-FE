@@ -71,7 +71,6 @@ function AppointmentConfirmation (props) {
     };
 
     const updateAppointmt = (e) => {
-        console.log(appointmentData);
         updateAppointment({
             doctorId: parseInt(appointmentData.doctorId.split(" - Name: ")[0]),
             appointmentId: parseInt(app.appointment.id),

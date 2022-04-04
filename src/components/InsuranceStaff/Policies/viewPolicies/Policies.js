@@ -36,9 +36,7 @@ function Policies() {
     // needs API integration
     useEffect(() => {
         getPolicies().then(response => {
-            console.log(response.data);
             const newData = response.data;
-            console.log(newData)
             newData.forEach((data, index) => {
                 const coverages = []
                 data['coverages'].map(coverage => {
@@ -48,15 +46,12 @@ function Policies() {
             });
             setPolicies(newData);
         });
-        console.log(policies);
     }, [])
 
     const triggerBECall = (e) => {
         if(e){
             getPolicies().then(response => {
-                console.log(response.data);
                 const newData = response.data;
-                console.log(newData)
                 newData.forEach((data, index) => {
                     const coverages = []
                     data['coverages'].map(coverage => {
@@ -66,7 +61,6 @@ function Policies() {
                 });
                 setPolicies(newData);
             });
-            console.log(policies);
         }
     };
 
@@ -108,7 +102,7 @@ function Policies() {
                         {
                             policies.map((policy, index) => {
                                 return (
-                                    <tr>
+                                    <tr key={index}>
                                         <td>{policy.policyName}</td>
                                         <td>{policy.policyType}</td>
                                         <td>{policy.policyClaimMaximumAmt}</td>

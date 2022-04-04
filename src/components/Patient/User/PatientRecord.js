@@ -25,7 +25,6 @@ function PatientRecord(props) {
     const [transactions, setTransactions] = useState([])
 
     useEffect(() => {
-        console.log(userId);
         getUserById(userId).then(response => {
             response.appointments.sort(function(a, b) {
                 // const keyA = new Date(a.date);
@@ -42,7 +41,6 @@ function PatientRecord(props) {
             const tran = [];
             getAllTransactions(response.id).then(resp => {
                 setTransactions(resp);
-                console.log(resp);
             });
 
             getAllBills(response.id).then(response => {

@@ -46,7 +46,6 @@ const ForgotPwd = (props) => {
     setToggleOTP(!toggleOTPSection);
     requestOTP(data).then((response) => {
       setData(response.data);
-      console.log(data);
     });
   };
 

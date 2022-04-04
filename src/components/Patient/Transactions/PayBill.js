@@ -21,7 +21,6 @@ const PayBill = () => {
   const [cost, setCost] = useState(0);
 
   useEffect(() => {
-    console.log(appointment);
     let cost1 = 0
     cost1 += appointment.appointment.fees;
     appointment?.appointment?.diagnoses?.labResult.map(lr => {
@@ -40,7 +39,6 @@ const PayBill = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
     createTransaction(data).then(res => {
       alert(res);
       navigate("/appointments");

@@ -68,7 +68,7 @@ function ViewClaims() {
                                     {
                                         claims.map((claim, index) => {
                                             return (
-                                                <tr>
+                                                <tr key={index}>
                                                     <td>{claim.claimId}</td>
                                                     <td>{claim.patientName}</td>
                                                     <td>{claim.policy.policyName}</td>

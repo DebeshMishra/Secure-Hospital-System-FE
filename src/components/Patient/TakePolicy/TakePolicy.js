@@ -26,7 +26,6 @@ function TakePolicy() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmit(!submit);
-        console.log(policyId.split(" ")[0])
         addPolicyToUser(userInfo.userData.user.id, policyId.split(" ")[0]).then(res => {
             alert(res);
             setSubmit(!submit);
@@ -35,7 +34,6 @@ function TakePolicy() {
     };
 
     const handleChange = (e) => {
-        console.log(e)
         setPolicyId(e.target.value);
     };
 

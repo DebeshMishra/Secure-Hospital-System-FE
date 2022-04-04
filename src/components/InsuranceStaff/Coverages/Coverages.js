@@ -35,7 +35,6 @@ function Coverages() {
     useEffect(() => {
         getCoverages().then(response => {
             setCoverages(response.data)
-            console.log(coverages);
         });
     }, [])
 
@@ -43,7 +42,6 @@ function Coverages() {
         if(e){
             getCoverages().then(response => {
                 setCoverages(response.data)
-                console.log(coverages);
             });
         }
     };

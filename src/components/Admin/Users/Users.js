@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState } from "react";
 import Table from "../../Table/table.js";
 import { blockUserByEmailId, unblockUserByEmailId, getAllUsersByRole } from "../../../services/users.service.js";
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserByEmailId } from "../../../services/authentication.service.js";
 import { useNavigate } from "react-router-dom";
 import { Button, Container } from "react-bootstrap";
 
@@ -13,7 +12,6 @@ const Users = (props) => {
     const editableUserInfo = useSelector((state) => state.editableUser);
     const userInfo = useSelector((state) => state.user);
 
-    const dispatch = useDispatch();
     let navigate = useNavigate();
 
     const editRowOnClick = (rowInfo) => {
@@ -22,7 +20,6 @@ const Users = (props) => {
 
     const blockOnClick = (rowInfo) => {
         let r = "";
-        console.log(rowInfo)
         if (userInfo.userData.user.roles[0].role != "ADMIN") {
             r = "PATIENT";
         }
@@ -57,7 +54,6 @@ const Users = (props) => {
     }, []);
 
     const viewPatient = (user) => {
-        console.log(user);
         navigate("/userData", { state: { userId: user.id } })
     }
 

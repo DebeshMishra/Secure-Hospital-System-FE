@@ -40,19 +40,12 @@ function ViewTransactions() {
 
   // needs API integration
   useEffect(() => {
-    /*getAllLabTests().then((response) => {
-      setLabTests(response.data);
-      console.log(labTests);
-    });*/
     setTransactions(dummyData)
   }, []);
 
   const triggerBECall = (e) => {
     if (e) {
-      /*getAllLabTests().then((response) => {
-        setLabTests(response.data);
-        console.log(labTests);
-      });*/
+
     }
   };
 

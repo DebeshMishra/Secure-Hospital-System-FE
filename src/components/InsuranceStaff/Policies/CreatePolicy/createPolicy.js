@@ -47,11 +47,9 @@ function CreatePolicy(props) {
     };
 
     const handleChange = (e) => {
-        console.log(e.target.value);
         const newdata = { ...policyData };
         newdata[e.target.id] = e.target.value;
         setPolicyData(newdata);
-        console.log(newdata);
     };
 
 
@@ -68,7 +66,6 @@ function CreatePolicy(props) {
             }
             setPolicyData(newdata);
         }
-        console.log(policyData);
     };
     
 

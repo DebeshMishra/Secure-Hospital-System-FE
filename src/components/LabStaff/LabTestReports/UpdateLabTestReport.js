@@ -30,14 +30,12 @@ function UpdateLabTestReport(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(data);
   };
 
   const handleChange = (e) => {
     const newdata = { ...data };
     newdata[e.target.id] = e.target.value;
     setData(newdata);
-    console.log(newdata);
   };
 
   let navigate = useNavigate();
@@ -50,7 +48,6 @@ function UpdateLabTestReport(props) {
   }, []);
 
   const updateReport = (e) => {
-    console.log(data);
     setSubmit(!submit);
     updateLabReportByPatientId(data).then(res => {
       alert(res);

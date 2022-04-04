@@ -19,12 +19,10 @@ import { getUserByEmailId, updateUserByEmailId } from "../../../services/authent
 function EditUser(props) {
   const [data, setData] = useState({});
   
-  //console.log(state);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     updateUserByEmailId(data).then(response => {
-      console.log(response);
       alert(response.data);
       navigate("/users");
     }, error => {

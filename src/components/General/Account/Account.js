@@ -28,7 +28,6 @@ function Account() {
     if ((userInfo.isLoggedIn || cookies.JWTToken != undefined)) {
       if (cookies.emailId) {
         getUserByEmailId(cookies.emailId).then(response => {
-          console.log(response);
           setData({
             firstName: response.firstName,
             lastName: response.lastName,
@@ -39,7 +38,6 @@ function Account() {
       }
       else if (userInfo.userData.email) {
         getUserByEmailId(userInfo.userData.email).then(response => {
-          console.log(response);
           setData({
             firstName: response.firstName,
             lastName: response.lastName,

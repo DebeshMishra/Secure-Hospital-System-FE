@@ -34,7 +34,6 @@ function ViewLabTests() {
   useEffect(() => {
     getAllLabTests().then((response) => {
       setLabTests(response.data);
-      console.log(labTests);
     });
   }, []);
 
@@ -42,7 +41,6 @@ function ViewLabTests() {
     if (e) {
       getAllLabTests().then((response) => {
         setLabTests(response.data);
-        console.log(labTests);
       });
     }
   };
