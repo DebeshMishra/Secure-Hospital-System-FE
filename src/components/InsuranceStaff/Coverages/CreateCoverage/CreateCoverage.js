@@ -27,18 +27,24 @@ function CreateCoverage(props) {
         "emailId",
     ]);
     const userInfo = useSelector((state) => state.user);
-    const [submit, setSubmit] = useState(true);
+    const [submit, setSubmit] = useState(false);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSubmit(!submit);
-        createCoverage(coverageData).then(response => {
-            setSubmit(!submit);
+        const newData = {...coverageData}
+        Object.keys(coverageData).forEach(key => {
+            newData[key] = newData[key].trim();
+        })
+        setSubmit(true);
+        createCoverage(newData).then(response => {
             alert("Successfully created a coverage!");
             props.onSubmitted(true);
+            setSubmit(false);
         }, (error) => {
             alert("Error in creating record!")
+            setSubmit(false);
         });
     };
 
@@ -53,6 +59,7 @@ function CreateCoverage(props) {
         <div className='create-coverage-parent'>
             <Row className="justify-content-md-center header">
                 <h3>Create Coverage</h3>
+                <p style={{color: 'blue'}}>Coverage name should be unique!</p>
             </Row>
             <Form onSubmit={handleSubmit}>
                 <Row className="justify-content-md-center mb-3">
@@ -70,7 +77,6 @@ function CreateCoverage(props) {
                                 type="text"
                             />
                         </InputGroup>
-                        <span style={{color: 'blue'}}>Coverage name should be unique!</span>
                 </Row>
                 <Row className="justify-content-md-center mb-3">
                         <InputGroup>
@@ -90,7 +96,7 @@ function CreateCoverage(props) {
                 </Row>
                 <Row className="justify-content-md-center mb-3">
                         <Form.Group className="mb-3">
-                            <Button variant="primary" disabled={coverageData.coverageName == null} type="submit" className="submit-button">
+                            <Button variant="primary" disabled={submit} type="submit" className="submit-button">
                                 Submit
                             </Button>
                         </Form.Group>

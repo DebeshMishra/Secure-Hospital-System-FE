@@ -37,9 +37,9 @@ const CreateUser = (props) => {
       minLength: 8, minLowercase: 1,
       minUppercase: 1, minNumbers: 1, minSymbols: 1
     })) {
-      setErrorMessage('Strong is Password')
+      setErrorMessage('Strong Password')
     } else {
-      setErrorMessage('Password is Not Strong ')
+      setErrorMessage('Password is Not Strong!')
     }
   }
 

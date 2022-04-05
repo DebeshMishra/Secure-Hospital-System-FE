@@ -46,9 +46,11 @@ function ViewClaims() {
 
     return (
         <>
+        <Container>
             {
-                claims != null && claims.length > 0 &&
-                <Container>
+                
+                
+                    claims != null && claims.length > 0 ?
                     <Row className="justify-content-md-center header">
                         <Col md="12">
                             <h3>Claims</h3>
@@ -98,10 +100,12 @@ function ViewClaims() {
                             </Table>
                         </Col>
                     </Row>
+                :
+                <h3>No Claims available!</h3>
 
-
-                </Container>
+                
             }
+            </Container>:
         </>
 
     )

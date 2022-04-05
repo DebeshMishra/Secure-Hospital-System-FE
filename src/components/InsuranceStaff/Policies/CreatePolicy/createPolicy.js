@@ -33,16 +33,22 @@ function CreatePolicy(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(policyData.coverages.length == 0){
-            alert("need atleat one coverage!");
+            alert("need atleast one coverage!");
             return;
         }
         setSubmit(true);
-        createPolicy(policyData).then(response => {
+        const newData = {...policyData}
+        Object.keys(newData).forEach(key => {
+            if(key != 'coverages')
+                newData[key] = newData[key].trim();
+        })
+        createPolicy(newData).then(response => {
             alert("Policy Created Successfully!");
             props.onSubmitted(true);
             setSubmit(false);
         }, error => {
             alert("some error creating the policy!");
+            setSubmit(false)
         })
     };
 
@@ -79,6 +85,7 @@ function CreatePolicy(props) {
         <Container>
             <Row className="justify-content-md-center header">
                 <h3>Create Policy</h3>
+                <p>Policy Name has to be Unique!</p>
             </Row>
             <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">

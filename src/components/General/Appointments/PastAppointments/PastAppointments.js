@@ -90,8 +90,8 @@ function PastAppointments(props) {
 
 
                     </div> :
-                    fectching ? <h3>Feteching Appoinments!</h3> :
-                        <h3>No Appointments!</h3>
+                 appointments.length == 0 ?  <h3>No Appointments!</h3> :  fectching ? <h3>Fetching Appoinments!</h3> : ""
+                        
             }
 
         </>
