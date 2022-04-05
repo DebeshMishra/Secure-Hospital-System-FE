@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { postTransactionToBlockChain } from "../../../../services/blockchain.service";
 import { approveTransaction, cancelTransaction, getAllTransactions } from "../../../../services/users.service";
 
 const Transactions = () => {
@@ -33,11 +34,27 @@ const Transactions = () => {
       setTransactions(resp);
       setFecteching(false);
     });
-  }, [])
+  }, []);
 
-  const approveTransactionf = ( transactionId, appointmentId) => {
+  const approveTransactionf = (t) => {
+    const transactionId = t.transactionId;
+    const appointmentId = t.appointmentId;
     approveTransaction(userInfo.userData.user.id, transactionId, appointmentId).then(response => {
-      alert(response);
+      postTransactionToBlockChain({
+        "bill_id": t.bill.id || 0,
+        "claim_id": t.claimId || 0,
+        "staff_id":  t.staffId || 0,
+        "patient_id":  t.patientId || 0,
+        "__Transaction":  t.transactionId + " ",
+        "appointment_id":  t.appointmentId || 0,
+        "transaction_id":  t.transactionId || 0,
+        "transaction_status_id": (t.transactionStatus == "COMPLETED"? 1: 0),
+        "transaction_completion_time": t.transactionCompletionTime || new Date().toISOString()
+      }).then(resp => {
+        alert("successfully stored in blockchain!");
+      }).catch(error => {
+        alert("unable to store in blockchain");
+      });
       getAllTransactions("").then(resp => {
         setTransactions(resp);
       });
@@ -88,11 +105,11 @@ const Transactions = () => {
                       <td key="7">{tran.transactionCompletionTime}</td>
                       <td key="8">{tran.transactionStatus}</td>
                       <td>
-                        <Button variant="primary" disabled={tran.transactionStatus != "PENDING"} onClick={() => approveTransactionf( tran.transactionId, tran.appointmentId)}>
+                        <Button variant="primary" disabled={tran.transactionStatus != "PENDING"} onClick={() => approveTransactionf(tran)}>
                           Approve 
                         </Button>
                         <span> | </span>
-                        <Button variant="primary" disabled={tran.transactionStatus != "PENDING"} FuseronClick={() => rejectTransactionf( tran.transactionId, tran.appointmentId)}>
+                        <Button variant="primary" disabled={tran.transactionStatus != "PENDING"} FuseronClick={() => rejectTransactionf(tran)}>
                           Deny 
                         </Button>
                       </td>
@@ -103,8 +120,8 @@ const Transactions = () => {
             </tbody>
           </table>
         </div>:
-        transactions?.length == 0? <h3>No Appointments!</h3>:
-        fectching ? <h3>Fetching Appoinments!</h3> : ""
+        transactions?.length == 0? <h3>No Transactions!</h3>:
+        fectching ? <h3>Fetching Transactions!</h3> : ""
       }
     </>
 

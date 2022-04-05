@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { getAllClaims, rejectClaim, approveClaim } from "../../../services/InsuranceStaff.services";
 import { useNavigate } from "react-router";
+import { postClaimToBlockChain } from "../../../services/blockchain.service";
 
 function ViewClaims() {
     const [claims, setClaims] = useState([]);
@@ -24,12 +25,26 @@ function ViewClaims() {
         })
     }, [])
 
-    const approveClaimf = (claimId) => {
+
+    const approveClaimf = (obj) => {
+        const claimId = obj.claimId;
         approveClaim(claimId).then(response => {
-            alert(response);
+            postClaimToBlockChain({
+                "__Claim": obj.claimId + "",
+                "claim_id": obj.claimId,
+                "patient_id": obj.patientId,
+                "policy_id": obj.policy.id,
+                "amount_required": obj.amountRequired,
+                "status_id": obj.status == "COMPLETED"? 1: 0,
+                "appointment_id": obj.appointmentId
+            }).then(resp => {
+                alert("success!");
+            }).catch(error => {
+                alert("Error in storing blockchain!")
+            });
             getAllClaims().then(response => {
                 setClaims(response);
-            })
+            });
         })
     }
     const rejectClaimf = (claimId) => {
@@ -79,7 +94,7 @@ function ViewClaims() {
                                                     <td>{claim.status}</td>
                                                     <td>{
                                                         <>
-                                                            <Button variant="primary" disabled={claim.status != "PENDING"} onClick={() => approveClaimf(claim.claimId)}>
+                                                            <Button variant="primary" disabled={claim.status != "PENDING"} onClick={() => approveClaimf(claim)}>
                                                                 Approve Claim
                                                             </Button>
                                                             <span> | </span>
