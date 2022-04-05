@@ -79,7 +79,7 @@ function PatientRecord(props) {
                     <Accordion.Item eventKey="4">
                         <Accordion.Header>Claims</Accordion.Header>
                         <Accordion.Body>
-                        {userData == null || userData.policies == null || userData.policies.length == 0 || userData.claims == null || userData.claims.length == 0 ? <b className='red'>No Policies taken!</b> : <Claims policies={userData.policies} claims={userData.claims}/>}
+                        {userData == null || userData.policies == null || userData.policies.length == 0 || userData.claims == null || userData.claims.length == 0 ? <b className='red'>No Claims taken!</b> : <Claims policies={userData.policies} claims={userData.claims}/>}
                         </Accordion.Body>
                     </Accordion.Item>
                     <Accordion.Item eventKey="5">

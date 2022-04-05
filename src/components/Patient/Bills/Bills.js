@@ -8,7 +8,7 @@ function Bills(props) {
             {
                 (props.bills != null || props.bills?.length > 0)?
                     <Row className="justify-content-md-center">
-                        <h5>Claims</h5>
+                        <h5>Bills</h5>
                         <table>
                             <tr>
                                 <th>Bill ID</th>
