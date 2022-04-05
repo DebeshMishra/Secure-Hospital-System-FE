@@ -15,6 +15,7 @@ import { approveTransaction, cancelTransaction, getAllTransactions } from "../..
 const Transactions = () => {
   const [transactions, setTransactions] = useState([]);
   const userInfo = useSelector((state) => state.user);
+  const [fectching, setFecteching] = useState(true)
 
   useEffect(() => {
     getTabledata();
@@ -27,8 +28,10 @@ const Transactions = () => {
   };
 
   useEffect(() => {
+    setFecteching(true);
     getAllTransactions("").then(resp => {
       setTransactions(resp);
+      setFecteching(false);
     });
   }, [])
 
@@ -54,7 +57,7 @@ const Transactions = () => {
   return (
     <>
       {
-        transactions != null && transactions.length > 0 &&
+        transactions != null && transactions?.length > 0 ?
         <div className="container mt-5">
           <h3>Transactions</h3>
           <table className="table table-dark table-striped">
@@ -99,7 +102,9 @@ const Transactions = () => {
               }
             </tbody>
           </table>
-        </div>
+        </div>:
+        transactions?.length == 0? <h3>No Appointments!</h3>:
+        fectching ? <h3>Fetching Appoinments!</h3> : ""
       }
     </>
 

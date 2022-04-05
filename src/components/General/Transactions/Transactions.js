@@ -26,6 +26,7 @@ function ViewTransactions() {
     "emailId",
   ]);
   const userInfo = useSelector((state) => state.user);
+  const [fectching, setFecteching] = useState(true)
 
   let dummyData = useMemo(() => [
     {
@@ -63,54 +64,61 @@ function ViewTransactions() {
 
 
   return (
-    <div className="labTestParent">
-      <Row className="justify-content-md-center header">
-        <Col md="8">
-          <h3>Transactions</h3>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <th>Transaction No</th>
-                <th >Description</th>
-                <th>Last Name</th>
-                <th>First Name</th>
-                <th>Price</th>
-                <th>Status</th>
-                <th>Receipts and Bills</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transactions, index) => {
-                return (
-                  <tr key={index}>
-                    <td key={1}>{index + 1}</td>
-                    <td style={{ maxWidth: "200px" }} key={2}>{transactions.description}</td>
-                    <td key={3}> {transactions.lastName}</td>
-                    <td key={4}> {transactions.firstName}</td>
-                    <td key={5}> {transactions.transactionPrice}</td>
-                    <td key={6}> {transactions.status} </td>
-                    <td key={7}> {<div>
-                      <Button id="createReceipt" onClick={() => createReceiptOnClick(transactions.row.values)}>
-                        Create Receipt
-                      </Button>
-                      &nbsp;&nbsp;
-                      <Button id="createBill" onClick={() => createBillOnClick(transactions.row.values)}>
-                        Create Bill
-                      </Button>
-                    </div>}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </Col>
-        <Col md="4" className="border-c">
-          <CreateTransaction onSubmitted={triggerBECall} />
-        </Col>
-      </Row>
-    </div>
+    <>
+      {
+        transactions != null && transactions.length > 0 ? 
+        <div className="labTestParent">
+        <Row className="justify-content-md-center header">
+          <Col md="8">
+            <h3>Transactions</h3>
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                  <th>Transaction No</th>
+                  <th >Description</th>
+                  <th>Last Name</th>
+                  <th>First Name</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th>Receipts and Bills</th>
+  
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((transactions, index) => {
+                  return (
+                    <tr key={index}>
+                      <td key={1}>{index + 1}</td>
+                      <td style={{ maxWidth: "200px" }} key={2}>{transactions.description}</td>
+                      <td key={3}> {transactions.lastName}</td>
+                      <td key={4}> {transactions.firstName}</td>
+                      <td key={5}> {transactions.transactionPrice}</td>
+                      <td key={6}> {transactions.status} </td>
+                      <td key={7}> {<div>
+                        <Button id="createReceipt" onClick={() => createReceiptOnClick(transactions.row.values)}>
+                          Create Receipt
+                        </Button>
+                        &nbsp;&nbsp;
+                        <Button id="createBill" onClick={() => createBillOnClick(transactions.row.values)}>
+                          Create Bill
+                        </Button>
+                      </div>}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </Col>
+          <Col md="4" className="border-c">
+            <CreateTransaction onSubmitted={triggerBECall} />
+          </Col>
+        </Row>
+      </div>
+      : <h3>No Transactions</h3>
+      }
+    </>
+  
   );
 }
 
