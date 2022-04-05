@@ -1,2 +1,2 @@
-export const SERVER_URL = "http://shsbe-env.eba-mn3qupqi.us-east-1.elasticbeanstalk.com";
+export const SERVER_URL = "https://shscse545group3.herokuapp.com";
 
