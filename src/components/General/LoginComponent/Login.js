@@ -112,11 +112,11 @@ const Login = (props) => {
             </InputGroup>
           </Col>
         </Row>
-        {/* <Row className="justify-content-md-center mb-3">
+        <Row className="justify-content-md-center mb-3">
           <Col md="4" className="floatLeft">
             <Link to="/forgotPwd">Forgot Password?</Link>
           </Col>
-        </Row> */}
+        </Row>
         <Row className="justify-content-md-center mb-3">
           <Col md="4">
             <Form.Group>
