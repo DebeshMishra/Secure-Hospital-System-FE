@@ -12,7 +12,11 @@ export const requestOTP = async (data) => {
         "Content-Type": "application/json",
       },
     }
-  );
+  ).catch(function(error){
+    if(error.response){
+      alert(error.response.data);
+    }
+  })
 
   return response;
 };
@@ -27,6 +31,10 @@ export const confirmOTP = async (data) => {
         "Content-Type": "application/json",
       },
     }
-  );
+  ).catch(function(error){
+    if(error.response){
+      alert(error.response.data);
+    }
+  })
   return response;
 };

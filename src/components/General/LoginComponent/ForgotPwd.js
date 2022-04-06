@@ -11,6 +11,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import validator from 'validator'
 
 import {
   Form,
@@ -37,30 +38,63 @@ const ForgotPwd = (props) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   let navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState('')
+  const [submit, setSubmit] = useState(false);
 
   const [toggleOTPSection, setToggleOTP] = useState(false);
+  const [otpCompare, setOtpCompare] = useState(true);
+
+  const validate = (value) => {
+
+    if (validator.isStrongPassword(value, {
+      minLength: 8, minLowercase: 1,
+      minUppercase: 1, minNumbers: 1, minSymbols: 1
+    })) {
+      setErrorMessage('Strong Password')
+    } else {
+      setErrorMessage('Password is Not Strong!')
+    }
+  }
 
   // on click of submit button, store in cookie - email and token
   const handleOTP = async (e) => {
     e.preventDefault();
     setToggleOTP(!toggleOTPSection);
-    requestOTP(data).then((response) => {
-      setData(response.data);
+    
+    if(data.email.trim().length == 0){
+      alert("Please fill the data!");
+      return;
+    }
+    setSubmit(true);
+    requestOTP({"email": data.email}).then(resp => {
+      setSubmit(false);
+      alert("Email sent!");
+    }).catch( error => {
+      setSubmit(false);
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // dispatch(removeUserData());
-    // loginAPI(data).then((response) => {
-    //   dispatch(
-    //     setAllData({
-    //       jwtToken: response.data.token,
-    //       userData: { email: data.email, user: {} },
-    //     })
-    //   );
-    //   navigate("/createNewPwd");
-    // });
+    if(data.email.trim().length == 0 || data.otp.trim().length == 0 ){
+        alert("Data is not correct, please check!")
+        return;
+    }else{
+      if(data.password.trim().length != data.password1.trim().length){
+        alert("passwords are not same");
+        return;
+      }
+    }
+    setSubmit(true);
+    confirmOTP(data).then((response) => {
+      setSubmit(false);
+      if(response != undefined){
+        alert(response.data)
+        navigate("/login");
+      }
+    }).catch( error => {
+      setSubmit(false);
+    });;
   };
 
   // when chrome refresh happens
@@ -74,6 +108,9 @@ const ForgotPwd = (props) => {
     const newdata = { ...data };
     newdata[e.target.id] = e.target.value;
     setData(newdata);
+    if (e.target.id == "password") {
+      validate(e.target.value);
+    }
   };
 
   return (
@@ -105,7 +142,8 @@ const ForgotPwd = (props) => {
           <Row className="justify-content-md-center mb-3">
             <Col md="4">
               <Form.Group>
-                <Button
+                <Button 
+                disabled = {submit}
                   variant="primary"
                   type="submit"
                   className="submit-button">
@@ -147,6 +185,8 @@ const ForgotPwd = (props) => {
                   value={data.otp}
                   onChange={handleChange}
                   type="text"
+                  minLength={6}
+                  maxLength={6}
                   required={true}
                 />
               </InputGroup>
@@ -177,7 +217,7 @@ const ForgotPwd = (props) => {
                 <FormControl
                   placeholder="Password"
                   aria-label="Password"
-                  id="password"
+                  id="password1"
                   required={true}
                   value={data.password1}
                   onChange={handleChange}
@@ -186,10 +226,18 @@ const ForgotPwd = (props) => {
               </InputGroup>
             </Col>
           </Row>
+          <div>
+              <p style={{ color: 'blue' }}> Min Length: 8, Max Length: 15, Min Lowercase: 1, Min Uppercase: 1, Min Numbers: 1, Min Symbols: 1</p>
+              <span style={{
+                fontWeight: 'bold',
+                color: 'red',
+              }}>{errorMessage}</span>
+            </div>
           <Row className="justify-content-md-center mb-3">
             <Col md="4">
               <Form.Group>
                 <Button
+                disabled = {submit}
                   variant="primary"
                   type="submit"
                   className="submit-button">
