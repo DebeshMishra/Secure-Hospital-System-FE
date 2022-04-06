@@ -32,7 +32,8 @@ function Account() {
             firstName: response.firstName,
             lastName: response.lastName,
             phone: response.phone,
-            email: response.email
+            email: response.email,
+            role: response.roles[0].role
           })
         })
       }
@@ -42,7 +43,8 @@ function Account() {
             firstName: response.firstName,
             lastName: response.lastName,
             phone: response.phone,
-            email: response.email
+            email: response.email,
+            role: response.roles[0].role
           })
         })
       }
@@ -84,6 +86,22 @@ function Account() {
                 aria-label="Last Name"
                 id="lastName"
                 value={data.lastName}
+                type="text"
+              />
+            </InputGroup>
+          </Col>
+        </Row>
+        <Row className="justify-content-md-center mb-3">
+          <Col md="4">
+            <InputGroup>
+              <InputGroup.Text id="basic-addon1">Role</InputGroup.Text>
+              <FormControl
+                readOnly
+                placeholder="Last Name"
+                aria-label="Last Name"
+                id="lastName"
+                disabled
+                value={data.role}
                 type="text"
               />
             </InputGroup>
