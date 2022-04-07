@@ -159,7 +159,7 @@ const CreateUser = (props) => {
               <FormControl
                 placeholder="Date of Birth"
                 aria-label="Date of Birth"
-                id="date"
+                id="dob"
                 autoComplete="off"
                 value={registrationdata.dob}
                 onChange={handleChange}
