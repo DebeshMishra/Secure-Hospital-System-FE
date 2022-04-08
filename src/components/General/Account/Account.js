@@ -132,7 +132,7 @@ function Account() {
                 aria-label="Phone"
                 id="phone"
                 value={data.phone}
-                type="number"
+                type="text"
               />
             </InputGroup>
           </Col>
