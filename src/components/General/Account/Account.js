@@ -52,7 +52,7 @@ function Account() {
     }
   }, []);
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
 
   return (
     <Container className="account">
